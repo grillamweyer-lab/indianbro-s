@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - BYTE Burgers</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .thanks-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        .thanks-icon {
+            font-size: 5rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            animation: bounce 2s infinite ease-in-out;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">BYTE <span>Burgers</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="franchise.html">Franchise</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="thanks-section container">
+        <div class="thanks-icon">🚀</div>
+        <h1 class="text-gradient gs_reveal_text">BYTE Received!</h1>
+        <p>Your request has been successfully submitted. We've received your data and our team will be in touch shortly.</p>
+        <a href="index.html" class="btn">Back to Home</a>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        // Clear the basket on success
+        localStorage.removeItem('byteCart');
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>

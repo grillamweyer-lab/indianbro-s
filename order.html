@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Your Order - BYTE Burgers</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        .order-section {
+            padding: 120px 0 60px;
+        }
+
+        .order-form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 4rem;
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .order-form-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle at top right, var(--primary-glow), transparent 60%);
+            z-index: 0;
+            opacity: 0.2;
+        }
+
+        .order-wrap {
+            position: relative;
+            z-index: 1;
+        }
+
+        .order-wrap h1 {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .order-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: #fff;
+            font-family: inherit;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        textarea.form-input {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .order-summary-box {
+            background: rgba(255, 127, 0, 0.1);
+            border: 1px dashed var(--primary);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            grid-column: span 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">BYTE <span>Burgers</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="franchise.html">Franchise</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="order-section container">
+        <div class="order-form-container gs_reveal">
+            <div class="order-wrap">
+                <h1 class="text-gradient gs_reveal_text">Complete Your Order</h1>
+                
+                <form class="order-form" action="https://formsubmit.co/pvsheram001@Gmail.com" method="POST">
+                    <!-- FormSubmit Options -->
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_next" value="http://localhost:8080/thanks.html">
+                    <input type="text" name="_honey" style="display:none">
+
+                    <div class="order-summary-box">
+                        <label class="form-label">Items to Order</label>
+                        <textarea name="items" id="items-field" class="form-input" placeholder="List the items you want here..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Your Name</label>
+                        <input type="text" name="name" class="form-input" placeholder="John Doe" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" name="phone" class="form-input" placeholder="+31 000 000 000" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label class="form-label">Delivery Address</label>
+                        <textarea name="address" id="address-field" class="form-input" placeholder="Street, City, Postcode in Solingen" required></textarea>
+                        <small id="delivery-status" style="display: block; margin-top: 0.5rem;"></small>
+                    </div>
+
+                    <div class="order-summary-box" style="background: rgba(255,100,0,0.1); border: 2px solid var(--primary);">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-weight: bold; font-size: 1.2rem;">Order Total (inc. delivery):</span>
+                            <span id="final-total-display" style="font-size: 1.5rem; color: var(--primary); font-weight: 800;" data-subtotal="0">€0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label class="form-label">Additional Notes (Optional)</label>
+                        <input type="text" name="notes" class="form-input" placeholder="No onions, extra sauce, etc.">
+                    </div>
+
+                    <button type="submit" class="btn form-submit" style="width: 100%; padding: 1.2rem; margin-top: 1rem;">Confirm Order</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        const STORE_COORDS = { lat: 51.178389, lon: 7.031451 };
+
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371; // Radius of the earth in km
+            const dLat = deg2rad(lat2 - lat1);
+            const dLon = deg2rad(lon2 - lon1);
+            const a = 
+                Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+                Math.sin(dLon/2) * Math.sin(dLon/2); 
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+            return R * c; // Distance in km
+        }
+
+        function deg2rad(deg) {
+            return deg * (Math.PI/180);
+        }
+
+        async function updateDeliveryFee() {
+            const address = document.getElementById('address-field').value;
+            const statusEl = document.getElementById('delivery-status');
+            const totalEl = document.getElementById('final-total-display');
+            const itemsField = document.getElementById('items-field');
+            const subtotal = parseFloat(totalEl.dataset.subtotal) || 0;
+
+            if (address.length < 10) return;
+
+            statusEl.innerText = "Calculating distance... 🚚";
+            statusEl.style.color = "var(--primary)";
+
+            try {
+                const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address + ", Solingen, Germany")}&format=json&limit=1`, {
+                    headers: { 'User-Agent': 'ByteBurgers-Order-System' }
+                });
+                const data = await response.json();
+
+                if (data.length > 0) {
+                    const lat = parseFloat(data[0].lat);
+                    const lon = parseFloat(data[0].lon);
+                    const distance = calculateDistance(STORE_COORDS.lat, STORE_COORDS.lon, lat, lon);
+                    
+                    const fee = distance < 5 ? 2.00 : 3.50;
+                    const total = subtotal + fee;
+
+                    statusEl.innerText = `Distance: ${distance.toFixed(1)}km. Delivery Fee: €${fee.toFixed(2)} ✅`;
+                    statusEl.style.color = "#44ff44";
+                    totalEl.innerText = `€${total.toFixed(2)}`;
+                    
+                    // Update hidden field with delivery info
+                    if (!itemsField.value.includes('Delivery Fee:')) {
+                        itemsField.value += `\nDelivery Fee: €${fee.toFixed(2)} (${distance.toFixed(1)}km)`;
+                        itemsField.value += `\nFinal Total: €${total.toFixed(2)}`;
+                    } else {
+                        // Update existing fee info
+                        itemsField.value = itemsField.value.replace(/Delivery Fee: .*/, `Delivery Fee: €${fee.toFixed(2)} (${distance.toFixed(1)}km)`);
+                        itemsField.value = itemsField.value.replace(/Final Total: .*/, `Final Total: €${total.toFixed(2)}`);
+                    }
+                } else {
+                    statusEl.innerText = "Could not verify address distance. Defaulting to €3.50 fee.";
+                    statusEl.style.color = "#ffaa00";
+                    totalEl.innerText = `€${(subtotal + 3.50).toFixed(2)}`;
+                    
+                    // Update hidden field for email delivery summary
+                    if (!itemsField.value.includes('Delivery Fee:')) {
+                        itemsField.value += `\nDelivery Fee: €3.50 (Distance unconfirmed)`;
+                        itemsField.value += `\nFinal Total: €${(subtotal + 3.50).toFixed(2)}`;
+                    } else {
+                        itemsField.value = itemsField.value.replace(/Delivery Fee: .*/, `Delivery Fee: €3.50 (Distance unconfirmed)`);
+                        itemsField.value = itemsField.value.replace(/Final Total: .*/, `Final Total: €${(subtotal + 3.50).toFixed(2)}`);
+                    }
+                }
+            } catch (error) {
+                console.error("Geocoding error:", error);
+                statusEl.innerText = "Error calculating distance. Defaulting to €3.50 fee.";
+                totalEl.innerText = `€${(subtotal + 3.50).toFixed(2)}`;
+                
+                // Update hidden field for email delivery summary
+                if (!itemsField.value.includes('Delivery Fee:')) {
+                    itemsField.value += `\nDelivery Fee: €3.50 (Error calculation)`;
+                    itemsField.value += `\nFinal Total: €${(subtotal + 3.50).toFixed(2)}`;
+                } else {
+                    itemsField.value = itemsField.value.replace(/Delivery Fee: .*/, `Delivery Fee: €3.50 (Error calculation)`);
+                    itemsField.value = itemsField.value.replace(/Final Total: .*/, `Final Total: €${(subtotal + 3.50).toFixed(2)}`);
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const items = urlParams.get('items');
+            
+            if (items) {
+                document.getElementById('items-field').value = items;
+                // Extract subtotal from the summary string
+                const totalMatch = items.match(/Total: €([\d.]+)/);
+                if (totalMatch) {
+                    const subtotal = parseFloat(totalMatch[1]);
+                    const totalDisplay = document.getElementById('final-total-display');
+                    totalDisplay.innerText = `€${subtotal.toFixed(2)}`;
+                    totalDisplay.dataset.subtotal = subtotal;
+                }
+            }
+
+            // Listen for address blur to calculate fee
+            document.getElementById('address-field').addEventListener('blur', updateDeliveryFee);
+        });
+    </script>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

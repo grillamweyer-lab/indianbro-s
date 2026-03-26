@@ -1,0 +1,12 @@
+{
+  "name": "byte-burgers-site",
+  "version": "1.0.0",
+  "description": "BYTE Burgers vibrant 3D website",
+  "scripts": {
+    "dev": "npx -y serve .",
+    "start": "npx -y serve ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - BYTE Burgers</title>
+    <meta name="description" content="View our full menu of juicy BYTE Burgers, Loaded Fries, Sides, and Shakes.">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        .menu-hero {
+            padding: 120px 0 60px;
+            text-align: center;
+        }
+
+        .menu-hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .menu-section {
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .menu-title-wrap {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .menu-title-bg {
+            background: var(--primary);
+            color: #fff;
+            padding: 0.5rem 2rem;
+            border-radius: 50px;
+            font-size: 2rem;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 4px 15px var(--primary-glow);
+            transform: rotate(-2deg);
+        }
+
+        .menu-title-bg::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            background: var(--primary-dark);
+            border-radius: 50px;
+            z-index: -1;
+            transform: rotate(4deg);
+            opacity: 0.5;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .menu-item-card {
+            background: rgba(30, 30, 35, 0.6);
+            border: 1px solid rgba(255,127,0,0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .menu-item-card:hover {
+            border-color: var(--primary);
+        }
+
+        .menu-item-card::before {
+            content: '';
+            position: absolute;
+            top: -50px; right: -50px;
+            width: 100px; height: 100px;
+            background: var(--primary-glow);
+            border-radius: 50%;
+            filter: blur(40px);
+            z-index: 0;
+        }
+
+        .menu-item-inner {
+            transform: translateZ(30px);
+            position: relative;
+            z-index: 1;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+            gap: 1rem;
+        }
+
+        .item-name {
+            font-size: 1.25rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .item-price {
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .item-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .item-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            background: rgba(255,255,255,0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            margin-top: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .tag-spicy { background: rgba(255, 51, 0, 0.2); color: #ff5533; }
+        .tag-vegan { background: rgba(51, 204, 51, 0.2); color: #55cc55; }
+        .tag-special { background: rgba(255, 128, 0, 0.2); color: #ff8c00; }
+
+        .decoration-curve {
+            position: absolute;
+            opacity: 0.1;
+            z-index: 1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">BYTE <span>Burgers</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html" style="color:var(--primary);">Menu</a></li>
+                <li><a href="franchise.html">Franchise</a></li>
+            </ul>
+            <a href="menu.html" class="btn">Order Now</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="menu-hero container gs_reveal">
+            <h1 class="text-gradient gs_reveal_text">Our Menu</h1>
+            <p class="text-muted" style="font-size: 1.2rem; max-width: 600px; margin: 0 auto;">Freshly prepared, locally sourced ingredients to give you the ultimate burger experience. Take a BYTE.</p>
+        </section>
+
+        <!-- BYTE Burgers -->
+        <section class="menu-section container relative" id="burgers">
+            <div class="menu-title-wrap gs_reveal">
+                <div class="menu-title-bg">BYTE Burgers</div>
+            </div>
+            
+            <div class="menu-grid">
+                <!-- Burger Item -->
+                <div class="menu-item-card tilt-card gs_reveal_up">
+                    <div class="menu-item-inner">
+                        <div class="item-header">
+                            <div class="item-name">GOAT BYTE ORIGINAL</div>
+                            <div class="item-price">€11.90</div>
+                        </div>
+                        <p class="item-desc">Juicy goat patty, signature spices & BYTE sauce</p>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('GOAT BYTE ORIGINAL', '€11.90')">Add to Basket</button>
+                    </div>
+                </div>
+
+                <div class="menu-item-card tilt-card gs_reveal_up">
+                    <div class="menu-item-inner">
+                        <div class="item-header">
+                            <div class="item-name">SPICY GOAT BYTE</div>
+                            <div class="item-price">€12.90</div>
+                        </div>
+                        <p class="item-desc">Goat patty, jalapeños & chili sauce</p>
+                        <span class="item-tag tag-spicy">🌶️ Spicy</span>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('SPICY GOAT BYTE', '€12.90')">Add to Basket</button>
+                    </div>
+                </div>
+
+                <div class="menu-item-card tilt-card gs_reveal_up">
+                    <div class="menu-item-inner">
+                        <div class="item-header">
+                            <div class="item-name">MASALA GOAT BYTE</div>
+                            <div class="item-price">€13.90</div>
+                        </div>
+                        <p class="item-desc">Indian-style goat, mint yogurt sauce</p>
+                        <span class="item-tag tag-spicy">🌶️ Flavorful</span>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('MASALA GOAT BYTE', '€13.90')">Add to Basket</button>
+                    </div>
+                </div>
+
+                <div class="menu-item-card tilt-card gs_reveal_up">
+                    <div class="menu-item-inner">
+                        <div class="item-header">
+                            <div class="item-name">BYTE CLASSIC</div>
+                            <div class="item-price">€9.90</div>
+                        </div>
+                        <p class="item-desc">Beef, cheddar, lettuce & BYTE sauce</p>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('BYTE CLASSIC', '€9.90')">Add to Basket</button>
+                    </div>
+                </div>
+
+                <div class="menu-item-card tilt-card gs_reveal_up">
+                    <div class="menu-item-inner">
+                        <div class="item-header">
+                            <div class="item-name">DOUBLE BYTE</div>
+                            <div class="item-price">€12.90</div>
+                        </div>
+                        <p class="item-desc">Double beef, double cheese & onions</p>
+                        <span class="item-tag tag-special">⭐ Bestseller</span>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('DOUBLE BYTE', '€12.90')">Add to Basket</button>
+                    </div>
+                </div>
+
+                <div class="menu-item-card tilt-card gs_reveal_up">
+                    <div class="menu-item-inner">
+                        <div class="item-header">
+                            <div class="item-name">SMOKY BBQ BYTE</div>
+                            <div class="item-price">€11.90</div>
+                        </div>
+                        <p class="item-desc">Beef, BBQ sauce & crispy onions</p>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('SMOKY BBQ BYTE', '€11.90')">Add to Basket</button>
+                    </div>
+                </div>
+
+                <div class="menu-item-card tilt-card gs_reveal_up">
+                    <div class="menu-item-inner">
+                        <div class="item-header">
+                            <div class="item-name">CRISPY CHICKEN BYTE</div>
+                            <div class="item-price">€8.90</div>
+                        </div>
+                        <p class="item-desc">Fried chicken, lettuce & mayo</p>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('CRISPY CHICKEN BYTE', '€8.90')">Add to Basket</button>
+                    </div>
+                </div>
+
+                <div class="menu-item-card tilt-card gs_reveal_up">
+                    <div class="menu-item-inner">
+                        <div class="item-header">
+                            <div class="item-name">SPICY CHICKEN BYTE</div>
+                            <div class="item-price">€9.90</div>
+                        </div>
+                        <p class="item-desc">Spicy chicken, jalapeños & chipotle</p>
+                        <span class="item-tag tag-special">⭐ Popular</span>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('SPICY CHICKEN BYTE', '€9.90')">Add to Basket</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Veg Burgers -->
+        <section class="menu-section container relative" id="veg">
+            <div class="menu-title-wrap gs_reveal">
+                <div class="menu-title-bg" style="transform: rotate(2deg);">Veg Burger</div>
+            </div>
+            
+            <div class="menu-grid">
+                <div class="menu-item-card tilt-card gs_reveal_up">
+                    <div class="menu-item-inner">
+                        <div class="item-header">
+                            <div class="item-name">GREEN BYTE</div>
+                            <div class="item-price">€8.50</div>
+                        </div>
+                        <p class="item-desc">Plant-based patty, lettuce & vegan sauce</p>
+                        <span class="item-tag tag-vegan">🌱 Vegan</span>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('GREEN BYTE (VEGAN)', '€8.50')">Add to Basket</button>
+                    </div>
+                </div>
+
+                <div class="menu-item-card tilt-card gs_reveal_up">
+                    <div class="menu-item-inner">
+                        <div class="item-header">
+                            <div class="item-name">FALAFEL BYTE</div>
+                            <div class="item-price">€9.00</div>
+                        </div>
+                        <p class="item-desc">Falafel, hummus & tahini</p>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('FALAFEL BYTE', '€9.00')">Add to Basket</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sides -->
+        <section class="menu-section container relative" id="sides">
+            <div class="menu-title-wrap gs_reveal">
+                <div class="menu-title-bg" style="transform: rotate(-1deg);">Loaded Fries & Sides</div>
+            </div>
+            
+            <div class="menu-grid">
+                <div class="menu-item-card tilt-card gs_reveal_up">
+                    <div class="menu-item-inner">
+                        <div class="item-header">
+                            <div class="item-name">Classic Fries</div>
+                            <div class="item-price">€3.90</div>
+                        </div>
+                        <p class="item-desc">Sweet Potato Options Available</p>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('Classic Fries', '€3.90')">Add to Basket</button>
+                    </div>
+                </div>
+
+                <div class="menu-item-card tilt-card gs_reveal_up">
+                    <div class="menu-item-inner">
+                        <div class="item-header">
+                            <div class="item-name">Peri Peri Fries</div>
+                            <div class="item-price">€4.90</div>
+                        </div>
+                        <p class="item-desc">Spiced to perfection</p>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('Peri Peri Fries', '€4.90')">Add to Basket</button>
+                    </div>
+                </div>
+
+                <div class="menu-item-card tilt-card gs_reveal_up">
+                    <div class="menu-item-inner">
+                        <div class="item-header">
+                            <div class="item-name">Cheese Melt Fries</div>
+                            <div class="item-price">€5.90</div>
+                        </div>
+                        <p class="item-desc">Smothered in melted cheddar</p>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('Cheese Melt Fries', '€5.90')">Add to Basket</button>
+                    </div>
+                </div>
+
+                <div class="menu-item-card tilt-card gs_reveal_up">
+                    <div class="menu-item-inner">
+                        <div class="item-header">
+                            <div class="item-name">GOAT Loaded Fries</div>
+                            <div class="item-price">€7.90</div>
+                        </div>
+                        <p class="item-desc">Goat mince, cheese & sauce</p>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('GOAT Loaded Fries', '€7.90')">Add to Basket</button>
+                    </div>
+                </div>
+
+                <div class="menu-item-card tilt-card gs_reveal_up">
+                    <div class="menu-item-inner">
+                        <div class="item-header">
+                            <div class="item-name">BBQ Beef Loaded Fries</div>
+                            <div class="item-price">€7.50</div>
+                        </div>
+                        <p class="item-desc">Beef, BBQ sauce & cheese</p>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('BBQ Beef Loaded Fries', '€7.50')">Add to Basket</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Value -->
+        <section class="menu-section container relative" id="combos">
+            <div class="menu-title-wrap gs_reveal">
+                <div class="menu-title-bg" style="transform: rotate(1deg);">Best Value</div>
+            </div>
+            
+            <div class="menu-grid">
+                <div class="menu-item-card tilt-card gs_reveal_up" style="border-color: var(--primary);">
+                    <div class="menu-item-inner">
+                        <div class="item-header">
+                            <div class="item-name">Make it a Meal</div>
+                            <div class="item-price">+€4.90</div>
+                        </div>
+                        <p class="item-desc">Burger + Fries + Drink</p>
+                        <span class="item-tag tag-special">⭐ Upgraded</span>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="openComboSelection('meal', '+€4.90')">Pick Your Items</button>
+                    </div>
+                </div>
+
+                <div class="menu-item-card tilt-card gs_reveal_up" style="border-color: var(--primary);">
+                    <div class="menu-item-inner">
+                        <div class="item-header">
+                            <div class="item-name">Loaded Combo</div>
+                            <div class="item-price">+€6.90</div>
+                        </div>
+                        <p class="item-desc">Burger + Loaded Fries + Drink</p>
+                        <span class="item-tag tag-spicy">🔥 Heavy</span>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="openComboSelection('loaded', '+€6.90')">Pick Your Items</button>
+                    </div>
+                </div>
+
+                <div class="menu-item-card tilt-card gs_reveal_up" style="border-color: var(--primary); background: rgba(255,127,0,0.1);">
+                    <div class="menu-item-inner">
+                        <div class="item-header">
+                            <div class="item-name">GOAT Power Combo</div>
+                            <div class="item-price">+€7.90</div>
+                        </div>
+                        <p class="item-desc">GOAT Burger + GOAT Fries + Drink</p>
+                        <span class="item-tag tag-special">🐐 The Ultimate</span>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="openComboSelection('goat', '+€7.90')">Pick Your Items</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Drinks -->
+        <section class="menu-section container relative" id="drinks">
+            <div class="menu-title-wrap gs_reveal">
+                <div class="menu-title-bg" style="transform: rotate(-1.5deg);">Drinks</div>
+            </div>
+            
+            <div class="menu-grid">
+                <div class="menu-item-card tilt-card gs_reveal_up">
+                    <div class="menu-item-inner">
+                        <div class="item-header">
+                            <div class="item-name">Sodas</div>
+                            <div class="item-price">€2.50</div>
+                        </div>
+                        <p class="item-desc">Coca-Cola / Fanta / Sprite</p>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('Sodas', '€2.50')">Add to Basket</button>
+                    </div>
+                </div>
+
+                <div class="menu-item-card tilt-card gs_reveal_up">
+                    <div class="menu-item-inner">
+                        <div class="item-header">
+                            <div class="item-name">Water</div>
+                            <div class="item-price">€2.00</div>
+                        </div>
+                        <p class="item-desc">Still or Sparkling</p>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('Water', '€2.00')">Add to Basket</button>
+                    </div>
+                </div>
+
+                <div class="menu-item-card tilt-card gs_reveal_up">
+                    <div class="menu-item-inner">
+                        <div class="item-header">
+                            <div class="item-name">Chocolate Shake</div>
+                            <div class="item-price">€4.50</div>
+                        </div>
+                        <p class="item-desc">Rich Belgian chocolate & whipped cream</p>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('Chocolate Shake', '€4.50')">Add to Basket</button>
+                    </div>
+                </div>
+
+                <div class="menu-item-card tilt-card gs_reveal_up">
+                    <div class="menu-item-inner">
+                        <div class="item-header">
+                            <div class="item-name">Vanilla Shake</div>
+                            <div class="item-price">€4.50</div>
+                        </div>
+                        <p class="item-desc">Madagascar vanilla bean</p>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('Vanilla Shake', '€4.50')">Add to Basket</button>
+                    </div>
+                </div>
+
+                <div class="menu-item-card tilt-card gs_reveal_up">
+                    <div class="menu-item-inner">
+                        <div class="item-header">
+                            <div class="item-name">Strawberry Shake</div>
+                            <div class="item-price">€4.50</div>
+                        </div>
+                        <p class="item-desc">Fresh farm strawberries</p>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('Strawberry Shake', '€4.50')">Add to Basket</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-col">
+                <a href="index.html" class="logo" style="margin-bottom: 1rem; display: inline-block;">BYTE <span>Burgers</span></a>
+                <p>Take a BYTE to experience the best burgers in town. Authentic spices, fresh ingredients.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul style="list-style:none; display:flex; flex-direction:column; gap:0.5rem;">
+                    <li><a href="menu.html" style="color:var(--primary); text-decoration:none;">Our Menu</a></li>
+                    <li><a href="franchise.html" style="color:var(--text-muted); text-decoration:none;">Start a Franchise</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <p>Phone: <span class="text-primary">0212315737</span></p>
+                <p>Social: <span class="text-primary">@byte</span></p>
+                <div class="social-links">
+                    <a href="#">FB</a>
+                    <a href="#">IG</a>
+                    <a href="#">TW</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 BYTE Burgers. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- GSAP & VanillaTilt -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Franchise - BYTE Burgers</title>
+    <meta name="description" content="Start your own BYTE Burgers franchise. Join our growing family today.">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        .franchise-hero {
+            padding: 120px 0 60px;
+            text-align: center;
+        }
+
+        .franchise-hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .franchise-info {
+            padding: 4rem 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .franchise-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .franchise-text p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .franchise-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .franchise-form-container {
+            padding: 4rem 0;
+            background: var(--bg-card);
+            border-radius: 30px;
+            margin-bottom: 4rem;
+            border: 1px solid var(--glass-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .franchise-form-container::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+            z-index: 0;
+            opacity: 0.3;
+        }
+
+        .form-wrap {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-wrap h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 3rem;
+        }
+
+        .apply-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .form-input {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border);
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            color: #fff;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        textarea.form-input {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-submit {
+            grid-column: span 2;
+            margin-top: 1rem;
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 992px) {
+            .franchise-info {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .franchise-stats {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .apply-form {
+                grid-template-columns: 1fr;
+            }
+            .form-group.full-width, .form-submit {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">BYTE <span>Burgers</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="franchise.html" style="color:var(--primary);">Franchise</a></li>
+            </ul>
+            <a href="menu.html" class="btn">Order Now</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="franchise-hero container gs_reveal">
+            <h1 class="text-gradient gs_reveal_text">Grow With Us</h1>
+            <p class="text-muted" style="font-size: 1.2rem; max-width: 700px; margin: 0 auto;">Join the BYTE Burgers revolution. We're looking for passionate partners to help us bring the ultimate burger experience to more people.</p>
+        </section>
+
+        <section class="container franchise-info">
+            <div class="franchise-text gs_reveal">
+                <h2>Be the First to Join the <span class="text-primary">BYTE</span> Revolution</h2>
+                <p>We've perfected the art of the goat burger and created a brand that people truly love. Now, we're looking for our very first visionary partners to help us expand.</p>
+                <p>This is a unique opportunity to get in on the ground floor of a brand with massive potential and a proven product-market fit.</p>
+                
+                <div class="franchise-stats">
+                    <div class="stat-card tilt-card">
+                        <span class="stat-number">1st</span>
+                        <span class="stat-label">Franchise Wave</span>
+                    </div>
+                    <div class="stat-card tilt-card">
+                        <span class="stat-number">95%</span>
+                        <span class="stat-label">Customer Satisfaction</span>
+                    </div>
+                    <div class="stat-card tilt-card">
+                        <span class="stat-number">Direct</span>
+                        <span class="stat-label">Founder Support</span>
+                    </div>
+                    <div class="stat-card tilt-card">
+                        <span class="stat-number">ROI</span>
+                        <span class="stat-label">Fast Growth Path</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="franchise-visual gs_reveal_img">
+                <!-- Using a high quality interior proxy image for a restaurant vibe -->
+                <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Restaurant Interior" style="width: 100%; border-radius: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); transform: rotate(2deg);">
+            </div>
+        </section>
+
+        <section class="container gs_reveal">
+            <div class="franchise-form-container">
+                <div class="form-wrap">
+                    <h2>Franchise Application</h2>
+                    <form class="apply-form" action="https://formsubmit.co/pvsheram001@Gmail.com" method="POST">
+                        <!-- Honeypot -->
+                        <input type="text" name="_honey" style="display:none">
+                        <!-- Disable Captcha for better UX (optional) -->
+                        <input type="hidden" name="_captcha" value="false">
+                        <!-- Redirect after submission -->
+                        <input type="hidden" name="_next" value="http://localhost:8080/thanks.html">
+
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" name="name" class="form-input" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" name="email" class="form-input" placeholder="john@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" name="phone" class="form-input" placeholder="+31 000 000 000" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Desired Location</label>
+                            <input type="text" name="location" class="form-input" placeholder="City, Country" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label class="form-label">Why do you want to join BYTE Burgers?</label>
+                            <textarea name="message" class="form-input" placeholder="Tell us about yourself and your experience..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn form-submit">Submit Application</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-col">
+                <a href="index.html" class="logo" style="margin-bottom: 1rem; display: inline-block;">BYTE <span>Burgers</span></a>
+                <p>Take a BYTE to experience the best burgers in town. Authentic spices, fresh ingredients.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul style="list-style:none; display:flex; flex-direction:column; gap:0.5rem;">
+                    <li><a href="menu.html" style="color:var(--text-muted); text-decoration:none;">Our Menu</a></li>
+                    <li><a href="franchise.html" style="color:var(--primary); text-decoration:none;">Start a Franchise</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <p>Phone: <span class="text-primary">0212315737</span></p>
+                <p>Social: <span class="text-primary">@byte</span></p>
+                <div class="social-links">
+                    <a href="#">FB</a>
+                    <a href="#">IG</a>
+                    <a href="#">TW</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 BYTE Burgers. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- GSAP & VanillaTilt -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
