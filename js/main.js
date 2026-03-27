@@ -88,16 +88,16 @@ function saveCart() {
 // Menu Data for Combos
 const menuData = {
     burgers: [
-        { name: 'Goat Byte Original', price: 11.90, isGoat: true },
-        { name: 'Spicy Goat Byte', price: 12.90, isGoat: true },
-        { name: 'Masala Goat Byte', price: 13.90, isGoat: true },
-        { name: 'Byte Classic', price: 9.90, isGoat: false },
-        { name: 'Double Byte', price: 12.90, isGoat: false },
-        { name: 'Smoky BBQ Byte', price: 11.90, isGoat: false },
-        { name: 'Crispy Chicken Byte', price: 8.90, isGoat: false },
-        { name: 'Spicy Chicken Byte', price: 9.90, isGoat: false },
-        { name: 'Green Byte (Vegan)', price: 8.50, isGoat: false },
-        { name: 'Falafel Byte', price: 9.00, isGoat: false }
+        { name: 'Goat Byte Original', price: 6.99, isGoat: true },
+        { name: 'Spicy Goat Byte', price: 7.49, isGoat: true },
+        { name: 'Masala Goat Byte', price: 7.99, isGoat: true },
+        { name: 'Byte Classic', price: 4.99, isGoat: false },
+        { name: 'Double Byte', price: 6.49, isGoat: false },
+        { name: 'Smoky BBQ Byte', price: 5.99, isGoat: false },
+        { name: 'Crispy Chicken Byte', price: 4.49, isGoat: false },
+        { name: 'Spicy Chicken Byte', price: 4.99, isGoat: false },
+        { name: 'Green Byte (Vegan)', price: 4.49, isGoat: false },
+        { name: 'Falafel Byte', price: 4.99, isGoat: false }
     ],
     sides: {
         regular: ['Classic Fries', 'Peri Peri Fries', 'Sweet Potato Fries'],
