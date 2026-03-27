@@ -702,3 +702,59 @@ footer {
     from { opacity: 0; transform: translateX(20px); }
     to { opacity: 1; transform: translateX(0); }
 }
+
+/* Burger Extras Modal */
+.extras-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.extra-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    user-select: none;
+}
+
+.extra-item:hover {
+    border-color: var(--primary);
+    background: rgba(255,127,0,0.06);
+}
+
+.extra-item:has(.extra-checkbox:checked) {
+    border-color: var(--primary);
+    background: rgba(255,127,0,0.12);
+}
+
+.extra-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.extra-name {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #fff;
+}
+
+.extra-price {
+    font-size: 0.95rem;
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.extra-checkbox {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--primary);
+    cursor: pointer;
+    flex-shrink: 0;
+}

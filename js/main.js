@@ -171,6 +171,40 @@ function confirmCombo() {
     closeComboModal();
 }
 
+// Extras modal for burger add-ons
+let pendingBurger = null;
+
+function addBurgerToCart(name, price) {
+    pendingBurger = { name, price: parseFloat(price.replace('€', '')) };
+    // Reset checkboxes
+    document.querySelectorAll('.extra-checkbox').forEach(cb => cb.checked = false);
+    document.getElementById('burger-extras-modal').classList.add('active');
+}
+
+function closeBurgerExtrasModal() {
+    document.getElementById('burger-extras-modal').classList.remove('active');
+    pendingBurger = null;
+}
+
+function confirmBurgerWithExtras() {
+    if (!pendingBurger) return;
+    // Add the burger itself
+    cart.push({ name: pendingBurger.name, price: pendingBurger.price });
+    // Add any checked extras
+    document.querySelectorAll('.extra-checkbox:checked').forEach(cb => {
+        cart.push({ name: cb.dataset.name, price: parseFloat(cb.dataset.price) });
+    });
+    saveCart();
+    if (cart.length <= 2) toggleBasket(true);
+    closeBurgerExtrasModal();
+    // Show brief confirmation
+    const btn = document.getElementById('confirm-extras-btn');
+    const orig = btn.innerText;
+    btn.innerText = 'Added! ✅';
+    btn.style.background = 'var(--primary)';
+    setTimeout(() => { btn.innerText = orig; btn.style.background = ''; }, 1500);
+}
+
 function addToCart(itemName, price) {
     // Standardize price parsing
     let numericPrice = typeof price === 'string' 
@@ -352,6 +386,52 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
         document.body.insertAdjacentHTML('beforeend', modalHTML);
+    }
+    // Burger Extras Modal
+    if (!document.getElementById('burger-extras-modal')) {
+        const extrasHTML = `
+            <div class="combo-modal" id="burger-extras-modal" style="z-index: 10001;">
+                <div class="modal-content">
+                    <h2 class="modal-title">🍔 Customise Your Burger</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem;">Want to make it even better? Add extras to your order:</p>
+                    <div class="extras-list">
+                        <label class="extra-item">
+                            <div class="extra-info">
+                                <span class="extra-name">🧀 Extra Cheese</span>
+                                <span class="extra-price">+€1.00</span>
+                            </div>
+                            <input type="checkbox" class="extra-checkbox" data-name="Extra Cheese" data-price="1.00">
+                        </label>
+                        <label class="extra-item">
+                            <div class="extra-info">
+                                <span class="extra-name">🥩 Extra Patty</span>
+                                <span class="extra-price">+€2.50</span>
+                            </div>
+                            <input type="checkbox" class="extra-checkbox" data-name="Extra Patty" data-price="2.50">
+                        </label>
+                        <label class="extra-item">
+                            <div class="extra-info">
+                                <span class="extra-name">🫙 Extra Sauce</span>
+                                <span class="extra-price">+€0.50</span>
+                            </div>
+                            <input type="checkbox" class="extra-checkbox" data-name="Extra Sauce" data-price="0.50">
+                        </label>
+                        <label class="extra-item">
+                            <div class="extra-info">
+                                <span class="extra-name">🌶️ Make it Spicy</span>
+                                <span class="extra-price">+€0.50</span>
+                            </div>
+                            <input type="checkbox" class="extra-checkbox" data-name="Make it Spicy" data-price="0.50">
+                        </label>
+                    </div>
+                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                        <button class="btn btn-outline" style="flex: 1" onclick="closeBurgerExtrasModal()">Skip Extras</button>
+                        <button class="btn" id="confirm-extras-btn" style="flex: 1" onclick="confirmBurgerWithExtras()">Add to Basket</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', extrasHTML);
     }
     updateBasketUI();
 });
