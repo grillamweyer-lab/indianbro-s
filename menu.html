@@ -153,9 +153,14 @@
             <a href="index.html" class="logo">BYTE <span>Burgers</span></a>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="menu.html" style="color:var(--primary);">Menu</a></li>
+                <li><a href="menu.html">Menu</a></li>
                 <li><a href="franchise.html">Franchise</a></li>
             </ul>
+            <div class="hamburger" id="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
             <a href="menu.html" class="btn">Order Now</a>
         </nav>
     </header>
@@ -178,10 +183,10 @@
                     <div class="menu-item-inner">
                         <div class="item-header">
                             <div class="item-name">GOAT BYTE ORIGINAL</div>
-                            <div class="item-price">€11.90</div>
+                            <div class="item-price">€6.99</div>
                         </div>
                         <p class="item-desc">Juicy goat patty, signature spices & BYTE sauce</p>
-                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('GOAT BYTE ORIGINAL', '€11.90')">Add to Basket</button>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('GOAT BYTE ORIGINAL', '€6.99')">Add to Basket</button>
                     </div>
                 </div>
 
@@ -189,11 +194,11 @@
                     <div class="menu-item-inner">
                         <div class="item-header">
                             <div class="item-name">SPICY GOAT BYTE</div>
-                            <div class="item-price">€12.90</div>
+                            <div class="item-price">€7.49</div>
                         </div>
                         <p class="item-desc">Goat patty, jalapeños & chili sauce</p>
                         <span class="item-tag tag-spicy">🌶️ Spicy</span>
-                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('SPICY GOAT BYTE', '€12.90')">Add to Basket</button>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('SPICY GOAT BYTE', '€7.49')">Add to Basket</button>
                     </div>
                 </div>
 
@@ -201,11 +206,11 @@
                     <div class="menu-item-inner">
                         <div class="item-header">
                             <div class="item-name">MASALA GOAT BYTE</div>
-                            <div class="item-price">€13.90</div>
+                            <div class="item-price">€7.99</div>
                         </div>
                         <p class="item-desc">Indian-style goat, mint yogurt sauce</p>
                         <span class="item-tag tag-spicy">🌶️ Flavorful</span>
-                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('MASALA GOAT BYTE', '€13.90')">Add to Basket</button>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('MASALA GOAT BYTE', '€7.99')">Add to Basket</button>
                     </div>
                 </div>
 
@@ -213,10 +218,10 @@
                     <div class="menu-item-inner">
                         <div class="item-header">
                             <div class="item-name">BYTE CLASSIC</div>
-                            <div class="item-price">€9.90</div>
+                            <div class="item-price">€4.99</div>
                         </div>
                         <p class="item-desc">Beef, cheddar, lettuce & BYTE sauce</p>
-                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('BYTE CLASSIC', '€9.90')">Add to Basket</button>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('BYTE CLASSIC', '€4.99')">Add to Basket</button>
                     </div>
                 </div>
 
@@ -224,11 +229,11 @@
                     <div class="menu-item-inner">
                         <div class="item-header">
                             <div class="item-name">DOUBLE BYTE</div>
-                            <div class="item-price">€12.90</div>
+                            <div class="item-price">€6.49</div>
                         </div>
                         <p class="item-desc">Double beef, double cheese & onions</p>
                         <span class="item-tag tag-special">⭐ Bestseller</span>
-                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('DOUBLE BYTE', '€12.90')">Add to Basket</button>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('DOUBLE BYTE', '€6.49')">Add to Basket</button>
                     </div>
                 </div>
 
@@ -236,10 +241,10 @@
                     <div class="menu-item-inner">
                         <div class="item-header">
                             <div class="item-name">SMOKY BBQ BYTE</div>
-                            <div class="item-price">€11.90</div>
+                            <div class="item-price">€5.99</div>
                         </div>
                         <p class="item-desc">Beef, BBQ sauce & crispy onions</p>
-                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('SMOKY BBQ BYTE', '€11.90')">Add to Basket</button>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('SMOKY BBQ BYTE', '€5.99')">Add to Basket</button>
                     </div>
                 </div>
 
@@ -247,10 +252,10 @@
                     <div class="menu-item-inner">
                         <div class="item-header">
                             <div class="item-name">CRISPY CHICKEN BYTE</div>
-                            <div class="item-price">€8.90</div>
+                            <div class="item-price">€4.49</div>
                         </div>
                         <p class="item-desc">Fried chicken, lettuce & mayo</p>
-                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('CRISPY CHICKEN BYTE', '€8.90')">Add to Basket</button>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('CRISPY CHICKEN BYTE', '€4.49')">Add to Basket</button>
                     </div>
                 </div>
 
@@ -258,11 +263,11 @@
                     <div class="menu-item-inner">
                         <div class="item-header">
                             <div class="item-name">SPICY CHICKEN BYTE</div>
-                            <div class="item-price">€9.90</div>
+                            <div class="item-price">€4.99</div>
                         </div>
                         <p class="item-desc">Spicy chicken, jalapeños & chipotle</p>
                         <span class="item-tag tag-special">⭐ Popular</span>
-                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('SPICY CHICKEN BYTE', '€9.90')">Add to Basket</button>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('SPICY CHICKEN BYTE', '€4.99')">Add to Basket</button>
                     </div>
                 </div>
             </div>
@@ -279,11 +284,11 @@
                     <div class="menu-item-inner">
                         <div class="item-header">
                             <div class="item-name">GREEN BYTE</div>
-                            <div class="item-price">€8.50</div>
+                            <div class="item-price">€4.49</div>
                         </div>
                         <p class="item-desc">Plant-based patty, lettuce & vegan sauce</p>
                         <span class="item-tag tag-vegan">🌱 Vegan</span>
-                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('GREEN BYTE (VEGAN)', '€8.50')">Add to Basket</button>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('GREEN BYTE (VEGAN)', '€4.49')">Add to Basket</button>
                     </div>
                 </div>
 
@@ -291,10 +296,10 @@
                     <div class="menu-item-inner">
                         <div class="item-header">
                             <div class="item-name">FALAFEL BYTE</div>
-                            <div class="item-price">€9.00</div>
+                            <div class="item-price">€4.99</div>
                         </div>
                         <p class="item-desc">Falafel, hummus & tahini</p>
-                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('FALAFEL BYTE', '€9.00')">Add to Basket</button>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('FALAFEL BYTE', '€4.99')">Add to Basket</button>
                     </div>
                 </div>
             </div>
@@ -311,10 +316,10 @@
                     <div class="menu-item-inner">
                         <div class="item-header">
                             <div class="item-name">Classic Fries</div>
-                            <div class="item-price">€3.90</div>
+                            <div class="item-price">€1.99</div>
                         </div>
                         <p class="item-desc">Sweet Potato Options Available</p>
-                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('Classic Fries', '€3.90')">Add to Basket</button>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('Classic Fries', '€1.99')">Add to Basket</button>
                     </div>
                 </div>
 
@@ -322,10 +327,10 @@
                     <div class="menu-item-inner">
                         <div class="item-header">
                             <div class="item-name">Peri Peri Fries</div>
-                            <div class="item-price">€4.90</div>
+                            <div class="item-price">€2.49</div>
                         </div>
                         <p class="item-desc">Spiced to perfection</p>
-                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('Peri Peri Fries', '€4.90')">Add to Basket</button>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('Peri Peri Fries', '€2.49')">Add to Basket</button>
                     </div>
                 </div>
 
@@ -333,10 +338,10 @@
                     <div class="menu-item-inner">
                         <div class="item-header">
                             <div class="item-name">Cheese Melt Fries</div>
-                            <div class="item-price">€5.90</div>
+                            <div class="item-price">€2.99</div>
                         </div>
                         <p class="item-desc">Smothered in melted cheddar</p>
-                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('Cheese Melt Fries', '€5.90')">Add to Basket</button>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('Cheese Melt Fries', '€2.99')">Add to Basket</button>
                     </div>
                 </div>
 
@@ -344,10 +349,10 @@
                     <div class="menu-item-inner">
                         <div class="item-header">
                             <div class="item-name">GOAT Loaded Fries</div>
-                            <div class="item-price">€7.90</div>
+                            <div class="item-price">€4.49</div>
                         </div>
                         <p class="item-desc">Goat mince, cheese & sauce</p>
-                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('GOAT Loaded Fries', '€7.90')">Add to Basket</button>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('GOAT Loaded Fries', '€4.49')">Add to Basket</button>
                     </div>
                 </div>
 
@@ -355,10 +360,10 @@
                     <div class="menu-item-inner">
                         <div class="item-header">
                             <div class="item-name">BBQ Beef Loaded Fries</div>
-                            <div class="item-price">€7.50</div>
+                            <div class="item-price">€3.99</div>
                         </div>
                         <p class="item-desc">Beef, BBQ sauce & cheese</p>
-                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('BBQ Beef Loaded Fries', '€7.50')">Add to Basket</button>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('BBQ Beef Loaded Fries', '€3.99')">Add to Basket</button>
                     </div>
                 </div>
             </div>
@@ -375,11 +380,11 @@
                     <div class="menu-item-inner">
                         <div class="item-header">
                             <div class="item-name">Make it a Meal</div>
-                            <div class="item-price">+€4.90</div>
+                            <div class="item-price">+€2.99</div>
                         </div>
                         <p class="item-desc">Burger + Fries + Drink</p>
                         <span class="item-tag tag-special">⭐ Upgraded</span>
-                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="openComboSelection('meal', '+€4.90')">Pick Your Items</button>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="openComboSelection('meal', '+€2.99')">Pick Your Items</button>
                     </div>
                 </div>
 
@@ -387,11 +392,11 @@
                     <div class="menu-item-inner">
                         <div class="item-header">
                             <div class="item-name">Loaded Combo</div>
-                            <div class="item-price">+€6.90</div>
+                            <div class="item-price">+€3.99</div>
                         </div>
                         <p class="item-desc">Burger + Loaded Fries + Drink</p>
                         <span class="item-tag tag-spicy">🔥 Heavy</span>
-                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="openComboSelection('loaded', '+€6.90')">Pick Your Items</button>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="openComboSelection('loaded', '+€3.99')">Pick Your Items</button>
                     </div>
                 </div>
 
@@ -399,11 +404,11 @@
                     <div class="menu-item-inner">
                         <div class="item-header">
                             <div class="item-name">GOAT Power Combo</div>
-                            <div class="item-price">+€7.90</div>
+                            <div class="item-price">+€4.99</div>
                         </div>
                         <p class="item-desc">GOAT Burger + GOAT Fries + Drink</p>
                         <span class="item-tag tag-special">🐐 The Ultimate</span>
-                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="openComboSelection('goat', '+€7.90')">Pick Your Items</button>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="openComboSelection('goat', '+€4.99')">Pick Your Items</button>
                     </div>
                 </div>
             </div>
@@ -420,10 +425,10 @@
                     <div class="menu-item-inner">
                         <div class="item-header">
                             <div class="item-name">Sodas</div>
-                            <div class="item-price">€2.50</div>
+                            <div class="item-price">€1.49</div>
                         </div>
                         <p class="item-desc">Coca-Cola / Fanta / Sprite</p>
-                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('Sodas', '€2.50')">Add to Basket</button>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('Sodas', '€1.49')">Add to Basket</button>
                     </div>
                 </div>
 
@@ -431,10 +436,10 @@
                     <div class="menu-item-inner">
                         <div class="item-header">
                             <div class="item-name">Water</div>
-                            <div class="item-price">€2.00</div>
+                            <div class="item-price">€1.00</div>
                         </div>
                         <p class="item-desc">Still or Sparkling</p>
-                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('Water', '€2.00')">Add to Basket</button>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('Water', '€1.00')">Add to Basket</button>
                     </div>
                 </div>
 
@@ -442,10 +447,10 @@
                     <div class="menu-item-inner">
                         <div class="item-header">
                             <div class="item-name">Chocolate Shake</div>
-                            <div class="item-price">€4.50</div>
+                            <div class="item-price">€2.99</div>
                         </div>
                         <p class="item-desc">Rich Belgian chocolate & whipped cream</p>
-                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('Chocolate Shake', '€4.50')">Add to Basket</button>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('Chocolate Shake', '€2.99')">Add to Basket</button>
                     </div>
                 </div>
 
@@ -453,10 +458,10 @@
                     <div class="menu-item-inner">
                         <div class="item-header">
                             <div class="item-name">Vanilla Shake</div>
-                            <div class="item-price">€4.50</div>
+                            <div class="item-price">€2.99</div>
                         </div>
                         <p class="item-desc">Madagascar vanilla bean</p>
-                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('Vanilla Shake', '€4.50')">Add to Basket</button>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('Vanilla Shake', '€2.99')">Add to Basket</button>
                     </div>
                 </div>
 
@@ -464,10 +469,10 @@
                     <div class="menu-item-inner">
                         <div class="item-header">
                             <div class="item-name">Strawberry Shake</div>
-                            <div class="item-price">€4.50</div>
+                            <div class="item-price">€2.99</div>
                         </div>
                         <p class="item-desc">Fresh farm strawberries</p>
-                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('Strawberry Shake', '€4.50')">Add to Basket</button>
+                        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;" onclick="addToCart('Strawberry Shake', '€2.99')">Add to Basket</button>
                     </div>
                 </div>
             </div>

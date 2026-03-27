@@ -6,87 +6,7 @@
     <title>Place Your Order - BYTE Burgers</title>
     <link rel="stylesheet" href="css/style.css">
     
-    <style>
-        .order-section {
-            padding: 120px 0 60px;
-        }
-
-        .order-form-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: var(--bg-card);
-            padding: 4rem;
-            border-radius: 30px;
-            border: 1px solid var(--glass-border);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .order-form-container::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: radial-gradient(circle at top right, var(--primary-glow), transparent 60%);
-            z-index: 0;
-            opacity: 0.2;
-        }
-
-        .order-wrap {
-            position: relative;
-            z-index: 1;
-        }
-
-        .order-wrap h1 {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .order-form {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
-
-        .form-group.full-width {
-            grid-column: span 2;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
-            color: #fff;
-            font-family: inherit;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        textarea.form-input {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .order-summary-box {
-            background: rgba(255, 127, 0, 0.1);
-            border: 1px dashed var(--primary);
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-bottom: 2rem;
-            grid-column: span 2;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="blob blob-1"></div>
@@ -100,6 +20,11 @@
                 <li><a href="menu.html">Menu</a></li>
                 <li><a href="franchise.html">Franchise</a></li>
             </ul>
+            <div class="hamburger" id="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </nav>
     </header>
 

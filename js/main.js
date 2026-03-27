@@ -257,6 +257,25 @@ function checkout() {
 
 // Initialize UI on load
 document.addEventListener('DOMContentLoaded', () => {
+    // Mobile Menu Toggle
+    const hamburger = document.getElementById('mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (hamburger) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+    }
+
     // Add Submit Animation to all forms
     document.querySelectorAll('form').forEach(form => {
         form.addEventListener('submit', (e) => {

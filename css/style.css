@@ -146,6 +146,120 @@ nav {
   box-shadow: 0 6px 20px var(--primary-glow);
 }
 
+/* Hero Section */
+.hero {
+  padding: 160px 0 80px;
+  position: relative;
+}
+
+.hero-content {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  align-items: center;
+  gap: 4rem;
+}
+
+.hero-text h1 {
+  font-size: 5rem;
+  margin-bottom: 1.5rem;
+}
+
+.hero-text p {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  margin-bottom: 2.5rem;
+  max-width: 600px;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.hero-img {
+  position: relative;
+}
+
+.hero-img img {
+  width: 100%;
+  border-radius: 30px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+/* Franchise & Info Sections */
+.franchise-hero {
+    padding: 120px 0 60px;
+    text-align: center;
+}
+
+.franchise-info {
+    padding: 4rem 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.stat-card {
+    background: var(--bg-card);
+    padding: 1.5rem;
+    border-radius: 15px;
+    border: 1px solid var(--glass-border);
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+/* Order & Forms */
+.order-section {
+    padding: 120px 0 60px;
+}
+
+.order-form-container, .franchise-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--bg-card);
+    padding: 3rem;
+    border-radius: 30px;
+    border: 1px solid var(--glass-border);
+    position: relative;
+}
+
+.order-form, .apply-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.form-group.full-width {
+    grid-column: span 2;
+}
+
+.form-input {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    color: #fff;
+    font-family: inherit;
+}
+
+.order-summary-box {
+    background: rgba(255, 127, 0, 0.1);
+    border: 1px dashed var(--primary);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    grid-column: span 2;
+}
+
 .combo-modal {
     position: fixed;
     top: 0; left: 0;
@@ -341,10 +455,107 @@ footer {
   100% { transform: translate(50px, 50px) rotate(45deg); }
 }
 
-/* Media Queries */
-@media (max-width: 768px) {
+/* Responsive Media Queries */
+@media (max-width: 1024px) {
   .nav-links {
-    display: none; /* Add mobile menu later if needed */
+    position: fixed;
+    top: 80px;
+    right: -100%;
+    width: 100%;
+    height: calc(100vh - 80px);
+    background: var(--bg-dark);
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 4rem;
+    align-items: center;
+    transition: all 0.4s cubic-bezier(0.77,0.2,0.05,1.0);
+    z-index: 99;
+  }
+
+  .nav-links.active {
+    right: 0;
+  }
+
+  .nav-links a {
+    font-size: 1.8rem;
+    margin: 1.5rem 0;
+  }
+
+  .hamburger {
+    display: flex;
+    margin-left: auto;
+    margin-right: 1.5rem;
+  }
+  
+  header .btn {
+      display: none; /* Hide top right btn on mobile to make space for hamburger */
+  }
+
+  .hero-text h1 {
+    font-size: 4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-content, .franchise-info {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 3rem;
+  }
+
+  .hero-text h1 {
+    font-size: 3.2rem;
+  }
+
+  .hero-btns {
+    justify-content: center;
+  }
+
+  .hero-img {
+      order: -1;
+      max-width: 80%;
+      margin: 0 auto;
+  }
+
+  .order-form, .apply-form {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-group.full-width {
+      grid-column: span 1;
+  }
+  
+  .order-summary-box {
+      grid-column: span 1;
+  }
+
+  .order-form-container, .franchise-form-container {
+      padding: 2rem 1.5rem;
+  }
+
+  .section-title {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-text h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-btns {
+    flex-direction: column;
+  }
+
+  .hero-btns .btn {
+    width: 100%;
+  }
+
+  .basket-float {
+    bottom: 20px;
+    right: 20px;
+    width: 55px;
+    height: 55px;
   }
 }
 
@@ -490,11 +701,4 @@ footer {
 @keyframes fadeIn {
     from { opacity: 0; transform: translateX(20px); }
     to { opacity: 1; transform: translateX(0); }
-}
-
-@media (max-width: 480px) {
-    .basket-drawer {
-        width: 100%;
-        right: -100%;
-    }
 }
