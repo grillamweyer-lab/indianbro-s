@@ -186,6 +186,14 @@ function closeBurgerExtrasModal() {
     pendingBurger = null;
 }
 
+function skipExtras() {
+    if (!pendingBurger) return;
+    cart.push({ name: pendingBurger.name, price: pendingBurger.price });
+    saveCart();
+    if (cart.length === 1) toggleBasket(true);
+    closeBurgerExtrasModal();
+}
+
 function confirmBurgerWithExtras() {
     if (!pendingBurger) return;
     // Add the burger itself
@@ -425,7 +433,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </label>
                     </div>
                     <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                        <button class="btn btn-outline" style="flex: 1" onclick="closeBurgerExtrasModal()">Skip Extras</button>
+                        <button class="btn btn-outline" style="flex: 1" onclick="skipExtras()">Skip Extras</button>
                         <button class="btn" id="confirm-extras-btn" style="flex: 1" onclick="confirmBurgerWithExtras()">Add to Basket</button>
                     </div>
                 </div>
