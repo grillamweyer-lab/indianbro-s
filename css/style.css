@@ -76,6 +76,28 @@ nav {
   position: relative;
 }
 
+/* Hamburger — hidden on desktop */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 22px;
+  cursor: pointer;
+  z-index: 101;
+  margin-left: auto;
+  margin-right: 1rem;
+}
+
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background: #fff;
+  border-radius: 3px;
+  transition: all 0.35s ease;
+}
+
 .logo {
   font-size: 2rem;
   font-weight: 900;
@@ -498,8 +520,6 @@ footer {
 
   .hamburger {
     display: flex;
-    margin-left: auto;
-    margin-right: 1.5rem;
   }
   
   header .btn {
