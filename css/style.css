@@ -472,10 +472,12 @@ footer {
 @media (max-width: 1024px) {
   .nav-links {
     position: fixed;
-    top: 80px;
+    top: 95px;
     right: -100%;
+    left: auto;
+    transform: none;
     width: 100%;
-    height: calc(100vh - 80px);
+    height: calc(100vh - 95px);
     background: var(--bg-dark);
     flex-direction: column;
     justify-content: flex-start;
