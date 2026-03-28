@@ -92,6 +92,18 @@ nav {
   color: var(--primary);
 }
 
+.logo-img {
+  height: 48px;
+  width: auto;
+  border-radius: 10px;
+  display: block;
+  transition: opacity 0.3s ease;
+}
+
+.logo-img:hover {
+  opacity: 0.85;
+}
+
 .nav-links {
   display: flex;
   gap: 2rem;
