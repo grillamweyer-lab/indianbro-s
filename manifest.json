@@ -1,0 +1,17 @@
+{
+  "name": "BYTE Burgers",
+  "short_name": "BYTE",
+  "description": "Experience the ultimate flavor explosion with our juicy goat patties, signature spices, and loaded fries.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0a0a0c",
+  "theme_color": "#ff751f",
+  "icons": [
+    {
+      "src": "images/logo.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
