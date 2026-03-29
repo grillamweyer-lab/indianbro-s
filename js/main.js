@@ -100,7 +100,7 @@ const menuData = {
         { name: 'Falafel Byte', price: 5.99, isGoat: false }
     ],
     sides: {
-        regular: ['Classic Fries', 'Peri Peri Fries', 'Sweet Potato Fries'],
+        regular: ['Classic Fries', 'Peri Peri Fries', 'Sweet Potato Fries', 'Crispy Onion Rings', 'Mozzarella Sticks', 'Jalapeño Poppers', 'Chicken Tenders'],
         loaded: ['Cheese Melt Fries', 'GOAT Loaded Fries', 'BBQ Beef Loaded Fries']
     },
     drinks: ['Coca-Cola', 'Fanta', 'Sprite', 'Mineral Water']
@@ -383,6 +383,10 @@ document.addEventListener('DOMContentLoaded', () => {
                             <option>Classic Fries</option>
                             <option>Peri Peri Fries</option>
                             <option>Sweet Potato Fries</option>
+                            <option>Crispy Onion Rings</option>
+                            <option>Mozzarella Sticks</option>
+                            <option>Jalapeño Poppers</option>
+                            <option>Chicken Tenders</option>
                         </select>
                     </div>
                     <div class="select-group">
