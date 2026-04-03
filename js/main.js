@@ -75,6 +75,38 @@ document.addEventListener("DOMContentLoaded", function() {
         "max-glare": 0.2,
         perspective: 1000
     });
+
+    // 1. Dynamic Ambient Glow (Cursor Tracker)
+    document.addEventListener('mousemove', (e) => {
+        document.body.style.setProperty('--cursor-x', `${e.clientX}px`);
+        document.body.style.setProperty('--cursor-y', `${e.clientY}px`);
+    });
+
+    // 2. Magnetic Buttons
+    const magnets = document.querySelectorAll('.btn');
+    magnets.forEach((magnet) => {
+        magnet.addEventListener('mousemove', function(e) {
+            const position = magnet.getBoundingClientRect();
+            const x = e.clientX - position.left - position.width / 2;
+            const y = e.clientY - position.top - position.height / 2;
+            
+            gsap.to(magnet, {
+                x: x * 0.3,
+                y: y * 0.3,
+                duration: 0.5,
+                ease: "power2.out"
+            });
+        });
+
+        magnet.addEventListener('mouseleave', function() {
+            gsap.to(magnet, {
+                x: 0,
+                y: 0,
+                duration: 0.5,
+                ease: "elastic.out(1, 0.3)"
+            });
+        });
+    });
 });
 
 // Shopping Basket Logic
