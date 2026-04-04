@@ -120,9 +120,9 @@ function saveCart() {
 // Menu Data for Combos
 const menuData = {
     burgers: [
-        { name: 'Smash Byte Original', price: 6.99, isGoat: true },
-        { name: 'Spicy Smash Byte', price: 7.49, isGoat: true },
-        { name: 'Deluxe Smash Byte', price: 7.99, isGoat: true },
+        { name: 'Goat Byte Original', price: 6.99, isGoat: true },
+        { name: 'Spicy Goat Byte', price: 7.49, isGoat: true },
+        { name: 'Masala Goat Byte', price: 7.99, isGoat: true },
         { name: 'Byte Classic', price: 5.99, isGoat: false },
         { name: 'Double Byte', price: 7.49, isGoat: false },
         { name: 'Smoky BBQ Byte', price: 6.99, isGoat: false },
@@ -133,7 +133,7 @@ const menuData = {
     ],
     sides: {
         regular: ['Classic Fries', 'Peri Peri Fries', 'Sweet Potato Fries', 'Crispy Onion Rings', 'Mozzarella Sticks', 'Jalapeño Poppers', 'Chicken Tenders'],
-        loaded: ['Cheese Melt Fries', 'SMASH Loaded Fries', 'BBQ Beef Loaded Fries']
+        loaded: ['Cheese Melt Fries', 'GOAT Loaded Fries', 'BBQ Beef Loaded Fries']
     },
     drinks: ['Coca-Cola', 'Fanta', 'Sprite', 'Mineral Water']
 };
@@ -439,9 +439,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="select-group">
                         <label class="select-label">Choose Burger</label>
                         <select id="combo-burger" class="select-input">
-                            <option>Smash Byte Original</option>
-                            <option>Spicy Smash Byte</option>
-                            <option>Deluxe Smash Byte</option>
+                            <option>Goat Byte Original</option>
+                            <option>Spicy Goat Byte</option>
+                            <option>Masala Goat Byte</option>
                             <option>Byte Classic</option>
                             <option>Double Byte</option>
                         </select>
