@@ -120,22 +120,14 @@ function saveCart() {
 // Menu Data for Combos
 const menuData = {
     burgers: [
-        { name: 'Goat Byte Original', price: 6.99, isGoat: true },
-        { name: 'Spicy Goat Byte', price: 7.49, isGoat: true },
-        { name: 'Masala Goat Byte', price: 7.99, isGoat: true },
-        { name: 'Byte Classic', price: 5.99, isGoat: false },
-        { name: 'Double Byte', price: 7.49, isGoat: false },
-        { name: 'Smoky BBQ Byte', price: 6.99, isGoat: false },
-        { name: 'Crispy Chicken Byte', price: 5.49, isGoat: false },
-        { name: 'Spicy Chicken Byte', price: 5.99, isGoat: false },
-        { name: 'Green Byte (Vegan)', price: 5.49, isGoat: false },
-        { name: 'Falafel Byte', price: 5.99, isGoat: false }
+        { name: 'Double Beef Burger', price: 8.99 },
+        { name: 'Chicken Burger', price: 6.99 }
     ],
     sides: {
-        regular: ['Classic Fries', 'Peri Peri Fries', 'Sweet Potato Fries', 'Crispy Onion Rings', 'Mozzarella Sticks', 'Jalapeño Poppers', 'Chicken Tenders'],
-        loaded: ['Cheese Melt Fries', 'GOAT Loaded Fries', 'BBQ Beef Loaded Fries']
+        regular: ['Classic Fries', 'Sweet Potato Fries'],
+        loaded: ['Cheese Melt Fries']
     },
-    drinks: ['Coca-Cola', 'Fanta', 'Sprite', 'Mineral Water']
+    drinks: ['Coca-Cola', 'Sprite', 'Mineral Water']
 };
 
 // Combo Selection Logic
@@ -152,11 +144,7 @@ function openComboSelection(type, feeLabel) {
 
     // Filter Burgers
     burgerSelect.innerHTML = '';
-    const filteredBurgers = type === 'goat' 
-        ? menuData.burgers.filter(b => b.isGoat)
-        : menuData.burgers;
-    
-    filteredBurgers.forEach(b => {
+    menuData.burgers.forEach(b => {
         const opt = document.createElement('option');
         opt.value = b.name;
         opt.innerText = `${b.name} (€${b.price.toFixed(2)})`;
@@ -439,30 +427,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="select-group">
                         <label class="select-label">Choose Burger</label>
                         <select id="combo-burger" class="select-input">
-                            <option>Goat Byte Original</option>
-                            <option>Spicy Goat Byte</option>
-                            <option>Masala Goat Byte</option>
-                            <option>Byte Classic</option>
-                            <option>Double Byte</option>
+                            <option>Double Beef Burger</option>
+                            <option>Chicken Burger</option>
                         </select>
                     </div>
                     <div class="select-group">
                         <label class="select-label">Choose Side</label>
                         <select id="combo-side" class="select-input">
                             <option>Classic Fries</option>
-                            <option>Peri Peri Fries</option>
                             <option>Sweet Potato Fries</option>
-                            <option>Crispy Onion Rings</option>
-                            <option>Mozzarella Sticks</option>
-                            <option>Jalapeño Poppers</option>
-                            <option>Chicken Tenders</option>
+                            <option>Cheese Melt Fries</option>
                         </select>
                     </div>
                     <div class="select-group">
                         <label class="select-label">Choose Drink</label>
                         <select id="combo-drink" class="select-input">
                             <option>Coca-Cola</option>
-                            <option>Fanta</option>
                             <option>Sprite</option>
                             <option>Mineral Water</option>
                         </select>

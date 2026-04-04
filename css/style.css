@@ -6,13 +6,13 @@
   --primary-l: 50%;
   --primary: hsl(var(--primary-h), var(--primary-s), var(--primary-l));
   --primary-dark: hsl(30, 100%, 40%);
-  --primary-glow: rgba(255, 127, 0, 0.4);
+  --primary-glow: rgba(255, 140, 0, 0.4);
   
-  --bg-dark: #0a0a0c;
-  --bg-card: #141417;
+  --bg-dark: #090705;
+  --bg-card: #14100c;
   --text-main: #ffffff;
   --text-muted: #a0a0a5;
-  --glass-bg: rgba(20, 20, 23, 0.7);
+  --glass-bg: rgba(20, 16, 12, 0.7);
   --glass-border: rgba(255, 255, 255, 0.05);
 }
 
@@ -31,10 +31,8 @@ body {
   --cursor-x: 50vw;
   --cursor-y: 50vh;
   background-image: 
-    radial-gradient(circle 600px at var(--cursor-x) var(--cursor-y), rgba(255, 117, 31, 0.15), transparent 80%),
-    radial-gradient(ellipse 80% 60% at 85% 10%, rgba(255, 117, 31, 0.12) 0%, transparent 70%),
-    radial-gradient(ellipse 70% 50% at 15% 90%, rgba(255, 90, 0, 0.08) 0%, transparent 70%),
-    radial-gradient(ellipse 100% 80% at 50% 50%, rgba(20, 10, 0, 0.3) 0%, transparent 100%);
+    radial-gradient(circle 600px at var(--cursor-x) var(--cursor-y), rgba(255, 120, 20, 0.1), transparent 80%),
+    radial-gradient(ellipse 100% 80% at 50% 50%, rgba(10, 8, 5, 0.5) 0%, transparent 100%);
 }
 
 /* Typography */

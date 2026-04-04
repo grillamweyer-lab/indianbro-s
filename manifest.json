@@ -1,7 +1,7 @@
 {
   "name": "BYTE Burgers",
   "short_name": "BYTE",
-  "description": "Experience the ultimate flavor explosion with our juicy goat patties, signature spices, and loaded fries.",
+  "description": "Premium smash burgers made fresh. Built for real cravings.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0a0a0c",

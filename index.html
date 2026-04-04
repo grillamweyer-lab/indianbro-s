@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BYTE Burgers - Take a BYTE</title>
-    <meta name="description" content="Vibrant 3D animated restaurant website for BYTE Burgers.">
+    <title>BYTE - Built Different</title>
+    <meta name="description" content="Premium smash burgers made fresh. Built for real cravings.">
     
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
     
     <!-- PWA Meta Tags -->
     <link rel="manifest" href="manifest.json?v=2">
-    <meta name="theme-color" content="#ff751f">
+    <meta name="theme-color" content="#ff8c00">
     <link rel="apple-touch-icon" href="images/app-icon.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -23,142 +23,124 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
-            overflow-x: hidden;
+            justify-content: center;
+            text-align: center;
             padding-top: 95px;
+            background-image: linear-gradient(to bottom, rgba(9, 7, 5, 0.7), rgba(9, 7, 5, 1)), url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-position: center;
+            margin-top: -95px; /* Offset for fixed header */
         }
 
         .hero-content {
-            flex: 1;
             z-index: 5;
             position: relative;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
+            align-items: center;
             gap: 1.5rem;
+            max-width: 800px;
+            padding: 0 2rem;
         }
 
         .hero h1 {
-            font-size: clamp(4rem, 8vw, 7rem);
-            margin-bottom: 1rem;
+            font-size: clamp(5rem, 10vw, 8rem);
+            margin-bottom: 0.5rem;
             text-transform: uppercase;
             letter-spacing: -2px;
+            line-height: 1;
         }
 
         .hero p {
             font-size: 1.5rem;
-            color: var(--text-muted);
-            margin-bottom: 2.5rem;
-            max-width: 600px;
+            color: #fff;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+        
+        .hero .btn {
+            font-size: 1.25rem;
+            padding: 1rem 3rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
-        .hero-3d-model {
-            flex: 1;
+        .video-showcase {
+            padding: 4rem 0 8rem;
+            background: var(--bg-dark);
             position: relative;
-            height: 600px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            perspective: 1000px;
-            z-index: 2;
+            z-index: 10;
         }
 
-        .burger-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            animation: float-burger 6s infinite ease-in-out;
+        .home-menu {
+            padding: 2rem 0 8rem;
         }
 
-        .burger-img {
-            width: 100%;
-            max-width: 600px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            filter: drop-shadow(0 30px 40px rgba(0,0,0,0.5)) drop-shadow(0 0 60px var(--primary-glow));
-        }
-
-        @keyframes float-burger {
-            0%, 100% { transform: translateY(0) rotateX(5deg) rotateY(-5deg); }
-            50% { transform: translateY(-30px) rotateX(-5deg) rotateY(10deg); }
-        }
-
-        .features {
-            padding: 8rem 0;
-            position: relative;
-        }
-
-        .features-grid {
+        .home-menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
-            margin-top: 4rem;
+            margin-top: 3rem;
         }
 
-        .feature-card {
-            text-align: center;
+        .simple-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid var(--glass-border);
+            text-align: left;
+            transition: border-color 0.3s;
+        }
+
+        .simple-card:hover {
+            border-color: var(--primary);
+        }
+
+        .simple-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            color: #fff;
         }
         
-        .feature-icon {
-            font-size: 3rem;
-            color: var(--primary);
+        .simple-card p {
+            color: var(--text-muted);
             margin-bottom: 1.5rem;
-        }
-
-        .feature-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
+            font-size: 1rem;
         }
         
+        .simple-card .price {
+            font-size: 1.25rem;
+            color: var(--primary);
+            font-weight: 800;
+        }
+
         .cta-section {
-            padding: 6rem 0;
-            background: linear-gradient(0deg, rgba(20,20,23,1) 0%, rgba(20,20,23,0) 100%);
+            padding: 8rem 0;
+            background: linear-gradient(0deg, rgba(10,8,5,1) 0%, rgba(10,8,5,0) 100%);
             text-align: center;
             position: relative;
         }
 
         .cta-content h2 {
-            font-size: 3.5rem;
+            font-size: clamp(3rem, 6vw, 5rem);
             margin-bottom: 1.5rem;
+            text-transform: uppercase;
         }
-
-        .cta-content .btn {
-            font-size: 1.2rem;
-            padding: 1rem 3rem;
-        }
-
+        
+        /* Mobile overrides */
         @media (max-width: 768px) {
             .hero {
-                flex-direction: column;
-                text-align: center;
-                padding-top: 100px;
-                min-height: auto;
-            }
-            .hero-content {
-                align-items: center;
-            }
-            .hero-3d-model {
-                height: 300px;
-                width: 100%;
-                margin-top: 2rem;
-            }
-            .burger-img {
-                max-width: 80%;
-            }
-            .features {
-                padding: 4rem 0;
+                min-height: 80vh;
             }
         }
     </style>
 </head>
 <body>
 
-
     <header>
         <nav class="container">
-            <a href="index.html" class="logo"><img src="images/logo.png" alt="BYTE Burgers" class="logo-img"></a>
+            <a href="index.html" class="logo">BYTE</a>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="menu.html">Menu</a></li>
@@ -174,115 +156,105 @@
     </header>
 
     <main>
-        <section class="hero container">
-            <div class="hero-content gs_reveal">
-                <h1>Take a <br><span class="text-gradient gs_reveal_text">BYTE</span></h1>
-                <p>Experience the ultimate flavor explosion with our juicy goat patties, signature spices, and loaded fries.</p>
-                <div style="margin-bottom: 2rem;">
-                    <img src="images/halal-badge.png" data-pin-nopin="true" alt="100% Halal Certified" style="height: 140px; width: auto; max-width: 100%;">
-                </div>
+        <section class="hero gs_reveal">
+            <div class="hero-content">
+                <h1 class="text-gradient">Smash.<br>Melt.<br>Bite.</h1>
+                <p>Premium burgers made fresh. Built for real cravings.</p>
                 <div class="hero-btns" style="display: flex; gap: 1rem;">
-                    <a href="menu.html" class="btn">Explore Menu</a>
-                    <a href="franchise.html" class="btn btn-outline">Join Franchise</a>
-                </div>
-            </div>
-            
-            <div class="hero-3d-model gs_reveal_img">
-                <div class="burger-wrapper" data-tilt data-tilt-max="15" data-tilt-speed="400" data-tilt-perspective="1000">
-                    <!-- Using a high quality unsplash transparent burger proxy for impact -->
-                    <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Juicy Burger" class="burger-img" style="border-radius: 50%; object-fit: cover;">
+                    <a href="menu.html" class="btn">Order Now</a>
                 </div>
             </div>
         </section>
 
-        <!-- Scrolling Marquee -->
-        <div class="marquee-wrapper gs_reveal">
-            <div class="marquee-content">
-                <span>✦ 100% HALAL ✦ PREMIUM GOAT PATTIES ✦ LOADED FRIES ✦ FRESH INGREDIENTS ✦ </span>
-                <span>✦ 100% HALAL ✦ PREMIUM GOAT PATTIES ✦ LOADED FRIES ✦ FRESH INGREDIENTS ✦ </span>
-            </div>
-        </div>
-
-        <section class="features container">
-            <div class="text-center gs_reveal">
-                <h2 style="font-size: 3rem; text-align: center;">Why <span class="text-primary">BYTE</span>?</h2>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-card tilt-card gs_reveal_up">
-                    <div class="tilt-inner">
-                        <div class="feature-icon">🐐</div>
-                        <h3>Signature Goat Patty</h3>
-                        <p class="text-muted">Our original juicy goat patty seasoned with signature spices that will blow your mind.</p>
-                    </div>
-                </div>
-                <div class="feature-card tilt-card gs_reveal_up" style="animation-delay: 0.2s">
-                    <div class="tilt-inner">
-                        <div class="feature-icon">🍟</div>
-                        <h3>Loaded & Crisp</h3>
-                        <p class="text-muted">Peri peri, cheese melt, or BBQ beef. Our loaded fries are perfectly paired for maximum taste.</p>
-                    </div>
-                </div>
-                <div class="feature-card tilt-card gs_reveal_up" style="animation-delay: 0.4s">
-                    <div class="tilt-inner">
-                        <div class="feature-icon">🌱</div>
-                        <h3>Vegan & Falafel</h3>
-                        <p class="text-muted">Plant-based patties and creamy hummus falafel options ensuring everyone can take a BYTE.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="video-showcase container gs_reveal_up" style="padding-top: 2rem; padding-bottom: 6rem; max-width: 900px;">
-            <div class="text-center" style="margin-bottom: 3rem;">
-                <h2 style="font-size: 3rem; text-align: center;">See It In <span class="text-primary">Action</span></h2>
-            </div>
-            <div class="tilt-card" style="padding: 1rem; border-radius: 25px;">
-                <video autoplay loop muted playsinline style="width: 100%; border-radius: 15px; display: block; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        <!-- Video Showcase directly below Hero -->
+        <section class="video-showcase gs_reveal_up">
+            <div class="container" style="max-width: 1000px;">
+                <video autoplay loop muted playsinline style="width: 100%; border-radius: 20px; display: block; box-shadow: 0 20px 50px rgba(0,0,0,0.8);">
                     <source src="assets/promo.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>
         </section>
 
-        <section class="cta-section">
-            <div class="container cta-content gs_reveal">
-                <h2>Hungry for More?</h2>
-                <p class="text-muted" style="margin-bottom: 2rem; font-size: 1.2rem;">Grab our best value combos and power up your day.</p>
-                <a href="menu.html" class="btn">View Full Menu</a>
+        <!-- Minimal Menu Preview -->
+        <section class="home-menu container gs_reveal">
+            <div class="text-center">
+                <h2 style="font-size: 3rem; text-transform: uppercase;">The Menu</h2>
+            </div>
+            
+            <div class="home-menu-grid">
+                <div class="simple-card gs_reveal_up">
+                    <h3>Double Beef Burger</h3>
+                    <p>Double smashed premium beef & cheese.</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="price">€8.99</span>
+                        <a href="menu.html" class="btn" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Order</a>
+                    </div>
+                </div>
+
+                <div class="simple-card gs_reveal_up" style="animation-delay: 0.1s">
+                    <h3>Chicken Burger</h3>
+                    <p>Crispy fried chicken & signature sauce.</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="price">€6.99</span>
+                        <a href="menu.html" class="btn" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Order</a>
+                    </div>
+                </div>
+
+                <div class="simple-card gs_reveal_up" style="animation-delay: 0.2s">
+                    <h3>Fries</h3>
+                    <p>Golden crisp seasoned fries.</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="price">€2.99</span>
+                        <a href="menu.html" class="btn" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Order</a>
+                    </div>
+                </div>
+                
+                <div class="simple-card gs_reveal_up" style="animation-delay: 0.3s; border-color: var(--primary);">
+                    <h3>The Combo</h3>
+                    <p>Burger + Fries + Drink.</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="price">+€3.99</span>
+                        <a href="menu.html" class="btn" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Order</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section gs_reveal">
+            <div class="container cta-content">
+                <h2 class="text-gradient">BYTE. Built different.</h2>
+                <p class="text-muted" style="margin-bottom: 3rem; font-size: 1.25rem;">Experience the new standard in fast food.</p>
+                <a href="menu.html" class="btn" style="font-size: 1.25rem; padding: 1.25rem 3rem;">View Full Menu</a>
             </div>
         </section>
     </main>
 
     <footer>
         <div class="container footer-content">
-            <div class="footer-col">
-                <a href="index.html" class="logo" style="margin-bottom: 1rem; display: inline-block;">BYTE <span>Burgers</span></a>
-                <p>Take a BYTE to experience the best burgers in town. Authentic spices, fresh ingredients.</p>
-                <div style="display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--primary); color: var(--text-main); background: rgba(255,127,0,0.1); padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; margin-top: 15px;">
-                    <span style="color: var(--primary);">☪️</span> 100% HALAL <span style="font-size: 1rem;">حلال</span>
-                </div>
+            <div class="footer-col" style="flex: 2;">
+                <a href="index.html" class="logo" style="margin-bottom: 1rem; display: inline-block;">BYTE</a>
+                <p style="font-size: 1.5rem; color: #fff; font-weight: 800; margin-bottom: 1rem;">BYTE. Built different.</p>
+                <p>123 Smash Ave, Flavor City</p>
             </div>
             <div class="footer-col">
-                <h3>Quick Links</h3>
+                <h3>Options</h3>
                 <ul style="list-style:none; display:flex; flex-direction:column; gap:0.5rem;">
-                    <li><a href="menu.html" style="color:var(--text-muted); text-decoration:none;">Our Menu</a></li>
-                    <li><a href="franchise.html" style="color:var(--text-muted); text-decoration:none;">Start a Franchise</a></li>
+                    <li><a href="menu.html" style="color:var(--text-muted); text-decoration:none;">Order Delivery</a></li>
+                    <li><a href="menu.html" style="color:var(--text-muted); text-decoration:none;">Pick Up</a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h3>Contact Us</h3>
-                <p>Phone: <span class="text-primary">0212315737</span></p>
-                <p>Social: <span class="text-primary">@byte</span></p>
+                <h3>Connect</h3>
+                <p>Social: <span class="text-primary">@byteburgers</span></p>
                 <div class="social-links">
-                    <a href="#">FB</a>
                     <a href="#">IG</a>
                     <a href="#">TW</a>
                 </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 BYTE Burgers. All rights reserved.</p>
+        <div class="footer-bottom" style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 2rem; margin-top: 2rem; text-align: center; color: var(--text-muted);">
+            <p>&copy; 2026 BYTE. All rights reserved.</p>
         </div>
     </footer>
 
