@@ -120,9 +120,9 @@
                 vatData.delivery_net = fee / 1.19;
                 vatData.delivery_vat_19 = fee - vatData.delivery_net;
                 
-                vatData.gross_total = vatData.food_gross + vatData.beverage_gross + vatData.delivery_gross;
-                vatData.net_total = (vatData.food_gross / 1.07) + (vatData.beverage_gross / 1.19) + vatData.delivery_net;
-                vatData.vat_total = vatData.vat_7_amount + vatData.vat_19_amount + vatData.delivery_vat_19;
+                vatData.gross_total = vatData.food_gross_total + vatData.beverage_gross_total + vatData.delivery_gross;
+                vatData.net_total = vatData.net_food_total + vatData.net_beverage_total + vatData.delivery_net;
+                vatData.vat_total = vatData.vat_7_total + vatData.vat_19_total + vatData.delivery_vat_19;
                 
                 localStorage.setItem('byteOrderVATDetails', JSON.stringify(vatData));
                 
@@ -132,15 +132,14 @@
                 
                 finalOutput += `\n\n--- VAT Breakdown ---\n\n`;
                 
-                const netFoodNum = vatData.food_gross / 1.07;
-                if(vatData.food_gross > 0) {
-                    finalOutput += `Net Food: €${netFoodNum.toFixed(2)}\n`;
-                    finalOutput += `VAT (7% Food): €${vatData.vat_7_amount.toFixed(2)}\n\n`;
+                if(vatData.food_gross_total > 0) {
+                    finalOutput += `Net Food: €${vatData.net_food_total.toFixed(2)}\n`;
+                    finalOutput += `VAT (7% Food): €${vatData.vat_7_total.toFixed(2)}\n\n`;
                 }
                 
-                if(vatData.beverage_gross > 0) {
-                    finalOutput += `Net Beverage: €${(vatData.beverage_gross / 1.19).toFixed(2)}\n`;
-                    finalOutput += `VAT (19% Beverage): €${vatData.vat_19_amount.toFixed(2)}\n\n`;
+                if(vatData.beverage_gross_total > 0) {
+                    finalOutput += `Net Beverages: €${vatData.net_beverage_total.toFixed(2)}\n`;
+                    finalOutput += `VAT (19% Beverages): €${vatData.vat_19_total.toFixed(2)}\n\n`;
                 }
                 
                 if(fee > 0) {

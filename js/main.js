@@ -402,13 +402,18 @@ function checkout() {
     let finalOrder = `${itemsSummary}\n\nItems Total: €${total.toFixed(2)}`;
     
     // Internal VAT Calculation (German Rules)
+    function isBeverage(name) {
+        let n = name.toLowerCase();
+        return menuData.drinks.includes(name) || n.includes("shake") || n.includes("soda") || n.includes("cola") || n.includes("drink") || n.includes("milkshake") || n.includes("juice") || n.includes("water");
+    }
+
     const totalFoodGross = cart.reduce((sum, item) => {
-        let fg = item.foodGross !== undefined ? item.foodGross : (menuData.drinks.includes(item.name) ? 0 : item.price);
+        let fg = item.foodGross !== undefined ? item.foodGross : (isBeverage(item.name) ? 0 : item.price);
         return sum + fg;
     }, 0);
     
     const totalBevGross = cart.reduce((sum, item) => {
-        let bg = item.beverageGross !== undefined ? item.beverageGross : (menuData.drinks.includes(item.name) ? item.price : 0);
+        let bg = item.beverageGross !== undefined ? item.beverageGross : (isBeverage(item.name) ? item.price : 0);
         return sum + bg;
     }, 0);
     
@@ -419,13 +424,15 @@ function checkout() {
     const vatBev = totalBevGross - totalNetBev;
     
     const internalVatBreakdown = {
-        gross_total: total,
-        net_total: totalNetFood + totalNetBev,
-        vat_total: vatFood + vatBev,
-        vat_7_amount: vatFood,
-        vat_19_amount: vatBev,
-        food_gross: totalFoodGross,
-        beverage_gross: totalBevGross
+        food_gross_total: totalFoodGross,
+        beverage_gross_total: totalBevGross,
+        net_food_total: totalNetFood,
+        net_beverage_total: totalNetBev,
+        vat_7_total: vatFood,
+        vat_19_total: vatBev,
+        total_vat: vatFood + vatBev,
+        total_net: totalNetFood + totalNetBev,
+        gross_total: total
     };
     localStorage.setItem('byteOrderVATDetails', JSON.stringify(internalVatBreakdown));
     
