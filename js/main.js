@@ -139,6 +139,15 @@ const menuData = {
 };
 
 // Combo Selection Logic
+const referencePrices = {
+    // Drinks
+    'Coca-Cola': 2.50, 'Fanta': 2.50, 'Sprite': 2.50, 'Mineral Water': 3.50,
+    // Sides
+    'Classic Fries': 2.49, 'Peri Peri Fries': 2.99, 'Sweet Potato Fries': 2.99,
+    'Cheese Melt Fries': 3.99, 'BBQ Beef Loaded Fries': 4.99, 'GOAT Loaded Fries': 5.49,
+    'Crispy Onion Rings': 3.49, 'Mozzarella Sticks': 3.99, 'Jalapeño Poppers': 3.99, 'Chicken Tenders': 4.49
+};
+
 let currentCombo = null;
 
 function openComboSelection(type, feeLabel) {
@@ -200,8 +209,17 @@ function confirmCombo() {
     
     const fullName = `${currentCombo.type.toUpperCase()}: ${burgerName} + ${side} + ${drink}`;
     
-    const bevTotal = 2.00;
-    const foodTotal = totalPrice - bevTotal;
+    // Proportional Reference Split
+    const ref_burger = burger.price;
+    const ref_side = referencePrices[side] || 3.49;
+    const ref_drink = referencePrices[drink] || 2.50;
+    const total_reference = ref_burger + ref_side + ref_drink;
+    
+    const food_ratio = (ref_burger + ref_side) / total_reference;
+    const beverage_ratio = ref_drink / total_reference;
+    
+    const foodTotal = totalPrice * food_ratio;
+    const bevTotal = totalPrice * beverage_ratio;
     
     addToCart(fullName, totalPrice, foodTotal, bevTotal);
     closeComboModal();
@@ -397,11 +415,17 @@ function checkout() {
     const totalNetFood = totalFoodGross / 1.07;
     const totalNetBev = totalBevGross / 1.19;
     
+    const vatFood = totalFoodGross - totalNetFood;
+    const vatBev = totalBevGross - totalNetBev;
+    
     const internalVatBreakdown = {
-        grossTotal: total,
-        netTotal: totalNetFood + totalNetBev,
-        vat7: totalFoodGross - totalNetFood,
-        vat19: totalBevGross - totalNetBev
+        gross_total: total,
+        net_total: totalNetFood + totalNetBev,
+        vat_total: vatFood + vatBev,
+        vat_7_amount: vatFood,
+        vat_19_amount: vatBev,
+        food_gross: totalFoodGross,
+        beverage_gross: totalBevGross
     };
     
     localStorage.setItem('byteOrderVATDetails', JSON.stringify(internalVatBreakdown));
