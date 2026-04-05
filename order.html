@@ -110,7 +110,7 @@
             const itemsField = document.getElementById('items-field');
             if(!itemsField.dataset.baseItems) return;
             
-            let finalOutput = itemsField.dataset.baseItems;
+            let finalOutput = itemsField.dataset.baseItems.split('\n\n--- VAT Breakdown ---')[0];
             
             let storedVat = localStorage.getItem('byteOrderVATDetails');
             if (storedVat) {
