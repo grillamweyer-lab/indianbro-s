@@ -126,16 +126,16 @@ function saveCart() {
 // Menu Data for Combos
 const menuData = {
     burgers: [
-        { name: 'Goat Byte Original', price: 6.99, isGoat: true },
-        { name: 'Spicy Goat Byte', price: 7.49, isGoat: true },
-        { name: 'Truffle Goat Byte', price: 7.99, isGoat: true },
-        { name: 'Byte Classic', price: 5.99, isGoat: false },
-        { name: 'Double Byte', price: 7.49, isGoat: false },
-        { name: 'Smoky BBQ Byte', price: 6.99, isGoat: false },
-        { name: 'Crispy Chicken Byte', price: 5.49, isGoat: false },
-        { name: 'Spicy Chicken Byte', price: 5.99, isGoat: false },
-        { name: 'Green Byte (Vegan)', price: 5.49, isGoat: false },
-        { name: 'Falafel Byte', price: 5.99, isGoat: false }
+        { name: 'Goat Byte Original', price: 7.48, isGoat: true },
+        { name: 'Spicy Goat Byte', price: 8.01, isGoat: true },
+        { name: 'Truffle Goat Byte', price: 8.55, isGoat: true },
+        { name: 'Byte Classic', price: 6.41, isGoat: false },
+        { name: 'Double Byte', price: 8.01, isGoat: false },
+        { name: 'Smoky BBQ Byte', price: 7.48, isGoat: false },
+        { name: 'Crispy Chicken Byte', price: 5.87, isGoat: false },
+        { name: 'Spicy Chicken Byte', price: 6.41, isGoat: false },
+        { name: 'Green Byte (Vegan)', price: 5.87, isGoat: false },
+        { name: 'Falafel Byte', price: 6.41, isGoat: false }
     ],
     sides: {
         regular: ['Classic Fries', 'Peri Peri Fries', 'Sweet Potato Fries', 'Crispy Onion Rings', 'Mozzarella Sticks', 'Jalapeño Poppers', 'Chicken Tenders'],
@@ -147,11 +147,11 @@ const menuData = {
 // Combo Selection Logic
 const referencePrices = {
     // Drinks
-    'Coca-Cola': 2.50, 'Fanta': 2.50, 'Sprite': 2.50, 'Mineral Water': 3.50,
+    'Coca-Cola': 2.97, 'Fanta': 2.97, 'Sprite': 2.97, 'Mineral Water': 4.17,
     // Sides
-    'Classic Fries': 2.49, 'Peri Peri Fries': 2.99, 'Sweet Potato Fries': 2.99,
-    'Cheese Melt Fries': 3.99, 'BBQ Beef Loaded Fries': 4.99, 'GOAT Loaded Fries': 5.49,
-    'Crispy Onion Rings': 3.49, 'Mozzarella Sticks': 3.99, 'Jalapeño Poppers': 3.99, 'Chicken Tenders': 4.49
+    'Classic Fries': 2.66, 'Peri Peri Fries': 3.20, 'Sweet Potato Fries': 3.20,
+    'Cheese Melt Fries': 4.27, 'BBQ Beef Loaded Fries': 5.34, 'GOAT Loaded Fries': 5.87,
+    'Crispy Onion Rings': 3.73, 'Mozzarella Sticks': 4.27, 'Jalapeño Poppers': 4.27, 'Chicken Tenders': 4.80
 };
 
 let currentCombo = null;
@@ -301,7 +301,7 @@ function confirmFriesSelection() {
     const isSweetPotato = document.getElementById('fries-sweet-radio').checked;
     
     if (isSweetPotato) {
-        cart.push({ name: 'Sweet Potato Fries', price: 2.99, foodGross: 2.99, beverageGross: 0 });
+        cart.push({ name: 'Sweet Potato Fries', price: 3.20, foodGross: 3.20, beverageGross: 0 });
     } else {
         cart.push({ name: pendingFries.name, price: pendingFries.price, foodGross: pendingFries.price, beverageGross: 0 });
     }
@@ -555,35 +555,35 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="combo-modal" id="burger-extras-modal" style="z-index: 10001;">
                 <div class="modal-content">
                     <h2 class="modal-title">🍔 Customise Your Burger</h2>
-                    <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem;">Want to make it even better? Add extras to your order:</p>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.02rem;">Want to make it even better? Add extras to your order:</p>
                     <div class="extras-list">
                         <label class="extra-item">
                             <div class="extra-info">
                                 <span class="extra-name">🧀 Extra Cheese</span>
-                                <span class="extra-price">+€1.00</span>
+                                <span class="extra-price">+€1.07</span>
                             </div>
-                            <input type="checkbox" class="extra-checkbox" data-name="Extra Cheese" data-price="1.00">
+                            <input type="checkbox" class="extra-checkbox" data-name="Extra Cheese" data-price="1.07">
                         </label>
                         <label class="extra-item">
                             <div class="extra-info">
                                 <span class="extra-name">🥩 Extra Patty</span>
-                                <span class="extra-price">+€2.50</span>
+                                <span class="extra-price">+€2.68</span>
                             </div>
-                            <input type="checkbox" class="extra-checkbox" data-name="Extra Patty" data-price="2.50">
+                            <input type="checkbox" class="extra-checkbox" data-name="Extra Patty" data-price="2.68">
                         </label>
                         <label class="extra-item">
                             <div class="extra-info">
                                 <span class="extra-name">🫙 Extra Sauce</span>
-                                <span class="extra-price">+€0.50</span>
+                                <span class="extra-price">+€0.54</span>
                             </div>
-                            <input type="checkbox" class="extra-checkbox" data-name="Extra Sauce" data-price="0.50">
+                            <input type="checkbox" class="extra-checkbox" data-name="Extra Sauce" data-price="0.54">
                         </label>
                         <label class="extra-item">
                             <div class="extra-info">
                                 <span class="extra-name">🌶️ Make it Spicy</span>
-                                <span class="extra-price">+€0.50</span>
+                                <span class="extra-price">+€0.54</span>
                             </div>
-                            <input type="checkbox" class="extra-checkbox" data-name="Make it Spicy" data-price="0.50">
+                            <input type="checkbox" class="extra-checkbox" data-name="Make it Spicy" data-price="0.54">
                         </label>
                     </div>
                     <div style="display: flex; gap: 1rem; margin-top: 2rem;">
@@ -601,19 +601,19 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="combo-modal" id="fries-selection-modal" style="z-index: 10001;">
                 <div class="modal-content">
                     <h2 class="modal-title">🍟 Choose Your Fries</h2>
-                    <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem;">Would you like our classic house fries or sweet potato fries?</p>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.02rem;">Would you like our classic house fries or sweet potato fries?</p>
                     <div class="extras-list">
                         <label class="extra-item" style="cursor: pointer;">
                             <div class="extra-info">
                                 <span class="extra-name">Classic Fries</span>
-                                <span class="extra-price">€2.49</span>
+                                <span class="extra-price">€2.66</span>
                             </div>
                             <input type="radio" name="fries-type" id="fries-normal-radio" value="normal" checked>
                         </label>
                         <label class="extra-item" style="cursor: pointer;">
                             <div class="extra-info">
                                 <span class="extra-name">Sweet Potato Fries</span>
-                                <span class="extra-price">€2.99</span>
+                                <span class="extra-price">€3.20</span>
                             </div>
                             <input type="radio" name="fries-type" id="fries-sweet-radio" value="sweet">
                         </label>
