@@ -1,4 +1,4 @@
-const CACHE_NAME = 'byte-burgers-v27';
+const CACHE_NAME = 'byte-burgers-v28';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
