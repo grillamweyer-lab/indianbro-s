@@ -186,7 +186,7 @@ nav {
 
 /* Hero Section */
 .hero {
-  padding: 160px 0 80px;
+  padding: 240px 0 80px;
   position: relative;
 }
 
@@ -575,6 +575,10 @@ footer {
     grid-template-columns: 1fr;
     text-align: center;
     gap: 3rem;
+  }
+  
+  .hero {
+      padding: 160px 0 80px;
   }
 
   .hero-text h1 {
