@@ -199,7 +199,11 @@ function confirmCombo() {
     const totalPrice = burger.price + currentCombo.fee;
     
     const fullName = `${currentCombo.type.toUpperCase()}: ${burgerName} + ${side} + ${drink}`;
-    addToCart(fullName, `€${totalPrice.toFixed(2)}`);
+    
+    const bevTotal = 2.00;
+    const foodTotal = totalPrice - bevTotal;
+    
+    addToCart(fullName, totalPrice, foodTotal, bevTotal);
     closeComboModal();
 }
 
@@ -220,7 +224,7 @@ function closeBurgerExtrasModal() {
 
 function skipExtras() {
     if (!pendingBurger) return;
-    cart.push({ name: pendingBurger.name, price: pendingBurger.price });
+    cart.push({ name: pendingBurger.name, price: pendingBurger.price, foodGross: pendingBurger.price, beverageGross: 0 });
     saveCart();
     if (cart.length === 1) toggleBasket(true);
     closeBurgerExtrasModal();
@@ -232,14 +236,14 @@ function confirmBurgerWithExtras() {
     
     if (checkedExtras.length === 0) {
         // No extras selected — just add the plain burger
-        cart.push({ name: pendingBurger.name, price: pendingBurger.price });
+        cart.push({ name: pendingBurger.name, price: pendingBurger.price, foodGross: pendingBurger.price, beverageGross: 0 });
     } else {
         // Bundle burger + extras into one labelled item
         const extraNames = checkedExtras.map(cb => cb.dataset.name).join(', ');
         const extraTotal = checkedExtras.reduce((sum, cb) => sum + parseFloat(cb.dataset.price), 0);
         const bundleName = `${pendingBurger.name} (+ ${extraNames})`;
         const bundlePrice = pendingBurger.price + extraTotal;
-        cart.push({ name: bundleName, price: bundlePrice });
+        cart.push({ name: bundleName, price: bundlePrice, foodGross: bundlePrice, beverageGross: 0 });
     }
 
     saveCart();
@@ -273,9 +277,9 @@ function confirmFriesSelection() {
     const isSweetPotato = document.getElementById('fries-sweet-radio').checked;
     
     if (isSweetPotato) {
-        cart.push({ name: 'Sweet Potato Fries', price: 2.99 });
+        cart.push({ name: 'Sweet Potato Fries', price: 2.99, foodGross: 2.99, beverageGross: 0 });
     } else {
-        cart.push({ name: pendingFries.name, price: pendingFries.price });
+        cart.push({ name: pendingFries.name, price: pendingFries.price, foodGross: pendingFries.price, beverageGross: 0 });
     }
 
     saveCart();
@@ -290,13 +294,22 @@ function confirmFriesSelection() {
     setTimeout(() => { btn.innerText = orig; btn.style.background = ''; }, 1500);
 }
 
-function addToCart(itemName, price) {
+function addToCart(itemName, price, overrideFood, overrideBev) {
     // Standardize price parsing
     let numericPrice = typeof price === 'string' 
         ? parseFloat(price.replace('€', '').replace('+', '')) 
         : price;
         
-    cart.push({ name: itemName, price: numericPrice });
+    let isBeverage = menuData.drinks.includes(itemName);
+    let foodG = overrideFood !== undefined ? overrideFood : (isBeverage ? 0 : numericPrice);
+    let bevG = overrideBev !== undefined ? overrideBev : (isBeverage ? numericPrice : 0);
+        
+    cart.push({ 
+        name: itemName, 
+        price: numericPrice,
+        foodGross: foodG,
+        beverageGross: bevG
+    });
     saveCart();
     
     // Show feedback
@@ -369,6 +382,29 @@ function checkout() {
     const itemsSummary = cart.map(item => `- ${item.name} (€${item.price.toFixed(2)})`).join('\n');
     const total = cart.reduce((sum, item) => sum + item.price, 0);
     const finalOrder = `${itemsSummary}\n\nTotal: €${total.toFixed(2)}`;
+    
+    // Internal VAT Calculation (German Rules)
+    const totalFoodGross = cart.reduce((sum, item) => {
+        let fg = item.foodGross !== undefined ? item.foodGross : (menuData.drinks.includes(item.name) ? 0 : item.price);
+        return sum + fg;
+    }, 0);
+    
+    const totalBevGross = cart.reduce((sum, item) => {
+        let bg = item.beverageGross !== undefined ? item.beverageGross : (menuData.drinks.includes(item.name) ? item.price : 0);
+        return sum + bg;
+    }, 0);
+    
+    const totalNetFood = totalFoodGross / 1.07;
+    const totalNetBev = totalBevGross / 1.19;
+    
+    const internalVatBreakdown = {
+        grossTotal: total,
+        netTotal: totalNetFood + totalNetBev,
+        vat7: totalFoodGross - totalNetFood,
+        vat19: totalBevGross - totalNetBev
+    };
+    
+    localStorage.setItem('byteOrderVATDetails', JSON.stringify(internalVatBreakdown));
     
     // Redirect to order page with full summary
     window.location.href = `order.html?items=${encodeURIComponent(finalOrder)}`;
