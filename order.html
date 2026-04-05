@@ -106,6 +106,41 @@
             return deg * (Math.PI/180);
         }
 
+        function processOrderVAT(fee, distance, isConfirmed) {
+            const itemsField = document.getElementById('items-field');
+            if(!itemsField.dataset.baseItems) return;
+            
+            let finalOutput = itemsField.dataset.baseItems;
+            
+            let storedVat = localStorage.getItem('byteOrderVATDetails');
+            if (storedVat) {
+                let vatData = JSON.parse(storedVat);
+                
+                vatData.delivery_gross = fee;
+                vatData.delivery_net = fee / 1.19;
+                vatData.delivery_vat_19 = fee - vatData.delivery_net;
+                
+                vatData.gross_total = vatData.food_gross + vatData.beverage_gross + vatData.delivery_gross;
+                vatData.net_total = (vatData.food_gross / 1.07) + (vatData.beverage_gross / 1.19) + vatData.delivery_net;
+                vatData.vat_total = vatData.vat_7_amount + vatData.vat_19_amount + vatData.delivery_vat_19;
+                
+                localStorage.setItem('byteOrderVATDetails', JSON.stringify(vatData));
+                
+                if(fee > 0) {
+                    const distStr = isConfirmed ? `${distance.toFixed(1)}km` : 'Distance unconfirmed';
+                    finalOutput += `\nDelivery Fee: €${fee.toFixed(2)} (${distStr})`;
+                    finalOutput += `\nFinal Total: €${vatData.gross_total.toFixed(2)}`;
+                }
+                
+                finalOutput += `\n\n--- VAT Breakdown ---\nNet Total: €${vatData.net_total.toFixed(2)}\n`;
+                if (vatData.vat_7_amount > 0) finalOutput += `VAT (7% Food): €${vatData.vat_7_amount.toFixed(2)}\n`;
+                
+                let total19 = vatData.vat_19_amount + vatData.delivery_vat_19;
+                if (total19 > 0) finalOutput += `VAT (19%): €${total19.toFixed(2)}`;
+            }
+            itemsField.value = finalOutput;
+        }
+
         async function updateDeliveryFee() {
             const address = document.getElementById('address-field').value;
             const statusEl = document.getElementById('delivery-status');
@@ -137,27 +172,14 @@
                     totalEl.innerText = `€${total.toFixed(2)}`;
                     
                     // Update hidden field with delivery info
-                    if (!itemsField.value.includes('Delivery Fee:')) {
-                        itemsField.value += `\nDelivery Fee: €${fee.toFixed(2)} (${distance.toFixed(1)}km)`;
-                        itemsField.value += `\nFinal Total: €${total.toFixed(2)}`;
-                    } else {
-                        // Update existing fee info
-                        itemsField.value = itemsField.value.replace(/Delivery Fee: .*/, `Delivery Fee: €${fee.toFixed(2)} (${distance.toFixed(1)}km)`);
-                        itemsField.value = itemsField.value.replace(/Final Total: .*/, `Final Total: €${total.toFixed(2)}`);
-                    }
+                    processOrderVAT(fee, distance, true);
                 } else {
                     statusEl.innerText = "Could not verify address distance. Defaulting to €3.50 fee.";
                     statusEl.style.color = "#ffaa00";
                     totalEl.innerText = `€${(subtotal + 3.50).toFixed(2)}`;
                     
                     // Update hidden field for email delivery summary
-                    if (!itemsField.value.includes('Delivery Fee:')) {
-                        itemsField.value += `\nDelivery Fee: €3.50 (Distance unconfirmed)`;
-                        itemsField.value += `\nFinal Total: €${(subtotal + 3.50).toFixed(2)}`;
-                    } else {
-                        itemsField.value = itemsField.value.replace(/Delivery Fee: .*/, `Delivery Fee: €3.50 (Distance unconfirmed)`);
-                        itemsField.value = itemsField.value.replace(/Final Total: .*/, `Final Total: €${(subtotal + 3.50).toFixed(2)}`);
-                    }
+                    processOrderVAT(3.50, 0, false);
                 }
             } catch (error) {
                 console.error("Geocoding error:", error);
@@ -165,13 +187,7 @@
                 totalEl.innerText = `€${(subtotal + 3.50).toFixed(2)}`;
                 
                 // Update hidden field for email delivery summary
-                if (!itemsField.value.includes('Delivery Fee:')) {
-                    itemsField.value += `\nDelivery Fee: €3.50 (Error calculation)`;
-                    itemsField.value += `\nFinal Total: €${(subtotal + 3.50).toFixed(2)}`;
-                } else {
-                    itemsField.value = itemsField.value.replace(/Delivery Fee: .*/, `Delivery Fee: €3.50 (Error calculation)`);
-                    itemsField.value = itemsField.value.replace(/Final Total: .*/, `Final Total: €${(subtotal + 3.50).toFixed(2)}`);
-                }
+                processOrderVAT(3.50, 0, false);
             }
         }
 
@@ -180,7 +196,7 @@
             const items = urlParams.get('items');
             
             if (items) {
-                document.getElementById('items-field').value = items;
+                document.getElementById('items-field').dataset.baseItems = items;
                 // Extract subtotal from the summary string
                 const totalMatch = items.match(/Total: €([\d.]+)/);
                 if (totalMatch) {
@@ -189,6 +205,7 @@
                     totalDisplay.innerText = `€${subtotal.toFixed(2)}`;
                     totalDisplay.dataset.subtotal = subtotal;
                 }
+                processOrderVAT(0, 0, false);
             }
 
             // Listen for address blur to calculate fee
