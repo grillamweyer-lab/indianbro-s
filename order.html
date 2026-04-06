@@ -308,8 +308,16 @@
 
             form.dataset.fulfillmentChosen = type;
             closeFulfillmentModal();
-            // Now show cash modal
-            document.getElementById('cash-modal').classList.add('active');
+
+            if (type === 'pickup') {
+                // No driver = no change needed, set payment and submit directly
+                document.getElementById('payment-field').value = 'CASH: Pickup — Customer pays at store.';
+                form.dataset.cashConfirmed = 'true';
+                form.submit();
+            } else {
+                // Delivery: ask about cash denomination for driver change
+                document.getElementById('cash-modal').classList.add('active');
+            }
         }
 
         function closeCashModal() {
