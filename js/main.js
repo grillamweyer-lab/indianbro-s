@@ -650,7 +650,7 @@ if ('serviceWorker' in navigator) {
 
 /* --- Headless Language Toggle Engine --- */
 function googleTranslateElementInit() {
-    new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,de', autoDisplay: false}, 'google_translate_element');
+    new google.translate.TranslateElement({pageLanguage: 'de', includedLanguages: 'en,de', autoDisplay: false}, 'google_translate_element');
 }
 
 window.switchLanguage = function(langCode) {
@@ -672,20 +672,20 @@ document.addEventListener('DOMContentLoaded', () => {
     let savedLang = localStorage.getItem('byteLangActive');
     
     // Visually update buttons early
-    if(savedLang === 'de') {
-        document.querySelectorAll(`.lang-btn[data-lang="de"]`).forEach(btn => btn.classList.add('active'));
+    if(savedLang === 'en') {
+        document.querySelectorAll(`.lang-btn[data-lang="en"]`).forEach(btn => btn.classList.add('active'));
         // Try toggling translation engine
         let checkInt = setInterval(() => {
             const select = document.querySelector('.goog-te-combo');
             if(select) {
-                if(select.value !== 'de') {
-                    select.value = 'de';
+                if(select.value !== 'en') {
+                    select.value = 'en';
                     select.dispatchEvent(new Event('change'));
                 }
                 clearInterval(checkInt);
             }
         }, 300);
     } else {
-        document.querySelectorAll(`.lang-btn[data-lang="en"]`).forEach(btn => btn.classList.add('active'));
+        document.querySelectorAll(`.lang-btn[data-lang="de"]`).forEach(btn => btn.classList.add('active'));
     }
 });
