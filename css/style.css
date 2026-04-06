@@ -199,6 +199,9 @@ nav {
 .hero-text h1 {
   font-size: 5rem;
   margin-bottom: 1.5rem;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
 }
 
 .hero-text p {
@@ -565,7 +568,7 @@ footer {
   }
 
   .hero-text h1 {
-    font-size: 4rem;
+    font-size: 3.5rem;
   }
 }
 
@@ -581,7 +584,7 @@ footer {
   }
 
   .hero-text h1 {
-    font-size: 3.2rem;
+    font-size: 2.75rem;
   }
 
   .hero-btns {
@@ -617,7 +620,8 @@ footer {
 
 @media (max-width: 480px) {
   .hero-text h1 {
-    font-size: 2.5rem;
+    font-size: 1.9rem;
+    letter-spacing: -1px;
   }
 
   .hero-btns {
