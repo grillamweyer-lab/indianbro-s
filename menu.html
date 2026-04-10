@@ -150,6 +150,35 @@
             z-index: 1;
             pointer-events: none;
         }
+
+        @media (max-width: 600px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .menu-item-card {
+                padding: 1.25rem;
+            }
+
+            .item-name {
+                font-size: 1rem;
+            }
+
+            .item-header {
+                flex-wrap: wrap;
+                gap: 0.25rem;
+            }
+
+            .menu-title-bg {
+                font-size: 1.4rem;
+                padding: 0.4rem 1.2rem;
+            }
+
+            .menu-hero h1 {
+                font-size: 2.5rem;
+            }
+        }
     </style>
 </head>
 <body>
