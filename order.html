@@ -266,6 +266,7 @@
                     if (orderType === 'PICKUP') {
                         document.getElementById('payment-field').value = 'CASH: Pickup — Customer pays at store.';
                         checkoutForm.dataset.cashConfirmed = 'true';
+                        sessionStorage.setItem('byteOrderType', 'PICKUP');
                         checkoutForm.submit();
                     } else {
                         document.getElementById('cash-modal').classList.add('active');
@@ -358,6 +359,7 @@
             }
 
             form.dataset.cashConfirmed = "true";
+            sessionStorage.setItem('byteOrderType', 'DELIVERY');
             closeCashModal();
             form.submit();
         }

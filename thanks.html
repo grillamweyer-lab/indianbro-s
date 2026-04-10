@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Thank You - BYTE Burgers</title>
+<title>Bestellung bestätigt - BYTE Burgers</title>
 <link href="css/style.css" rel="stylesheet"/>
 <!-- PWA Meta Tags -->
 <link href="manifest.json?v=2" rel="manifest"/>
@@ -13,36 +13,98 @@
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
 <link rel="icon" type="image/png" href="images/logo.png"/>
 <style>
-        .thanks-section {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 2rem;
-        }
-        .thanks-icon {
-            font-size: 5rem;
-            color: var(--primary);
-            margin-bottom: 2rem;
-            animation: bounce 2s infinite ease-in-out;
-        }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-        h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-        p {
-            font-size: 1.5rem;
-            color: var(--text-muted);
-            margin-bottom: 3rem;
-            max-width: 600px;
-        }
-    </style>
+    .thanks-section {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 6rem 2rem 4rem;
+    }
+    .thanks-icon {
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+        animation: bounce 2s infinite ease-in-out;
+    }
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-16px); }
+    }
+    .thanks-title {
+        font-size: clamp(2.5rem, 7vw, 4rem);
+        margin-bottom: 0.75rem;
+    }
+    .thanks-subtitle {
+        font-size: 1.2rem;
+        color: var(--text-muted);
+        max-width: 520px;
+        margin: 0 auto 2.5rem;
+        line-height: 1.6;
+    }
+    .info-cards {
+        display: flex;
+        gap: 1.25rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 2.5rem;
+        width: 100%;
+        max-width: 600px;
+    }
+    .info-card {
+        background: rgba(255,127,0,0.07);
+        border: 1px solid rgba(255,127,0,0.25);
+        border-radius: 16px;
+        padding: 1.25rem 1.5rem;
+        flex: 1;
+        min-width: 160px;
+    }
+    .info-card .card-label {
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: var(--text-muted);
+        margin-bottom: 0.4rem;
+    }
+    .info-card .card-value {
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: #fff;
+    }
+    .info-card .card-value.highlight {
+        color: var(--primary);
+    }
+    .call-box {
+        background: rgba(255,127,0,0.1);
+        border: 1px solid rgba(255,127,0,0.35);
+        border-radius: 16px;
+        padding: 1.25rem 2rem;
+        margin-bottom: 2.5rem;
+        max-width: 420px;
+        width: 100%;
+    }
+    .call-box p {
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        margin-bottom: 0.6rem;
+    }
+    .call-link {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--primary);
+        text-decoration: none;
+        letter-spacing: 0.5px;
+    }
+    .call-link:hover {
+        text-decoration: underline;
+    }
+    .btn-row {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+</style>
 </head>
 <body>
 <div class="blob blob-1"></div>
@@ -51,23 +113,75 @@
 <nav class="container">
 <a class="logo" href="index.html"><img alt="BYTE Burgers" class="logo-img" src="images/logo-white.png"/></a>
 <ul class="nav-links">
-<li><a href="index.html">Heim</a></li>
+<li><a href="index.html">Startseite</a></li>
 <li><a href="menu.html">Speisekarte</a></li>
 <li><a href="franchise.html">Franchise</a></li>
 </ul>
+<div class="hamburger" id="mobile-menu">
+<span></span>
+<span></span>
+<span></span>
+</div>
 </nav>
 </header>
 <main class="thanks-section container">
-<div class="thanks-icon">🚀</div>
-<h1 class="text-gradient gs_reveal_text">BYTE empfangen!</h1>
-<p>Ihre Anfrage wurde erfolgreich übermittelt.Wir haben Ihre Daten erhalten und unser Team wird sich in Kürze mit Ihnen in Verbindung setzen.</p>
-<a class="btn" href="index.html">Zurück nach Hause</a>
+    <div class="thanks-icon" id="thanks-icon">🍔</div>
+    <h1 class="text-gradient thanks-title">Bestellung bestätigt!</h1>
+    <p class="thanks-subtitle" id="thanks-subtitle">Deine Bestellung wird gerade vorbereitet.</p>
+
+    <div class="info-cards">
+        <div class="info-card">
+            <div class="card-label">Bestellart</div>
+            <div class="card-value highlight" id="order-type-display">—</div>
+        </div>
+        <div class="info-card">
+            <div class="card-label">Geschätzte Zeit</div>
+            <div class="card-value highlight" id="eta-display">—</div>
+        </div>
+    </div>
+
+    <div class="call-box">
+        <p>Fragen zu deiner Bestellung? Ruf uns an:</p>
+        <a class="call-link" href="tel:+49212315737">0212 315737</a>
+    </div>
+
+    <div class="btn-row">
+        <a class="btn" href="menu.html">Erneut bestellen</a>
+        <a class="btn" href="index.html" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff;">Startseite</a>
+    </div>
 </main>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script>
-        // Clear the basket on success
-        localStorage.removeItem('byteCart');
-    </script>
+    const orderType = sessionStorage.getItem('byteOrderType');
+
+    const icon = document.getElementById('thanks-icon');
+    const subtitle = document.getElementById('thanks-subtitle');
+    const orderTypeDisplay = document.getElementById('order-type-display');
+    const etaDisplay = document.getElementById('eta-display');
+
+    if (orderType === 'PICKUP') {
+        icon.textContent = '🏪';
+        subtitle.textContent = 'Deine Bestellung wird vorbereitet. Komm einfach zur Abholung vorbei!';
+        orderTypeDisplay.textContent = 'Abholung';
+        etaDisplay.textContent = '~15 Min.';
+    } else if (orderType === 'DELIVERY') {
+        icon.textContent = '🛵';
+        subtitle.textContent = 'Deine Bestellung ist unterwegs! Unser Fahrer bringt sie dir so schnell wie möglich.';
+        orderTypeDisplay.textContent = 'Lieferung';
+        etaDisplay.textContent = '30–45 Min.';
+    } else {
+        // Fallback if sessionStorage was not set (e.g. direct page visit)
+        icon.textContent = '✅';
+        subtitle.textContent = 'Deine Bestellung wurde erhalten. Wir rufen dich gleich an, um alles zu bestätigen.';
+        orderTypeDisplay.textContent = 'Bestätigt';
+        etaDisplay.textContent = 'Bald';
+    }
+
+    // Clear cart and order data
+    localStorage.removeItem('byteCart');
+    localStorage.removeItem('byteOrderVATDetails');
+    sessionStorage.removeItem('byteOrderType');
+</script>
 <script src="js/main.js"></script>
 </body>
 </html>
