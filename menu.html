@@ -670,8 +670,14 @@
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // Always keep menu data fresh — never serve stale offline cache
-    db.ref('menu').keepSynced(true);
+    // On hard reload, force Firebase to reconnect (clears stale offline state)
+    db.goOnline();
+
+    // Fallback: if menu is still showing spinner after 5s, force a fresh fetch
+    let menuLoaded = false;
+    setTimeout(() => {
+        if (!menuLoaded) db.ref('menu').once('value', renderFromSnap);
+    }, 5000);
 
     // bfcache fix: when browser restores page from back/forward cache,
     // Firebase doesn't re-fire. Force a fresh render.
@@ -748,6 +754,7 @@
             container.innerHTML = '<div style="text-align:center;padding:4rem;color:#666">Speisekarte wird geladen…</div>';
             return;
         }
+        menuLoaded = true;
 
         // Group by section preserving order
         const sections = {};
