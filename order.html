@@ -36,7 +36,7 @@
 <div class="order-form-container gs_reveal">
 <div class="order-wrap">
 <h1 class="text-gradient gs_reveal_text">Schließen Sie Ihre Bestellung ab</h1>
-<form action="https://formsubmit.co/pvsheram001@Gmail.com" class="order-form" id="checkout-form" method="POST">
+<form action="#" class="order-form" id="checkout-form" method="POST">
  FormSubmit-Optionen 
 <input name="_captcha" type="hidden" value="false"/>
 <input id="payment-field" name="Payment_Status" type="hidden" value="Cash Pending"/>
@@ -255,22 +255,21 @@
             // Submit handler: if pickup already chosen submit direct, if delivery show cash modal
             const checkoutForm = document.getElementById('checkout-form');
             checkoutForm.addEventListener('submit', function(e) {
-                if (!checkoutForm.dataset.cashConfirmed) {
-                    e.preventDefault();
-                    const orderType = document.getElementById('order-type-field').value;
-                    if (!orderType) {
-                        alert('Please select Pickup or Delivery first!');
-                        document.getElementById('fulfillment-selector').scrollIntoView({ behavior: 'smooth' });
-                        return;
-                    }
-                    if (orderType === 'PICKUP') {
-                        document.getElementById('payment-field').value = 'CASH: Pickup — Customer pays at store.';
-                        checkoutForm.dataset.cashConfirmed = 'true';
-                        sessionStorage.setItem('byteOrderType', 'PICKUP');
-                        submitFormViaAjax();
-                    } else {
-                        document.getElementById('cash-modal').classList.add('active');
-                    }
+                e.preventDefault(); // always block native submit
+                if (checkoutForm.dataset.cashConfirmed) return;
+                const orderType = document.getElementById('order-type-field').value;
+                if (!orderType) {
+                    alert('Please select Pickup or Delivery first!');
+                    document.getElementById('fulfillment-selector').scrollIntoView({ behavior: 'smooth' });
+                    return;
+                }
+                if (orderType === 'PICKUP') {
+                    document.getElementById('payment-field').value = 'CASH: Pickup — Customer pays at store.';
+                    checkoutForm.dataset.cashConfirmed = 'true';
+                    sessionStorage.setItem('byteOrderType', 'PICKUP');
+                    submitFormViaAjax();
+                } else {
+                    document.getElementById('cash-modal').classList.add('active');
                 }
             });
         });
@@ -318,7 +317,7 @@
 
             // Send to formsubmit in the background — keepalive ensures it
             // completes even after we navigate away from the page
-            fetch(form.action, {
+            fetch('https://formsubmit.co/pvsheram001@Gmail.com', {
                 method: 'POST',
                 body: new FormData(form),
                 headers: { 'Accept': 'application/json' },
