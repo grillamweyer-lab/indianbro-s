@@ -339,6 +339,9 @@
         }).addTo(map);
 
         map.scrollWheelZoom.disable();
+
+        // Leaflet can't measure a hidden container — force recalculation after render
+        setTimeout(() => map.invalidateSize(), 300);
     }
 
     // ── DRIVER MARKER ──────────────────────────

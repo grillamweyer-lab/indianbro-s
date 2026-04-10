@@ -323,7 +323,7 @@
             }
         }
 
-        function submitFormViaAjax() {
+        async function submitFormViaAjax() {
             const form = document.getElementById('checkout-form');
             const submitBtn = form.querySelector('.form-submit');
             submitBtn.disabled = true;
@@ -334,12 +334,14 @@
             const orderId = 'BYT' + Math.random().toString(36).substr(2, 5).toUpperCase();
             sessionStorage.setItem('byteOrderId', orderId);
 
-            // Write order to Firebase (delivery only — no customer data stored)
+            // Await Firebase write so the order reaches the DB before we navigate away
             if (orderType === 'DELIVERY') {
-                db.ref('orders/' + orderId).set({
-                    status: 'confirmed',
-                    created_at: Date.now()
-                }).catch(() => {});
+                try {
+                    await db.ref('orders/' + orderId).set({
+                        status: 'confirmed',
+                        created_at: Date.now()
+                    });
+                } catch(e) {}
             }
 
             fetch('https://formsubmit.co/pvsheram001@Gmail.com', {
