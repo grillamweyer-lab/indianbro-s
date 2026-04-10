@@ -126,8 +126,8 @@
 </header>
 <main class="thanks-section container">
     <div class="thanks-icon" id="thanks-icon">🍔</div>
-    <h1 class="text-gradient thanks-title">Bestellung bestätigt!</h1>
-    <p class="thanks-subtitle" id="thanks-subtitle">Deine Bestellung wird gerade vorbereitet.</p>
+    <h1 class="text-gradient thanks-title">Bestellung aufgegeben!</h1>
+    <p class="thanks-subtitle" id="thanks-subtitle">Deine Bestellung wurde platziert und wird jetzt vorbereitet.</p>
 
     <div class="info-cards">
         <div class="info-card">
@@ -161,18 +161,18 @@
 
     if (orderType === 'PICKUP') {
         icon.textContent = '🏪';
-        subtitle.textContent = 'Deine Bestellung wird vorbereitet. Komm einfach zur Abholung vorbei!';
+        subtitle.textContent = 'Deine Bestellung wurde aufgegeben! Komm einfach zur Abholung vorbei.';
         orderTypeDisplay.textContent = 'Abholung';
         etaDisplay.textContent = '~15 Min.';
     } else if (orderType === 'DELIVERY') {
         icon.textContent = '🛵';
-        subtitle.textContent = 'Deine Bestellung ist unterwegs! Unser Fahrer bringt sie dir so schnell wie möglich.';
+        subtitle.textContent = 'Deine Bestellung wurde aufgegeben! Unser Fahrer bringt sie dir so schnell wie möglich.';
         orderTypeDisplay.textContent = 'Lieferung';
         etaDisplay.textContent = '30–45 Min.';
     } else {
         // Fallback if sessionStorage was not set (e.g. direct page visit)
         icon.textContent = '✅';
-        subtitle.textContent = 'Deine Bestellung wurde erhalten. Wir rufen dich gleich an, um alles zu bestätigen.';
+        subtitle.textContent = 'Deine Bestellung wurde aufgegeben! Wir rufen dich gleich an, um alles zu bestätigen.';
         orderTypeDisplay.textContent = 'Bestätigt';
         etaDisplay.textContent = 'Bald';
     }
