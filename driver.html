@@ -222,13 +222,17 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // Load PIN from Firebase (admin can change it)
-    db.ref('settings/driverPin').once('value', snap => {
-        if (snap.val()) DRIVER_PIN = snap.val();
-    });
-
     let gpsInterval = null;
     let activeOrder  = null;
+    let pinReady = false;
+
+    // Load PIN from Firebase before allowing unlock
+    db.ref('settings/driverPin').once('value', snap => {
+        if (snap.val()) DRIVER_PIN = snap.val();
+        pinReady = true;
+    });
+    // Fallback: if Firebase takes >3s, allow entry with default PIN
+    setTimeout(() => { pinReady = true; }, 3000);
 
     // ── PIN ──────────────────────────────────
     const digits = ['p1','p2','p3','p4'].map(id => document.getElementById(id));
@@ -246,6 +250,12 @@
     function getPin() { return digits.map(d => d.value).join(''); }
 
     function checkPin() {
+        if (!pinReady) {
+            document.getElementById('pin-error').textContent = 'Loading… try again in a second.';
+            digits.forEach(d => d.value = '');
+            digits[0].focus();
+            return;
+        }
         if (getPin() === DRIVER_PIN) {
             document.getElementById('pin-screen').style.display = 'none';
             document.getElementById('dashboard').style.display = 'block';

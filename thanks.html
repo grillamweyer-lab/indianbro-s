@@ -299,8 +299,10 @@
     const db = firebase.database();
 
     const STORE = { lat: 51.178389, lng: 7.031451 };
-    const orderType = sessionStorage.getItem('byteOrderType');
-    const orderId   = sessionStorage.getItem('byteOrderId');
+    // Support refresh: orderId and type are also passed as URL params
+    const params    = new URLSearchParams(window.location.search);
+    const orderType = sessionStorage.getItem('byteOrderType') || params.get('type');
+    const orderId   = sessionStorage.getItem('byteOrderId')   || params.get('oid');
 
     // Clear session data
     localStorage.removeItem('byteCart');
@@ -308,7 +310,7 @@
     sessionStorage.removeItem('byteOrderType');
     sessionStorage.removeItem('byteOrderId');
 
-    if (orderType === 'DELIVERY' && orderId) {
+    if (orderType === 'delivery' && orderId) {
         document.getElementById('tracking-view').style.display = 'flex';
         document.getElementById('order-ref').innerHTML = 'Order <span>#' + orderId + '</span>';
         // Double rAF: ensures browser finishes layout before Leaflet measures the container
@@ -393,9 +395,11 @@
 
     // ── STATUS UI ──────────────────────────────
     const STATUSES = {
-        confirmed:  { badge:'badge-confirmed',  label:'⏳ Order Confirmed', steps:['done','current','',''],     hidePill: false },
-        on_the_way: { badge:'badge-on_the_way', label:'🛵 On the Way!',     steps:['done','done','current',''], hidePill: true  },
-        delivered:  { badge:'badge-delivered',  label:'✅ Delivered!',      steps:['done','done','done','done'], hidePill: true  }
+        confirmed:  { badge:'badge-confirmed',  label:'⏳ Order Confirmed', steps:['done','current','',''],      hidePill: false },
+        preparing:  { badge:'badge-confirmed',  label:'🔥 Being Prepared',  steps:['done','current','',''],      hidePill: false },
+        ready:      { badge:'badge-on_the_way', label:'✅ Ready for pickup', steps:['done','done','current',''],  hidePill: false },
+        on_the_way: { badge:'badge-on_the_way', label:'🛵 On the Way!',      steps:['done','done','current',''], hidePill: true  },
+        delivered:  { badge:'badge-delivered',  label:'✅ Delivered!',       steps:['done','done','done','done'], hidePill: true  }
     };
     const STEP_IDS = ['step-confirmed','step-preparing','step-on_the_way','step-delivered'];
 

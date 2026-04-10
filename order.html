@@ -280,7 +280,7 @@
                 if (orderType === 'PICKUP') {
                     document.getElementById('payment-field').value = 'CASH: Pickup — Customer pays at store.';
                     checkoutForm.dataset.cashConfirmed = 'true';
-                    sessionStorage.setItem('byteOrderType', 'PICKUP');
+                    sessionStorage.setItem('byteOrderType', 'pickup');
                     submitFormViaAjax();
                 } else {
                     document.getElementById('cash-modal').classList.add('active');
@@ -305,7 +305,7 @@
             btnDelivery.style.background = 'rgba(255,127,0,0.08)';
 
             if (type === 'pickup') {
-                orderTypeField.value = 'PICKUP';
+                orderTypeField.value = 'pickup';
                 btnPickup.style.border = '2px solid var(--primary)';
                 btnPickup.style.background = 'rgba(255,127,0,0.2)';
                 addressSection.style.display = 'none';
@@ -314,7 +314,7 @@
                 totalEl.innerText = `€${subtotal.toFixed(2)}`;
                 document.getElementById('delivery-status').innerText = '';
             } else {
-                orderTypeField.value = 'DELIVERY';
+                orderTypeField.value = 'delivery';
                 btnDelivery.style.border = '2px solid var(--primary)';
                 btnDelivery.style.background = 'rgba(255,127,0,0.2)';
                 addressSection.style.display = '';
@@ -361,7 +361,7 @@
                 keepalive: true
             }).catch(() => {});
 
-            window.location.href = 'thanks.html?v=' + Date.now();
+            window.location.href = 'thanks.html?oid=' + orderId + '&type=' + (orderType||'').toLowerCase() + '&v=' + Date.now();
         }
 
         function closeFulfillmentModal() {}  // kept for safety, no longer used
@@ -413,7 +413,7 @@
             }
 
             form.dataset.cashConfirmed = "true";
-            sessionStorage.setItem('byteOrderType', 'DELIVERY');
+            sessionStorage.setItem('byteOrderType', 'delivery');
             closeCashModal();
             submitFormViaAjax();
         }
