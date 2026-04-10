@@ -517,9 +517,9 @@ label.form-label { font-size:.78rem; color:var(--muted); display:block; margin-b
                 <select id="fi-section" style="width:100%">
                     <option>Burgers</option>
                     <option>Sides</option>
+                    <option>Specials</option>
                     <option>Drinks</option>
                     <option>Extras</option>
-                    <option>Deals</option>
                 </select>
             </div>
             <div class="form-group full">
@@ -816,43 +816,85 @@ function showToast(msg) {
 }
 
 // ── MENU MANAGER ──────────────────────────────────────────────────────────────
+const MENU_VERSION = 2; // bump this to force-reseed after menu changes
+
 const DEFAULT_MENU = {
     Burgers: [
-        { name:'SMASH Classic', desc:'Single smash patty, cheddar, lettuce, tomato, sauce', price:6.49, emoji:'🍔' },
-        { name:'SMASH Double', desc:'Double smash patty, double cheddar, caramelised onion', price:8.49, emoji:'🍔' },
-        { name:'BYTE Signature', desc:'Double patty, bacon, jalapeño, BYTE sauce', price:9.49, emoji:'🔥' },
-        { name:'Crispy Chicken', desc:'Fried chicken fillet, coleslaw, pickles, mayo', price:8.49, emoji:'🐔' },
-        { name:'Veggie SMASH', desc:'Plant-based patty, avocado, roasted peppers', price:7.99, emoji:'🥑' },
+        { name:'Goat Byte Original',    desc:'100% Halal Ziegenpatty, BYTE Sauce, Salat, Tomate',       price:7.48, emoji:'🐐' },
+        { name:'Spicy Goat Byte',       desc:'Würziges Ziegenpatty, Jalapeño, Sriracha Mayo',           price:8.01, emoji:'🌶️' },
+        { name:'Truffle Goat Byte',     desc:'Ziegenpatty, Trüffelöl, karamellisierte Zwiebeln',        price:8.55, emoji:'🍄' },
+        { name:'Byte Classic',          desc:'Smash Patty, Cheddar, Salat, Tomate, BYTE Sauce',         price:6.41, emoji:'🍔' },
+        { name:'Double Byte',           desc:'Doppeltes Smash Patty, doppelter Cheddar',                price:8.01, emoji:'🍔' },
+        { name:'Smoky BBQ Byte',        desc:'Smash Patty, BBQ Sauce, Speck, Cheddar',                  price:7.48, emoji:'🔥' },
+        { name:'Crispy Chicken Byte',   desc:'Knuspriges Hähnchenfilet, Krautsalat, Gurken',            price:5.87, emoji:'🐔' },
+        { name:'Spicy Chicken Byte',    desc:'Würziges Hähnchenfilet, Sriracha, Pickles',               price:6.41, emoji:'🌶️' },
+        { name:'Green Byte (Vegan)',    desc:'Pflanzliches Patty, Avocado, geröstete Paprika',          price:5.87, emoji:'🥑' },
+        { name:'Falafel Byte',          desc:'Hausgemachte Falafel, Hummus, Tahini',                    price:6.41, emoji:'🧆' },
     ],
     Sides: [
-        { name:'Smash Fries', desc:'Crispy thin-cut fries', price:2.99, emoji:'🍟' },
-        { name:'Cheese Fries', desc:'Fries with nacho cheese sauce', price:3.99, emoji:'🧀' },
-        { name:'Onion Rings', desc:'Beer-battered onion rings (6 pcs)', price:3.49, emoji:'🧅' },
-        { name:'Chicken Tenders', desc:'3 crispy tenders with dip', price:4.49, emoji:'🍗' },
+        { name:'Classic Fries',         desc:'Klassische knusprige Pommes',                             price:2.66, emoji:'🍟' },
+        { name:'Peri Peri Fries',       desc:'Pommes mit Peri Peri Gewürz',                            price:3.20, emoji:'🍟' },
+        { name:'Cheese Melt Fries',     desc:'Pommes mit geschmolzenem Cheddar',                       price:4.27, emoji:'🧀' },
+        { name:'GOAT Loaded Fries',     desc:'Geladene Pommes mit Ziegenfleisch',                      price:5.87, emoji:'🐐' },
+        { name:'BBQ Beef Loaded Fries', desc:'Pommes mit BBQ Rindfleisch',                             price:5.34, emoji:'🥩' },
+        { name:'Crispy Onion Rings',    desc:'Knusprige Zwiebelringe',                                  price:4.80, emoji:'🧅' },
+        { name:'Mozzarella Sticks',     desc:'Frittierte Mozzarella Sticks (6 Stk.)',                  price:5.87, emoji:'🧀' },
+        { name:'Jalapeño Poppers',      desc:'Gefüllte Jalapeño Poppers (6 Stk.)',                     price:5.34, emoji:'🌶️' },
+        { name:'Chicken Tenders',       desc:'3 knusprige Tenders mit Dip',                            price:6.41, emoji:'🍗' },
+    ],
+    Specials: [
+        { name:'BYTE Currywurst',           desc:'Hausgemachte Currywurst nach BYTE Art',               price:7.49, emoji:'🌭' },
+        { name:'BYTE Currywurst + Fries',   desc:'Currywurst mit klassischen Pommes',                   price:9.99, emoji:'🌭' },
     ],
     Drinks: [
-        { name:'Soft Drink', desc:'Coke, Fanta, Sprite — 500ml', price:2.49, emoji:'🥤' },
-        { name:'Milkshake', desc:'Vanilla, Chocolate, Strawberry — 400ml', price:3.99, emoji:'🥛' },
-        { name:'Still Water', desc:'500ml bottle', price:1.49, emoji:'💧' },
+        { name:'Sodas',             desc:'Coca-Cola / Fanta / Sprite',              price:2.68, emoji:'🥤' },
+        { name:'Water',             desc:'Still oder prickelnd',                    price:3.75, emoji:'💧' },
+        { name:'Chocolate Shake',   desc:'Reichhaltige belgische Schokolade',       price:3.73, emoji:'🍫' },
+        { name:'Vanilla Shake',     desc:'Vanilleschote aus Madagaskar',            price:3.73, emoji:'🍦' },
+        { name:'Strawberry Shake',  desc:'Frische Bauernerdbeeren',                price:3.73, emoji:'🍓' },
+    ],
+    Extras: [
+        { name:'Extra Cheese',      desc:'Scheibe geschmolzener Cheddar',          price:1.07, emoji:'🧀' },
+        { name:'Extra Patty',       desc:'Zusätzliches Rinder- oder Ziegenpatty',  price:2.68, emoji:'🥩' },
+        { name:'Extra Sauce',       desc:'Zusätzliche Soße nach Wahl',             price:0.54, emoji:'🫙' },
+        { name:'Make it Spicy',     desc:'Schärfe-Level erhöhen 🌶️',              price:0.54, emoji:'🌶️' },
     ],
 };
 
-function listenMenu() {
-    db.ref('menu').on('value', snap => {
-        const data = snap.val();
-        if (!data || Object.keys(data).length === 0) {
-            // Seed default menu into Firebase (only runs once when menu is empty)
-            Object.entries(DEFAULT_MENU).forEach(([section, items]) => {
-                items.forEach(item => {
-                    const key = db.ref('menu').push().key;
-                    db.ref('menu/' + key).set({ ...item, section, available: true });
-                });
+function seedMenu() {
+    db.ref('menu').remove(() => {
+        Object.entries(DEFAULT_MENU).forEach(([section, items]) => {
+            items.forEach(item => {
+                db.ref('menu').push({ ...item, section, available: true });
             });
-            return;
-        }
-        menuData = data;
-        renderMenu();
+        });
+        db.ref('settings/menuVersion').set(MENU_VERSION);
     });
+}
+
+function listenMenu() {
+    // Check version first — reseed if outdated
+    db.ref('settings/menuVersion').once('value', vSnap => {
+        const version = vSnap.val() || 0;
+        if (version < MENU_VERSION) { seedMenu(); return; }
+
+        db.ref('menu').on('value', snap => {
+            const data = snap.val();
+            if (!data || Object.keys(data).length === 0) { seedMenu(); return; }
+            menuData = data;
+            renderMenu();
+        });
+    });
+
+    // Always listen after version check settles
+    setTimeout(() => {
+        db.ref('menu').on('value', snap => {
+            const data = snap.val();
+            if (!data || Object.keys(data).length === 0) return;
+            menuData = data;
+            renderMenu();
+        });
+    }, 1500);
 }
 
 function renderMenu() {
