@@ -396,7 +396,11 @@
             if (order.status === 'delivered') {
                 document.getElementById('eta-pill').style.display = 'none';
             }
-            if (order.driver_lat && order.driver_lng) {
+            if (order.status === 'delivered') {
+                // Remove driver marker and re-centre on store
+                if (driverMarker) { map.removeLayer(driverMarker); driverMarker = null; }
+                map.setView([STORE.lat, STORE.lng], 16, { animate: true });
+            } else if (order.driver_lat && order.driver_lng) {
                 document.getElementById('map-pill').style.opacity = '0';
                 animateMarker(order.driver_lat, order.driver_lng);
                 map.fitBounds(
