@@ -258,26 +258,63 @@
     }
 
     // ── ORDERS ───────────────────────────────
-    // Only fetch last 7 days so the payload stays small and updates are instant
+    // Event delegation — handles taps even when cards re-render
+    document.getElementById('orders-list').addEventListener('click', e => {
+        const startBtn = e.target.closest('.btn-start');
+        const doneBtn  = e.target.closest('.btn-done');
+        if (startBtn && !startBtn.disabled) startDelivery(startBtn.dataset.id);
+        if (doneBtn)  markDelivered(doneBtn.dataset.id);
+    });
+
+    let knownOrders = {}; // track current orders to diff updates
+
     function listenOrders() {
-        const since = Date.now() - 7 * 24 * 60 * 60 * 1000;
-        db.ref('orders').orderByChild('created_at').startAt(since).on('value', snap => {
+        db.ref('orders').on('value', snap => {
             const all = snap.val() || {};
             const active = Object.entries(all)
                 .filter(([, o]) => o.status !== 'delivered')
                 .sort((a, b) => b[1].created_at - a[1].created_at);
 
-            const sub = document.getElementById('dash-sub');
+            const sub  = document.getElementById('dash-sub');
             const list = document.getElementById('orders-list');
 
             if (active.length === 0) {
+                knownOrders = {};
                 sub.textContent = 'No active orders right now';
                 list.innerHTML = '<div class="empty-state"><span class="icon">🛵</span>Waiting for new orders…</div>';
                 return;
             }
 
             sub.textContent = active.length + ' active order' + (active.length > 1 ? 's' : '');
-            list.innerHTML = active.map(([id, o]) => cardHTML(id, o)).join('');
+
+            // Remove cards for orders that are now delivered/gone
+            Object.keys(knownOrders).forEach(id => {
+                if (!all[id] || all[id].status === 'delivered') {
+                    const el = document.getElementById('card-' + id);
+                    if (el) el.remove();
+                    delete knownOrders[id];
+                }
+            });
+
+            // Add or update cards without replacing the whole list
+            active.forEach(([id, order]) => {
+                const existing = document.getElementById('card-' + id);
+                const changed  = !knownOrders[id] || knownOrders[id].status !== order.status;
+                if (!existing) {
+                    // New card — insert at top
+                    const div = document.createElement('div');
+                    div.innerHTML = cardHTML(id, order);
+                    list.prepend(div.firstElementChild);
+                } else if (changed) {
+                    // Status changed — only update the tag and button state
+                    updateCard(existing, order);
+                }
+                knownOrders[id] = { status: order.status };
+            });
+
+            // Clear empty state if it was showing
+            const empty = list.querySelector('.empty-state');
+            if (empty) empty.remove();
         });
     }
 
@@ -291,17 +328,30 @@
                 <span class="order-time">${time}</span>
             </div>
             <div class="order-tag ${delivering ? 'tag-delivering' : 'tag-confirmed'}">
-                ${delivering ? '🛵 Delivering' : '⏳ Confirmed'}
+                ${delivering ? '🛵 On the way' : '⏳ Confirmed'}
             </div>
+            <div style="font-size:.82rem;color:#aaa;margin-bottom:.75rem">${order.name || ''} ${order.address ? '· ' + order.address : ''}</div>
             <div class="card-btns">
-                <button class="btn-start" onclick="startDelivery('${id}')" ${delivering ? 'disabled' : ''}>
+                <button class="btn-start" data-id="${id}" ${delivering ? 'disabled' : ''}>
                     🛵 Start Delivery
                 </button>
-                <button class="btn-done" onclick="markDelivered('${id}')">
+                <button class="btn-done" data-id="${id}">
                     ✅ Delivered
                 </button>
             </div>
         </div>`;
+    }
+
+    function updateCard(el, order) {
+        const delivering = order.status === 'on_the_way';
+        el.className = 'order-card' + (delivering ? ' delivering' : '');
+        const tag = el.querySelector('.order-tag');
+        if (tag) {
+            tag.className = 'order-tag ' + (delivering ? 'tag-delivering' : 'tag-confirmed');
+            tag.textContent = delivering ? '🛵 On the way' : '⏳ Confirmed';
+        }
+        const startBtn = el.querySelector('.btn-start');
+        if (startBtn) startBtn.disabled = delivering;
     }
 
     // ── GPS TRACKING ─────────────────────────
