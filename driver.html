@@ -201,13 +201,29 @@
     </div>
 </div>
 
+<!-- NEW ORDER ALERT BANNER (in-page fallback, works on all browsers) -->
+<div id="new-order-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;
+     background:#ff7f00;color:#fff;padding:1rem 1.25rem;font-family:Outfit,sans-serif;
+     font-weight:800;font-size:1rem;text-align:center;cursor:pointer;
+     box-shadow:0 4px 20px rgba(255,127,0,0.5);animation:bannerSlide .3s ease;">
+    🔔 NEW ORDER! Tap to view
+</div>
+<style>@keyframes bannerSlide{from{transform:translateY(-100%)}to{transform:translateY(0)}}</style>
+
 <!-- DASHBOARD -->
 <div id="dashboard">
     <div class="dash-header">
         <img src="images/logo-white.png" alt="BYTE"/>
-        <div class="gps-pill" id="gps-pill">
-            <div class="gps-dot"></div>
-            <span id="gps-txt">GPS off</span>
+        <div style="display:flex;align-items:center;gap:.6rem">
+            <button id="notif-btn" onclick="enableNotifications()" style="display:none;
+                padding:.3rem .8rem;background:rgba(255,127,0,0.15);border:1px solid rgba(255,127,0,0.4);
+                border-radius:50px;color:#ff7f00;font-family:inherit;font-size:.75rem;font-weight:700;cursor:pointer">
+                🔔 Enable Alerts
+            </button>
+            <div class="gps-pill" id="gps-pill">
+                <div class="gps-dot"></div>
+                <span id="gps-txt">GPS off</span>
+            </div>
         </div>
     </div>
     <div class="dash-title">Active Orders</div>
@@ -269,7 +285,7 @@
         if (getPin() === DRIVER_PIN) {
             document.getElementById('pin-screen').style.display = 'none';
             document.getElementById('dashboard').style.display = 'block';
-            requestNotifPermission();
+            initNotifButton();
             listenOrders();
         } else {
             document.getElementById('pin-error').textContent = 'Wrong PIN — try again.';
@@ -279,23 +295,70 @@
     }
 
     // ── NOTIFICATIONS ────────────────────────
-    function requestNotifPermission() {
-        if ('Notification' in window && Notification.permission === 'default') {
-            Notification.requestPermission();
+    function initNotifButton() {
+        // Show the "Enable Alerts" button if permission not yet granted
+        if ('Notification' in window && Notification.permission !== 'granted') {
+            document.getElementById('notif-btn').style.display = 'inline-block';
         }
     }
 
-    function notifyNewOrder(id, order) {
-        if (!('Notification' in window) || Notification.permission !== 'granted') return;
-        const n = new Notification('🔔 New Order #' + id, {
-            body: `${order.name || 'Customer'} · ${order.type || ''} · €${(order.total||0).toFixed(2)}`,
-            icon: 'images/logo.png',
-            badge: 'images/logo.png',
-            tag: 'order-' + id,
-            renotify: true,
-            vibrate: [200, 100, 200, 100, 200]
+    function enableNotifications() {
+        if (!('Notification' in window)) {
+            alert('This browser does not support notifications. Try Chrome on Android.');
+            return;
+        }
+        Notification.requestPermission().then(perm => {
+            if (perm === 'granted') {
+                document.getElementById('notif-btn').style.display = 'none';
+                // Test notification so driver knows it works
+                new Notification('✅ Alerts enabled!', {
+                    body: 'You will be notified when new orders arrive.',
+                    icon: 'images/logo.png'
+                });
+            } else {
+                alert('Permission denied. Go to browser Settings → Site settings → Notifications and allow this site.');
+            }
         });
-        n.onclick = () => { window.focus(); n.close(); };
+    }
+
+    function notifyNewOrder(id, order) {
+        // Always show in-page banner (works on all browsers/iOS)
+        const banner = document.getElementById('new-order-banner');
+        banner.textContent = `🔔 New Order #${id} — ${order.name || 'Customer'} · €${(order.total||0).toFixed(2)}`;
+        banner.style.display = 'block';
+        banner.onclick = () => { banner.style.display = 'none'; };
+        setTimeout(() => { banner.style.display = 'none'; }, 10000);
+
+        // Play sound
+        playDing();
+
+        // Also try system notification (Android Chrome / desktop)
+        if ('Notification' in window && Notification.permission === 'granted') {
+            try {
+                const n = new Notification('🔔 New Order #' + id, {
+                    body: `${order.name || 'Customer'} · ${order.type || ''} · €${(order.total||0).toFixed(2)}`,
+                    icon: 'images/logo.png',
+                    tag: 'order-' + id,
+                    renotify: true
+                });
+                n.onclick = () => { window.focus(); n.close(); };
+            } catch(e) {}
+        }
+    }
+
+    function playDing() {
+        try {
+            const ctx = new AudioContext();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain); gain.connect(ctx.destination);
+            osc.frequency.setValueAtTime(880, ctx.currentTime);
+            osc.frequency.setValueAtTime(1100, ctx.currentTime + 0.12);
+            osc.frequency.setValueAtTime(880, ctx.currentTime + 0.25);
+            gain.gain.setValueAtTime(0.5, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+            osc.start(); osc.stop(ctx.currentTime + 0.8);
+        } catch(e) {}
     }
 
     // ── ORDERS ───────────────────────────────
