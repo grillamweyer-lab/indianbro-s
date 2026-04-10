@@ -459,6 +459,26 @@ label.form-label { font-size:.78rem; color:var(--muted); display:block; margin-b
             </div>
 
             <div class="settings-section">
+                <div class="section-title">Combo Fees</div>
+                <div class="settings-row" style="flex-wrap:wrap;gap:1rem;align-items:flex-end">
+                    <div style="display:flex;flex-direction:column;gap:.35rem">
+                        <label style="font-size:.8rem;color:var(--muted)">Meal Combo (+€)</label>
+                        <input type="number" id="combo-fee-meal" step="0.01" min="0" placeholder="4.27" style="width:110px"/>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:.35rem">
+                        <label style="font-size:.8rem;color:var(--muted)">Loaded Combo (+€)</label>
+                        <input type="number" id="combo-fee-loaded" step="0.01" min="0" placeholder="5.34" style="width:110px"/>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:.35rem">
+                        <label style="font-size:.8rem;color:var(--muted)">GOAT Combo (+€)</label>
+                        <input type="number" id="combo-fee-goat" step="0.01" min="0" placeholder="6.41" style="width:110px"/>
+                    </div>
+                    <button class="btn btn-primary btn-sm" onclick="saveComboPrices()">Save Combo Fees</button>
+                </div>
+                <div id="combo-save-msg" style="font-size:.8rem;color:var(--green);margin-top:.5rem;display:none">Combo fees updated ✓</div>
+            </div>
+
+            <div class="settings-section">
                 <div class="section-title">Change Driver PIN</div>
                 <div class="settings-row" style="flex-wrap:wrap;gap:.75rem">
                     <input type="password" id="new-driver-pin" maxlength="4" placeholder="New 4-digit PIN" inputmode="numeric" style="width:180px"/>
@@ -1283,6 +1303,26 @@ function saveAdminPin() {
     setTimeout(() => { msg.style.display = 'none'; }, 3000);
     showToast('🔑 Admin PIN updated');
 }
+
+function saveComboPrices() {
+    const meal   = parseFloat(document.getElementById('combo-fee-meal').value);
+    const loaded = parseFloat(document.getElementById('combo-fee-loaded').value);
+    const goat   = parseFloat(document.getElementById('combo-fee-goat').value);
+    if ([meal, loaded, goat].some(isNaN)) { alert('Please fill in all three combo fees'); return; }
+    db.ref('settings/combos').set({ meal, loaded, goat });
+    const msg = document.getElementById('combo-save-msg');
+    msg.style.display = 'block';
+    setTimeout(() => { msg.style.display = 'none'; }, 3000);
+    showToast('✅ Combo fees updated');
+}
+
+// Load current combo fees into the inputs when settings tab loads
+db.ref('settings/combos').once('value', snap => {
+    const c = snap.val() || {};
+    if (c.meal   !== undefined) document.getElementById('combo-fee-meal').value   = c.meal;
+    if (c.loaded !== undefined) document.getElementById('combo-fee-loaded').value = c.loaded;
+    if (c.goat   !== undefined) document.getElementById('combo-fee-goat').value   = c.goat;
+});
 </script>
 </body>
 </html>

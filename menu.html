@@ -470,33 +470,33 @@
 <div class="menu-item-inner">
 <div class="item-header">
 <div class="item-name">Machen Sie daraus eine Mahlzeit</div>
-<div class="item-price">+€4.27</div>
+<div class="item-price" id="combo-price-meal">+€4.27</div>
 </div>
 <p class="item-desc">Burger + Pommes + Getränk</p>
 <span class="item-tag tag-special">⭐ Aktualisiert</span>
-<button class="btn btn-outline" onclick="openComboSelection('meal', '+€4.27')" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;">Wählen Sie Ihre Artikel aus</button>
+<button class="btn btn-outline" id="combo-btn-meal" onclick="openComboSelection('meal', '+€4.27')" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;">Wählen Sie Ihre Artikel aus</button>
 </div>
 </div>
 <div class="menu-item-card tilt-card gs_reveal_up" style="border-color: var(--primary);">
 <div class="menu-item-inner">
 <div class="item-header">
 <div class="item-name">Geladene Combo</div>
-<div class="item-price">+€5.34</div>
+<div class="item-price" id="combo-price-loaded">+€5.34</div>
 </div>
 <p class="item-desc">Burger + beladene Pommes + Getränk</p>
 <span class="item-tag tag-spicy">🔥 Schwer</span>
-<button class="btn btn-outline" onclick="openComboSelection('loaded', '+€5.34')" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;">Wählen Sie Ihre Artikel aus</button>
+<button class="btn btn-outline" id="combo-btn-loaded" onclick="openComboSelection('loaded', '+€5.34')" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;">Wählen Sie Ihre Artikel aus</button>
 </div>
 </div>
 <div class="menu-item-card tilt-card gs_reveal_up" style="border-color: var(--primary); background: rgba(255,127,0,0.1);">
 <div class="menu-item-inner">
 <div class="item-header">
 <div class="item-name">GOAT Power Combo</div>
-<div class="item-price">+€6.41</div>
+<div class="item-price" id="combo-price-goat">+€6.41</div>
 </div>
 <p class="item-desc">GOAT Burger + Beilagen + Getränke</p>
 <span class="item-tag tag-special">🐐 Das Ultimative</span>
-<button class="btn btn-outline" onclick="openComboSelection('goat', '+€6.41')" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;">Wählen Sie Ihre Artikel aus</button>
+<button class="btn btn-outline" id="combo-btn-goat" onclick="openComboSelection('goat', '+€6.41')" style="margin-top: 1rem; padding: 0.5rem 1rem; width: 100%;">Wählen Sie Ihre Artikel aus</button>
 </div>
 </div>
 </div>
@@ -772,6 +772,26 @@
     }
 
     db.ref('menu').on('value', renderFromSnap);
+
+    // ── Combo prices from Firebase ──────────────────────────────────
+    function applyComboFees(snap) {
+        const c = snap.val() || {};
+        const defaults = { meal: 4.27, loaded: 5.34, goat: 6.41 };
+        ['meal', 'loaded', 'goat'].forEach(type => {
+            const fee   = parseFloat(c[type] ?? defaults[type]).toFixed(2);
+            const label = `+€${fee}`;
+            const priceEl = document.getElementById('combo-price-' + type);
+            const btnEl   = document.getElementById('combo-btn-'   + type);
+            if (priceEl) priceEl.textContent = label;
+            if (btnEl)   btnEl.setAttribute('onclick', `openComboSelection('${type}', '${label}')`);
+        });
+    }
+    db.ref('settings/combos').on('value', applyComboFees);
+
+    // bfcache fix for combos
+    window.addEventListener('pageshow', e => {
+        if (e.persisted) db.ref('settings/combos').once('value', applyComboFees);
+    });
 })();
 </script>
 </body>
