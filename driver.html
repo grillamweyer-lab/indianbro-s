@@ -191,6 +191,16 @@
     <button class="pin-btn" onclick="checkPin()">Unlock</button>
 </div>
 
+<!-- NAV PICKER MODAL -->
+<div id="nav-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:999;align-items:flex-end;justify-content:center;">
+    <div style="background:#1a1208;border:1px solid rgba(255,127,0,0.2);border-radius:20px 20px 0 0;padding:1.5rem;width:100%;max-width:480px;">
+        <div style="font-size:.75rem;text-transform:uppercase;letter-spacing:2px;color:#666;margin-bottom:.5rem;text-align:center;">Open navigation in</div>
+        <div style="font-weight:800;font-size:1rem;margin-bottom:1.25rem;text-align:center;color:#fff" id="nav-address-label"></div>
+        <div style="display:flex;flex-direction:column;gap:.65rem;" id="nav-btns"></div>
+        <button onclick="closeNavModal()" style="margin-top:1rem;width:100%;padding:.75rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:#aaa;font-family:inherit;font-size:.9rem;font-weight:700;cursor:pointer;">Cancel</button>
+    </div>
+</div>
+
 <!-- DASHBOARD -->
 <div id="dashboard">
     <div class="dash-header">
@@ -272,7 +282,7 @@
     document.getElementById('orders-list').addEventListener('click', e => {
         const startBtn = e.target.closest('.btn-start');
         const doneBtn  = e.target.closest('.btn-done');
-        if (startBtn && !startBtn.disabled) startDelivery(startBtn.dataset.id);
+        if (startBtn && !startBtn.disabled) showNavPicker(startBtn.dataset.id, startBtn.dataset.address);
         if (doneBtn)  markDelivered(doneBtn.dataset.id);
     });
 
@@ -328,22 +338,30 @@
         });
     }
 
+    function isActiveOnThisDevice(id) {
+        return activeOrder === id;
+    }
+
     function cardHTML(id, order) {
-        const delivering = order.status === 'on_the_way';
+        const onTheWay  = order.status === 'on_the_way';
+        const thisDevice = isActiveOnThisDevice(id);
         const time = new Date(order.created_at).toLocaleTimeString('de-DE', { hour:'2-digit', minute:'2-digit' });
+        const tagClass = onTheWay ? 'tag-delivering' : 'tag-confirmed';
+        const tagText  = onTheWay ? '🛵 On the way' : '⏳ Confirmed';
+        // Button only disabled if THIS device is already tracking it
+        const startDisabled = thisDevice ? 'disabled' : '';
+        const startLabel = thisDevice ? '🛵 Delivering…' : '🛵 Start Delivery';
         return `
-        <div class="order-card ${delivering ? 'delivering' : ''}" id="card-${id}">
+        <div class="order-card ${onTheWay ? 'delivering' : ''}" id="card-${id}">
             <div class="card-top">
                 <span class="order-num">#${id}</span>
                 <span class="order-time">${time}</span>
             </div>
-            <div class="order-tag ${delivering ? 'tag-delivering' : 'tag-confirmed'}">
-                ${delivering ? '🛵 On the way' : '⏳ Confirmed'}
-            </div>
+            <div class="order-tag ${tagClass}">${tagText}</div>
             <div style="font-size:.82rem;color:#aaa;margin-bottom:.75rem">${order.name || ''} ${order.address ? '· ' + order.address : ''}</div>
             <div class="card-btns">
-                <button class="btn-start" data-id="${id}" ${delivering ? 'disabled' : ''}>
-                    🛵 Start Delivery
+                <button class="btn-start" data-id="${id}" data-address="${(order.address||'').replace(/"/g,'')}" ${startDisabled}>
+                    ${startLabel}
                 </button>
                 <button class="btn-done" data-id="${id}">
                     ✅ Delivered
@@ -353,15 +371,66 @@
     }
 
     function updateCard(el, order) {
-        const delivering = order.status === 'on_the_way';
-        el.className = 'order-card' + (delivering ? ' delivering' : '');
+        const id = el.id.replace('card-', '');
+        const onTheWay   = order.status === 'on_the_way';
+        const thisDevice = isActiveOnThisDevice(id);
+        el.className = 'order-card' + (onTheWay ? ' delivering' : '');
         const tag = el.querySelector('.order-tag');
         if (tag) {
-            tag.className = 'order-tag ' + (delivering ? 'tag-delivering' : 'tag-confirmed');
-            tag.textContent = delivering ? '🛵 On the way' : '⏳ Confirmed';
+            tag.className = 'order-tag ' + (onTheWay ? 'tag-delivering' : 'tag-confirmed');
+            tag.textContent = onTheWay ? '🛵 On the way' : '⏳ Confirmed';
         }
         const startBtn = el.querySelector('.btn-start');
-        if (startBtn) startBtn.disabled = delivering;
+        if (startBtn) {
+            // Only grey out if this device is already GPS-tracking this order
+            startBtn.disabled = thisDevice;
+            startBtn.textContent = thisDevice ? '🛵 Delivering…' : '🛵 Start Delivery';
+        }
+    }
+
+    // ── NAV PICKER ───────────────────────────
+    let pendingNavOrderId = null;
+
+    function showNavPicker(orderId, address) {
+        pendingNavOrderId = orderId;
+        const enc = encodeURIComponent(address || '');
+        document.getElementById('nav-address-label').textContent = address || 'No address';
+        const apps = [
+            {
+                name: '🗺 Google Maps',
+                url:  `https://www.google.com/maps/dir/?api=1&destination=${enc}&travelmode=driving`,
+                color: '#4285F4'
+            },
+            {
+                name: '🧭 Apple Maps',
+                url:  `http://maps.apple.com/?daddr=${enc}&dirflg=d`,
+                color: '#555'
+            },
+            {
+                name: '🚗 Waze',
+                url:  `https://waze.com/ul?q=${enc}&navigate=yes`,
+                color: '#33ccff'
+            }
+        ];
+        document.getElementById('nav-btns').innerHTML = apps.map(a => `
+            <a href="${a.url}" target="_blank" onclick="onNavChosen()"
+               style="display:block;padding:.85rem 1rem;background:rgba(255,255,255,0.05);
+                      border:1px solid rgba(255,255,255,0.1);border-radius:12px;
+                      color:#fff;font-family:inherit;font-size:.95rem;font-weight:700;
+                      text-decoration:none;text-align:center;">
+                ${a.name}
+            </a>`).join('');
+        const modal = document.getElementById('nav-modal');
+        modal.style.display = 'flex';
+    }
+
+    function onNavChosen() {
+        closeNavModal();
+        if (pendingNavOrderId) startDelivery(pendingNavOrderId);
+    }
+
+    function closeNavModal() {
+        document.getElementById('nav-modal').style.display = 'none';
     }
 
     // ── GPS TRACKING ─────────────────────────
