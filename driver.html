@@ -258,8 +258,10 @@
     }
 
     // ── ORDERS ───────────────────────────────
+    // Only fetch last 7 days so the payload stays small and updates are instant
     function listenOrders() {
-        db.ref('orders').on('value', snap => {
+        const since = Date.now() - 7 * 24 * 60 * 60 * 1000;
+        db.ref('orders').orderByChild('created_at').startAt(since).on('value', snap => {
             const all = snap.val() || {};
             const active = Object.entries(all)
                 .filter(([, o]) => o.status !== 'delivered')
@@ -304,6 +306,11 @@
 
     // ── GPS TRACKING ─────────────────────────
     function startDelivery(orderId) {
+        if (!navigator.geolocation) {
+            alert('GPS is not supported on this device.');
+            return;
+        }
+
         // Stop any existing GPS stream
         if (gpsInterval) { clearInterval(gpsInterval); gpsInterval = null; }
 
@@ -312,6 +319,7 @@
 
         const pill  = document.getElementById('gps-pill');
         const label = document.getElementById('gps-txt');
+        label.textContent = 'Getting GPS…';
 
         function send() {
             navigator.geolocation.getCurrentPosition(pos => {
@@ -321,7 +329,17 @@
                     driver_lat: pos.coords.latitude,
                     driver_lng: pos.coords.longitude
                 });
-            }, () => { label.textContent = 'GPS error'; }, { enableHighAccuracy: true, timeout: 10000 });
+            }, err => {
+                pill.classList.remove('live');
+                if (err.code === 1) {
+                    label.textContent = 'GPS blocked';
+                    alert('Location permission denied. Please enable it in your browser settings and try again.');
+                    clearInterval(gpsInterval);
+                    gpsInterval = null;
+                } else {
+                    label.textContent = 'GPS error — retrying';
+                }
+            }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 });
         }
 
         send();
