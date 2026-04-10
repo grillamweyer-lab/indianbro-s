@@ -208,7 +208,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script>
-    const DRIVER_PIN = '2580'; // ← Change this to your preferred 4-digit PIN
+    let DRIVER_PIN = '2580'; // default — overridden by Firebase on load
 
     const firebaseConfig = {
         apiKey: "AIzaSyCfAfJkP9EsxPR1Zp7J8jctgSoxIfM_gbE",
@@ -221,6 +221,11 @@
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
+
+    // Load PIN from Firebase (admin can change it)
+    db.ref('settings/driverPin').once('value', snap => {
+        if (snap.val()) DRIVER_PIN = snap.val();
+    });
 
     let gpsInterval = null;
     let activeOrder  = null;
@@ -337,11 +342,12 @@
     }
 
     // ── CLEANUP ───────────────────────────────
+    // Only remove orders older than 7 days — keeps analytics data intact
     function cleanupOldOrders() {
-        const cutoff = Date.now() - 24 * 60 * 60 * 1000;
+        const cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
         db.ref('orders').once('value', snap => {
             (snap.val() ? Object.entries(snap.val()) : []).forEach(([id, o]) => {
-                if (o.created_at < cutoff || o.status === 'delivered') {
+                if (o.created_at < cutoff) {
                     db.ref('orders/' + id).remove();
                 }
             });
