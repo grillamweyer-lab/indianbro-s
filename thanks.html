@@ -216,28 +216,28 @@
 <div id="tracking-view">
     <div style="position:relative;">
         <div id="map"></div>
-        <div class="map-pill" id="map-pill">⏳ Waiting for driver…</div>
+        <div class="map-pill" id="map-pill">⏳ Warte auf Fahrer…</div>
     </div>
 
     <div class="tracking-card">
-        <div class="status-badge badge-confirmed" id="status-badge">⏳ Order Confirmed</div>
+        <div class="status-badge badge-confirmed" id="status-badge">⏳ Bestellung bestätigt</div>
 
         <div class="steps-wrap">
             <div class="step-row done" id="step-confirmed">
                 <div class="step-circle">✓</div>
-                <span class="step-label">Order Confirmed</span>
+                <span class="step-label">Bestellung bestätigt</span>
             </div>
             <div class="step-row current" id="step-preparing">
                 <div class="step-circle">🍔</div>
-                <span class="step-label">Being Prepared</span>
+                <span class="step-label">Wird zubereitet</span>
             </div>
             <div class="step-row" id="step-on_the_way">
                 <div class="step-circle">🛵</div>
-                <span class="step-label">On the Way</span>
+                <span class="step-label">Unterwegs</span>
             </div>
             <div class="step-row" id="step-delivered">
                 <div class="step-circle">✅</div>
-                <span class="step-label">Delivered!</span>
+                <span class="step-label">Geliefert!</span>
             </div>
         </div>
 
@@ -246,13 +246,13 @@
              border-radius:50px;padding:.4rem 1.1rem;font-size:.85rem;font-weight:700;color:#44ff88;text-align:center"></div>
 
         <div class="call-box">
-            <p>Questions about your order?</p>
+            <p>Fragen zu deiner Bestellung?</p>
             <a class="call-link" href="tel:+49212315737">0212 315737</a>
         </div>
 
         <div class="btn-row">
-            <a class="btn" href="menu.html">Reorder</a>
-            <a class="btn" href="index.html" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:#fff;">Home</a>
+            <a class="btn" href="menu.html">Erneut bestellen</a>
+            <a class="btn" href="index.html" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:#fff;">Startseite</a>
         </div>
     </div>
 </div>
@@ -390,7 +390,7 @@
                 etaShown = true;
                 const pill = document.getElementById('eta-pill');
                 const dist = order.distance_km ? ` · ${order.distance_km}km` : '';
-                pill.textContent = `⏱ Est. delivery: ~${order.eta_minutes} min${dist}`;
+                pill.textContent = `⏱ Geschätzte Lieferzeit: ~${order.eta_minutes} Min${dist}`;
                 pill.style.display = 'block';
             }
             if (order.status === 'delivered') {
@@ -409,11 +409,11 @@
 
     // ── STATUS UI ──────────────────────────────
     const STATUSES = {
-        confirmed:  { badge:'badge-confirmed',  label:'⏳ Order Confirmed', steps:['done','current','',''],      hidePill: false },
-        preparing:  { badge:'badge-confirmed',  label:'🔥 Being Prepared',  steps:['done','current','',''],      hidePill: false },
-        ready:      { badge:'badge-on_the_way', label:'✅ Ready for pickup', steps:['done','done','current',''],  hidePill: false },
-        on_the_way: { badge:'badge-on_the_way', label:'🛵 On the Way!',      steps:['done','done','current',''], hidePill: true  },
-        delivered:  { badge:'badge-delivered',  label:'✅ Delivered!',       steps:['done','done','done','done'], hidePill: true  }
+        confirmed:  { badge:'badge-confirmed',  label:'⏳ Bestellung bestätigt', steps:['done','current','',''],      hidePill: false },
+        preparing:  { badge:'badge-confirmed',  label:'🔥 Wird zubereitet',      steps:['done','current','',''],      hidePill: false },
+        ready:      { badge:'badge-on_the_way', label:'✅ Bereit zur Abholung',  steps:['done','done','current',''],  hidePill: false },
+        on_the_way: { badge:'badge-on_the_way', label:'🛵 Unterwegs!',           steps:['done','done','current',''],  hidePill: true  },
+        delivered:  { badge:'badge-delivered',  label:'✅ Geliefert!',           steps:['done','done','done','done'], hidePill: true  }
     };
     const STEP_IDS = ['step-confirmed','step-preparing','step-on_the_way','step-delivered'];
 
