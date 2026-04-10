@@ -768,8 +768,9 @@
             .map(s => renderSection(s, sections[s]))
             .join('');
 
-        // Show combos section after firebase sections are rendered (keeps position stable)
+        // Show combos with latest prices (no race condition)
         document.getElementById('combos').style.display = '';
+        applyComboDisplay();
 
         // Re-init VanillaTilt on new cards
         if (typeof VanillaTilt !== 'undefined') {
@@ -782,23 +783,43 @@
     db.ref('menu').on('value', renderFromSnap);
 
     // ── Combo prices from Firebase ──────────────────────────────────
-    function applyComboFees(snap) {
-        const c = snap.val() || {};
-        const defaults = { meal: 4.27, loaded: 5.34, goat: 6.41 };
+    // Always tracks latest fees so renderFromSnap can apply them immediately
+    let latestComboFees = { meal: 4.27, loaded: 5.34, goat: 6.41 };
+
+    function applyComboDisplay() {
         ['meal', 'loaded', 'goat'].forEach(type => {
-            const fee   = parseFloat(c[type] ?? defaults[type]).toFixed(2);
-            const label = `+€${fee}`;
+            const label   = `+€${parseFloat(latestComboFees[type]).toFixed(2)}`;
             const priceEl = document.getElementById('combo-price-' + type);
             const btnEl   = document.getElementById('combo-btn-'   + type);
             if (priceEl) priceEl.textContent = label;
             if (btnEl)   btnEl.setAttribute('onclick', `openComboSelection('${type}', '${label}')`);
         });
     }
-    db.ref('settings/combos').on('value', applyComboFees);
 
-    // bfcache fix for combos
+    db.ref('settings/combos').on('value', snap => {
+        const c = snap.val() || {};
+        latestComboFees = {
+            meal:   c.meal   ?? 4.27,
+            loaded: c.loaded ?? 5.34,
+            goat:   c.goat   ?? 6.41,
+        };
+        applyComboDisplay();
+    });
+
+    // bfcache fix: force fresh fetch of both menu and combo fees
     window.addEventListener('pageshow', e => {
-        if (e.persisted) db.ref('settings/combos').once('value', applyComboFees);
+        if (e.persisted) {
+            db.ref('menu').once('value', renderFromSnap);
+            db.ref('settings/combos').once('value', snap => {
+                const c = snap.val() || {};
+                latestComboFees = {
+                    meal:   c.meal   ?? 4.27,
+                    loaded: c.loaded ?? 5.34,
+                    goat:   c.goat   ?? 6.41,
+                };
+                applyComboDisplay();
+            });
+        }
     });
 })();
 </script>
