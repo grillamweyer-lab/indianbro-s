@@ -5,7 +5,11 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Place Your Order - BYTE Burgers</title>
 <link href="css/style-v3.css" rel="stylesheet"/>
-<link href="css/style-v3.css" rel="stylesheet"/>
+<style>
+@media (max-width: 1024px) { nav { height:75px!important; } .logo-img { height:120px!important; margin:-20px 0!important; } .hamburger { display:flex!important; } header .btn { display:none!important; } .nav-links { position:fixed!important; top:75px!important; right:-100%!important; width:100%!important; height:calc(100vh - 75px)!important; background:#090705!important; flex-direction:column!important; padding-top:3rem!important; align-items:center!important; transition:all 0.4s ease!important; z-index:99!important; } .nav-links.active { right:0!important; } }
+@media (max-width: 768px) { nav { height:70px!important; } .logo-img { height:100px!important; margin:-15px 0!important; } .order-section { padding-top:90px!important; } .order-form { grid-template-columns:1fr!important; } .form-group.full-width { grid-column:span 1!important; } .order-summary-box { grid-column:span 1!important; } .order-form-container { padding:1.5rem 1rem!important; } .footer-content { grid-template-columns:1fr!important; } }
+@media (max-width: 480px) { nav { height:65px!important; } .logo-img { height:85px!important; margin:-10px 0!important; } .order-section { padding-top:85px!important; } .nav-links { top:65px!important; } .container { padding:0 1rem!important; } }
+</style>
 <!-- PWA Meta Tags -->
 <link href="manifest.json?v=2" rel="manifest"/>
 <meta content="#ff751f" name="theme-color"/>
