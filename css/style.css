@@ -656,6 +656,10 @@ footer {
     font-size: 1rem !important;
   }
 
+  .order-section {
+    padding: 100px 0 40px;
+  }
+
   .franchise-stats {
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
@@ -713,6 +717,11 @@ footer {
 }
 
 @media (max-width: 480px) {
+  .franchise-hero,
+  .order-section {
+    padding-top: 90px;
+  }
+
   nav {
     height: 65px;
   }
