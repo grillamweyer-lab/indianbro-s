@@ -161,40 +161,46 @@
             let storedVat = localStorage.getItem('byteOrderVATDetails');
             if (storedVat) {
                 let vatData = JSON.parse(storedVat);
-                
-                vatData.delivery_gross = fee;
-                vatData.delivery_net = fee / 1.19;
-                vatData.delivery_vat_19 = fee - vatData.delivery_net;
-                
-                vatData.gross_total = vatData.food_gross_total + vatData.beverage_gross_total + vatData.delivery_gross;
-                vatData.net_total = vatData.net_food_total + vatData.net_beverage_total + vatData.delivery_net;
-                vatData.vat_total = vatData.vat_7_total + vatData.vat_19_total + vatData.delivery_vat_19;
-                
-                localStorage.setItem('byteOrderVATDetails', JSON.stringify(vatData));
-                
-                if(fee > 0) {
+                const round2 = v => Math.round(v * 100) / 100;
+
+                // Delivery VAT (19%)
+                const delivery_gross = fee;
+                const delivery_net   = round2(fee / 1.19);
+                const delivery_vat   = round2(fee - delivery_net);
+
+                const total_vat   = round2(vatData.vat_7 + vatData.vat_19 + delivery_vat);
+                const total_net   = round2(vatData.net_food + vatData.net_beverage + delivery_net);
+                const gross_total = round2(vatData.gross_total + delivery_gross);
+
+                localStorage.setItem('byteOrderVATDetails', JSON.stringify({
+                    ...vatData,
+                    delivery_gross, delivery_net, delivery_vat,
+                    total_vat, total_net, gross_total
+                }));
+
+                if (fee > 0) {
                     finalOutput += `\n\nDelivery Fee: €${fee.toFixed(2)}`;
                 }
-                
+
                 finalOutput += `\n\n--- VAT Breakdown ---\n\n`;
-                
-                if(vatData.food_gross_total > 0) {
-                    finalOutput += `Net Food: €${vatData.net_food_total.toFixed(2)}\n`;
-                    finalOutput += `VAT (7% Food): €${vatData.vat_7_total.toFixed(2)}\n\n`;
+
+                if (vatData.net_food > 0) {
+                    finalOutput += `Net Food: €${vatData.net_food.toFixed(2)}\n`;
+                    finalOutput += `VAT (7% Food): €${vatData.vat_7.toFixed(2)}\n\n`;
                 }
-                
-                if(vatData.beverage_gross_total > 0) {
-                    finalOutput += `Net Drinks: €${vatData.net_beverage_total.toFixed(2)}\n`;
-                    finalOutput += `VAT (19% Drinks): €${vatData.vat_19_total.toFixed(2)}\n\n`;
+
+                if (vatData.net_beverage > 0) {
+                    finalOutput += `Net Drinks: €${vatData.net_beverage.toFixed(2)}\n`;
+                    finalOutput += `VAT (19% Drinks): €${vatData.vat_19.toFixed(2)}\n\n`;
                 }
-                
-                if(fee > 0) {
-                    finalOutput += `Net Delivery: €${vatData.delivery_net.toFixed(2)}\n`;
-                    finalOutput += `VAT (19% Delivery): €${vatData.delivery_vat_19.toFixed(2)}\n\n`;
+
+                if (fee > 0) {
+                    finalOutput += `Net Delivery: €${delivery_net.toFixed(2)}\n`;
+                    finalOutput += `VAT (19% Delivery): €${delivery_vat.toFixed(2)}\n\n`;
                 }
-                
-                finalOutput += `Total VAT: €${vatData.vat_total.toFixed(2)}\n\n`;
-                finalOutput += `Final Total: €${vatData.gross_total.toFixed(2)}`;
+
+                finalOutput += `Total VAT: €${total_vat.toFixed(2)}\n\n`;
+                finalOutput += `Final Total: €${gross_total.toFixed(2)}`;
             }
             itemsField.value = finalOutput;
         }
