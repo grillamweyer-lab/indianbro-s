@@ -23,8 +23,9 @@ const CONFIG = {
   coords: { lat: 51.178389, lng: 7.031451 },
 
   // ── Branding ──────────────────────────────────────────────────────────────
-  primaryColor: '#ff7f00',
-  themeColor:   '#ff751f',
+  // Change these two lines to restyle the entire website for a new client
+  primaryColor: '#ff7f00',   // main accent color (buttons, highlights)
+  themeColor:   '#ff751f',   // browser theme bar color on mobile
 
   // ── External links ────────────────────────────────────────────────────────
   googleReviewLink: 'https://maps.app.goo.gl/sFAPyQW8HifLWtUH6',
@@ -41,3 +42,23 @@ const CONFIG = {
     appId:             '1:700610883011:web:b7e6f16233b67d7976e176'
   }
 };
+
+// ── Apply branding colors to CSS variables immediately ────────────────────
+(function() {
+  // Convert hex to rgb components for rgba() usage in CSS
+  function hexToRgb(hex) {
+    const r = parseInt(hex.slice(1,3),16);
+    const g = parseInt(hex.slice(3,5),16);
+    const b = parseInt(hex.slice(5,7),16);
+    return r + ',' + g + ',' + b;
+  }
+  const p = CONFIG.primaryColor;
+  const rgb = hexToRgb(p);
+  const root = document.documentElement;
+  root.style.setProperty('--primary',       p);
+  root.style.setProperty('--primary-rgb',   rgb);
+  root.style.setProperty('--primary-glow',  'rgba(' + rgb + ',0.35)');
+  // Update theme-color meta tag
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.content = CONFIG.themeColor;
+})();
