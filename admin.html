@@ -655,17 +655,17 @@ function initApp() {
 
 // ── ORDERS ───────────────────────────────────────────────────────────────────
 function listenOrders() {
+    let initialLoadDone = false;
     db.ref('orders').on('value', snap => {
         const data = snap.val() || {};
-        // detect new
         Object.keys(data).forEach(id => {
-            if (!knownOrderIds.has(id) && knownOrderIds.size > 0) {
+            if (initialLoadDone && !knownOrderIds.has(id)) {
                 playDing();
-                // flash notification
                 showToast('🔔 New order #' + id);
             }
             knownOrderIds.add(id);
         });
+        initialLoadDone = true;
         allOrders = data;
         renderOrders();
         updateBadge();
