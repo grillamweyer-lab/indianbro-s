@@ -1,45 +1,45 @@
 // ─────────────────────────────────────────────────────────────────────────────
-//  BYTE Burgers — White-Label Configuration
+//  Indian Bro's — White-Label Configuration
 //  To set up a new restaurant, only edit this file.
 // ─────────────────────────────────────────────────────────────────────────────
 const CONFIG = {
 
   // ── Restaurant identity ───────────────────────────────────────────────────
-  name:        'BYTE Burgers',
-  tagline:     'BYTE. Anders gebaut.',
-  description: 'Beste Halal Smash Burger in NRW',
-  copyright:   '© 2026 BYTE Burgers. Alle Rechte vorbehalten.',
+  name:        "Indian Bro's",
+  tagline:     'Taste the Real Indian Food',
+  description: "Authentic Indian cuisine — biryani, curries & more",
+  copyright:   "© 2026 Indian Bro's. All rights reserved.",
 
   // ── Contact ───────────────────────────────────────────────────────────────
-  phone:        '0212315737',
-  phoneIntl:    '+49212315737',
-  address:      'Weyerstraße 284A, 42719 Solingen',
+  phone:        '017643186357',
+  phoneIntl:    '+4917643186357',
+  address:      'Weyerstreet 248A',
   city:         'Solingen',
   country:      'Germany',
-  social:       '@byteburgers',
-  website:      'https://byteburgers.shop',
+  social:       '@indianbros',
+  website:      'https://indianbros.de',
 
   // ── Location (for maps & delivery distance) ───────────────────────────────
   coords: { lat: 51.178389, lng: 7.031451 },
 
   // ── Branding ──────────────────────────────────────────────────────────────
   // Change these two lines to restyle the entire website for a new client
-  primaryColor: '#ff7f00',   // main accent color (buttons, highlights)
-  themeColor:   '#ff751f',   // browser theme bar color on mobile
+  primaryColor: '#d4a017',   // saffron gold — biryani vibes
+  themeColor:   '#c49010',   // browser theme bar color on mobile
 
   // ── External links ────────────────────────────────────────────────────────
-  googleReviewLink: 'https://maps.app.goo.gl/sFAPyQW8HifLWtUH6',
-  formsubmitEmail:  'pvsheram001@Gmail.com',
+  googleReviewLink: 'https://maps.google.com',
+  formsubmitEmail:  'monetizationfast@gmail.com',
 
   // ── Firebase ──────────────────────────────────────────────────────────────
   firebase: {
-    apiKey:            'AIzaSyCfAfJkP9EsxPR1Zp7J8jctgSoxIfM_gbE',
-    authDomain:        'byte-34c84.firebaseapp.com',
-    databaseURL:       'https://byte-34c84-default-rtdb.europe-west1.firebasedatabase.app',
-    projectId:         'byte-34c84',
-    storageBucket:     'byte-34c84.firebasestorage.app',
-    messagingSenderId: '700610883011',
-    appId:             '1:700610883011:web:b7e6f16233b67d7976e176'
+    apiKey:            'REPLACE_WITH_THEIR_API_KEY',
+    authDomain:        'REPLACE_WITH_THEIR_AUTH_DOMAIN',
+    databaseURL:       'REPLACE_WITH_THEIR_DATABASE_URL',
+    projectId:         'REPLACE_WITH_THEIR_PROJECT_ID',
+    storageBucket:     'REPLACE_WITH_THEIR_STORAGE_BUCKET',
+    messagingSenderId: 'REPLACE_WITH_THEIR_SENDER_ID',
+    appId:             'REPLACE_WITH_THEIR_APP_ID'
   }
 };
 
