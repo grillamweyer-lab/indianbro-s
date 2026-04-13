@@ -33,13 +33,13 @@ const CONFIG = {
 
   // ── Firebase ──────────────────────────────────────────────────────────────
   firebase: {
-    apiKey:            'REPLACE_WITH_THEIR_API_KEY',
-    authDomain:        'REPLACE_WITH_THEIR_AUTH_DOMAIN',
-    databaseURL:       'REPLACE_WITH_THEIR_DATABASE_URL',
-    projectId:         'REPLACE_WITH_THEIR_PROJECT_ID',
-    storageBucket:     'REPLACE_WITH_THEIR_STORAGE_BUCKET',
-    messagingSenderId: 'REPLACE_WITH_THEIR_SENDER_ID',
-    appId:             'REPLACE_WITH_THEIR_APP_ID'
+    apiKey:            'AIzaSyBPZlNIyvlFw7CitDfRxiqpej-de-hXUDw',
+    authDomain:        'indian-bro-s.firebaseapp.com',
+    databaseURL:       'https://indian-bro-s-default-rtdb.europe-west1.firebasedatabase.app',
+    projectId:         'indian-bro-s',
+    storageBucket:     'indian-bro-s.firebasestorage.app',
+    messagingSenderId: '161370117881',
+    appId:             '1:161370117881:web:a862e18874b264fba3b428'
   }
 };
 
