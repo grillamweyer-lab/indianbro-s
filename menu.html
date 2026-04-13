@@ -640,6 +640,7 @@
 
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
+    window._menuDb = db;
 
 
     // Fallback: if menu is still showing spinner after 5s, force a fresh fetch

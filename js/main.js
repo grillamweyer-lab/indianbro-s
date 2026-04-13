@@ -435,11 +435,58 @@ function updateBasketUI() {
     totalElement.innerText = `€${total.toFixed(2)}`;
 }
 
+function isStoreOpen(settings) {
+    if (settings.holiday) return false;
+    const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const now = new Date();
+    const day = DAYS[now.getDay()];
+    const h = (settings.hours || {})[day];
+    if (!h || h.closed) return false;
+    const [openH, openM]  = (h.open  || '00:00').split(':').map(Number);
+    const [closeH, closeM] = (h.close || '00:00').split(':').map(Number);
+    const cur = now.getHours() * 60 + now.getMinutes();
+    const open  = openH  * 60 + openM;
+    const close = closeH * 60 + closeM;
+    // Handle overnight (e.g. 18:00 – 02:00)
+    if (close < open) return cur >= open || cur < close;
+    return cur >= open && cur < close;
+}
+
 function checkout() {
     if (cart.length === 0) {
         alert("Ihr Warenkorb ist leer!");
         return;
     }
+
+    const db = window._menuDb;
+    if (db) {
+        db.ref('settings').once('value', snap => {
+            const settings = snap.val() || {};
+            if (!isStoreOpen(settings)) {
+                const h = (settings.hours || {});
+                const DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+                const day = DAYS[new Date().getDay()];
+                const todayHours = h[day];
+                let msg = 'Wir haben gerade geschlossen.';
+                if (settings.holiday) {
+                    msg = 'Wir sind heute im Urlaub. Bitte morgen wieder bestellen!';
+                } else if (todayHours && !todayHours.closed) {
+                    msg = `Wir haben heute von ${todayHours.open} – ${todayHours.close} Uhr geöffnet.`;
+                } else {
+                    msg = 'Wir sind heute geschlossen.';
+                }
+                alert('🔒 ' + msg);
+                return;
+            }
+            doCheckout();
+        });
+        return;
+    }
+    doCheckout();
+}
+
+function doCheckout() {
+    if (cart.length === 0) return;
 
     const itemsSummary = cart.map(item => `- ${item.name} (€${item.price.toFixed(2)})`).join('\n');
     const total = cart.reduce((sum, item) => sum + item.price, 0);
