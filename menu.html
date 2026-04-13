@@ -6,8 +6,8 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
 <meta http-equiv="Pragma" content="no-cache"/>
 <meta http-equiv="Expires" content="0"/>
-<title>Speisekarte | BYTE Burgers Solingen | Smash Burgers & Halal</title>
-<meta content="Entdecken Sie unsere Speisekarte in Solingen: Ziegenbyte Original, Smash Burgers, Loaded Fries & Shakes. 100% Halal & frisch zubereitet. Jetzt bestellen!" name="description"/>
+<title>Menu | Indian Bro's | Authentic Indian Food</title>
+<meta content="Explore Indian Bro's menu: Hyderabadi Biryani, Chicken Joint, Sides & Drinks. 100% Halal, freshly prepared. Order now!" name="description"/>
 <link href="css/style-v3.css" rel="stylesheet"/>
 <style>
 @media (max-width: 1024px) { nav { height:75px!important; } .logo-img { height:120px!important; margin:-20px 0!important; } .hamburger { display:flex!important; } header .btn { display:none!important; } .nav-links { position:fixed!important; top:75px!important; right:-100%!important; width:100%!important; height:calc(100vh - 75px)!important; background:#090705!important; flex-direction:column!important; padding-top:3rem!important; align-items:center!important; transition:all 0.4s ease!important; z-index:99!important; } .nav-links.active { right:0!important; } }
@@ -649,17 +649,15 @@
     });
 
     const SECTION_CONFIG = {
-        Burgers:  { title: 'BYTE Burger',                    rotation: '-2deg',  id: 'fb-burgers'  },
-        Sides:    { title: 'Geladene Pommes & Beilagen',     rotation: '-1deg',  id: 'fb-sides'    },
-        Specials: { title: 'Straßenklassiker',               rotation: '-1deg',  id: 'fb-specials' },
-        Drinks:   { title: 'Getränke',                       rotation: '-1.5deg',id: 'fb-drinks'   },
-        Extras:   { title: 'Extras & Add-ons',               rotation: '1.5deg', id: 'fb-extras'   },
+        Biryani:        { title: 'Biryani',         rotation: '-2deg',  id: 'fb-biryani'  },
+        Specials:       { title: 'Specials',         rotation: '-1deg',  id: 'fb-specials' },
+        'Chicken Joint':{ title: 'Chicken Joint',   rotation: '-1deg',  id: 'fb-chicken'  },
+        Sides:          { title: 'Sides',            rotation: '-1.5deg',id: 'fb-sides'    },
+        Drinks:         { title: 'Drinks',           rotation: '1.5deg', id: 'fb-drinks'   },
     };
-    const SECTION_ORDER = ['Burgers','Sides','Specials','Drinks','Extras'];
+    const SECTION_ORDER = ['Biryani','Specials','Chicken Joint','Sides','Drinks'];
 
     function getAddToCartFn(item, section) {
-        if (section === 'Burgers') return `addBurgerToCart('${esc(item.name)}', '€${item.price.toFixed(2)}')`;
-        if (item.name === 'Classic Fries') return `openFriesSelection('${esc(item.name)}', '€${item.price.toFixed(2)}')`;
         if (item.name === 'Sodas') return `openSodaSelection('€${item.price.toFixed(2)}')`;
         return `addToCart('${esc(item.name)}', '€${item.price.toFixed(2)}')`;
     }
