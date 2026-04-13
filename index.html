@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 
 <head>
     <meta charset="utf-8" /><link rel="canonical" href="https://byteburgers.shop/"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>BYTE Burgers Solingen | Beste Halal Smash Burger in NRW</title>
-    <meta content="Erleben Sie Premium Smash Burger bei BYTE Burgers in Solingen. 100% Halal, frisch vorbereitet & einzigartiger Genuss in Nordrhein-Westfalen." name="description" />
+    <title>Indian Bro's | Taste the Real Indian Food</title>
+    <meta content="Experience authentic Indian cuisine at Indian Bro's. Biryani, curries & more. 100% Halal, freshly prepared." name="description" />
     <!-- CSS -->
     <link href="css/style-v3.css" rel="stylesheet" />
     <link rel="preload" href="assets/promo.mp4" as="video" type="video/mp4" />
@@ -27,14 +27,14 @@
     {
       "@context": "https://schema.org",
       "@type": "Restaurant",
-      "name": "BYTE Burgers",
-      "image": "https://www.byteburgers.shop/images/logo.png",
-      "@id": "https://www.byteburgers.shop",
-      "url": "https://www.byteburgers.shop",
-      "telephone": "0212315737",
+      "name": "Indian Bro's",
+      "image": "https://grillamweyer-lab.github.io/indianbro-s/images/logo.png",
+      "@id": "https://grillamweyer-lab.github.io/indianbro-s",
+      "url": "https://grillamweyer-lab.github.io/indianbro-s",
+      "telephone": "+4917643186357",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "Weyerstraße 284A",
+        "streetAddress": "Weyerstreet 248A",
         "addressLocality": "Solingen",
         "addressRegion": "NRW",
         "postalCode": "42719",
@@ -42,10 +42,10 @@
       },
       "geo": {
         "@type": "GeoCoordinates",
-        "latitude": 51.176,
-        "longitude": 7.022
+        "latitude": 51.178389,
+        "longitude": 7.031451
       },
-      "servesCuisine": ["Burgers", "Halal"],
+      "servesCuisine": ["Indian", "Biryani", "Halal"],
       "priceRange": "€€",
       "openingHoursSpecification": [
         {
@@ -55,7 +55,7 @@
           "closes": "22:00"
         }
       ],
-      "menu": "https://byte-burgers.com/menu.html"
+      "menu": "https://grillamweyer-lab.github.io/indianbro-s/menu.html"
     }
     </script>
     <style>
@@ -69,7 +69,7 @@
             text-align: center;
             padding-top: 260px;
             padding-bottom: 60px;
-            background-image: linear-gradient(to bottom, rgba(9, 7, 5, 0.7), rgba(9, 7, 5, 1)), url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+            background-image: linear-gradient(to bottom, rgba(9, 7, 5, 0.7), rgba(9, 7, 5, 1)), url('https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
             background-size: cover;
             background-position: center;
             margin-top: -95px;
@@ -189,8 +189,8 @@
             <a class="logo" href="index.html"><img alt="BYTE Burgers" class="logo-img"
                     src="images/logo-white.png" /></a>
             <ul class="nav-links">
-                <li><a href="index.html">Startseite</a></li>
-                <li><a href="menu.html">Speisekarte</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
                 <li><a href="franchise.html">Franchise</a></li>
             </ul>
             <div class="hamburger" id="mobile-menu">
@@ -198,20 +198,20 @@
                 <span></span>
                 <span></span>
             </div>
-            <a class="btn" href="menu.html">Jetzt bestellen</a>
+            <a class="btn" href="menu.html">Order Now</a>
         </nav>
     </header>
     <main>
         <section class="hero gs_reveal">
             <div class="hero-content">
-                <h1 class="text-gradient">Smashen<br />Schmelzen<br />Beißen</h1>
-                <p>Premium-Burger frisch vorbereitet.Einzigartiger Genuss.</p>
+                <h1 class="text-gradient">Taste<br />The Real<br />Indian Food</h1>
+                <p>Authentic biryani & curries, freshly prepared. A unique culinary experience.</p>
                 <div style="margin-bottom: 2rem;">
                     <img alt="100% Halal Certified" data-pin-nopin="true" src="images/halal-badge.png"
                         style="height: 80px; width: auto; max-width: 100%;" />
                 </div>
                 <div class="hero-btns" style="display: flex; gap: 1rem;">
-                    <a class="btn" href="menu.html">Jetzt bestellen</a>
+                    <a class="btn" href="menu.html">Order Now</a>
                 </div>
             </div>
         </section>
@@ -230,19 +230,17 @@
         <!-- Minimal Menu Preview — loaded from Firebase -->
         <section class="home-menu container gs_reveal">
             <div style="text-align: center; margin-bottom: 2rem;">
-                <h2 style="font-size: 3rem; text-transform: uppercase;">Das Menü</h2>
+                <h2 style="font-size: 3rem; text-transform: uppercase;">Our Menu</h2>
             </div>
             <div class="home-menu-grid" id="home-menu-grid">
-                <div style="text-align:center;padding:2rem;color:#666;grid-column:1/-1">Wird geladen…</div>
+                <div style="text-align:center;padding:2rem;color:#666;grid-column:1/-1">Loading…</div>
             </div>
         </section>
         <section class="cta-section gs_reveal">
             <div class="container cta-content">
-                <h2 class="text-gradient">BYTE.Anders gebaut.</h2>
-                <p class="text-muted" style="margin-bottom: 3rem; font-size: 1.34rem;">Erleben Sie den neuen Standard im
-                    Fast Food.</p>
-                <a class="btn" href="menu.html" style="font-size: 1.34rem; padding: 1.34rem 3rem;">Vollständiges Menü
-                    anzeigen</a>
+                <h2 class="text-gradient">Indian Bro's. Real Flavours.</h2>
+                <p class="text-muted" style="margin-bottom: 3rem; font-size: 1.34rem;">Experience the new standard in Indian cuisine.</p>
+                <a class="btn" href="menu.html" style="font-size: 1.34rem; padding: 1.34rem 3rem;">View Full Menu</a>
             </div>
         </section>
     </main>
@@ -251,9 +249,8 @@
             <div class="footer-col" style="flex: 2;">
                 <a class="logo" href="index.html" style="margin-bottom: 1rem; display: inline-block;"><img
                         alt="BYTE Burgers" class="logo-img" src="images/logo-white.png" /></a>
-                <p style="font-size: 1.5rem; color: #fff; font-weight: 800; margin-bottom: 1rem;">BYTE.Anders gebaut.
-                </p>
-                <p>Weyerstraße 284A, 42719 Solingen</p>
+                <p style="font-size: 1.5rem; color: #fff; font-weight: 800; margin-bottom: 1rem;">Indian Bro's. Real Flavours.</p>
+                <p>Weyerstreet 248A, 42719 Solingen</p>
                 <div
                     style="display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--primary); color: var(--text-main); background: rgba(255,127,0,0.1); padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 0.91rem; margin-top: 15px;">
                     <span style="color: var(--primary);">☪️</span> 100 % HALAL <span
@@ -261,16 +258,15 @@
                 </div>
             </div>
             <div class="footer-col">
-                <h3>Optionen</h3>
+                <h3>Options</h3>
                 <ul style="list-style:none; display:flex; flex-direction:column; gap:0.5rem;">
-                    <li><a href="menu.html" style="color:var(--text-muted); text-decoration:none;">Lieferung
-                            bestellen</a></li>
-                    <li><a href="menu.html" style="color:var(--text-muted); text-decoration:none;">Abholen</a></li>
+                    <li><a href="menu.html" style="color:var(--text-muted); text-decoration:none;">Order Delivery</a></li>
+                    <li><a href="menu.html" style="color:var(--text-muted); text-decoration:none;">Pickup</a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h3>Verbinden</h3>
-                <p>Sozial: <span class="text-primary">@byteburgers</span></p>
+                <h3>Connect</h3>
+                <p>Social: <span class="text-primary">@indianbros</span></p>
                 <div class="social-links">
                     <a href="#">ICH G</a>
                     <a href="#">TW</a>
@@ -279,7 +275,7 @@
         </div>
         <div class="footer-bottom"
             style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 2rem; margin-top: 2rem; text-align: center; color: var(--text-muted);">
-            <p>© 2026 BYTE.Alle Rechte vorbehalten.</p>
+            <p>© 2026 Indian Bro's. All rights reserved.</p>
         </div>
     </footer>
     <!-- GSAP & VanillaTilt -->
