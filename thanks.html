@@ -275,23 +275,33 @@
     </div>
 </div>
 
-<!-- ── PICKUP SIMPLE VIEW ─────────────────────── -->
+<!-- ── PICKUP TRACKING VIEW ─────────────────────── -->
 <main id="simple-view" style="display:none;">
-<div class="thanks-section container">
-    <div class="thanks-icon">🏪</div>
-    <h1 class="text-gradient thanks-title">Bestellung aufgegeben!</h1>
-    <p class="thanks-subtitle">Deine Bestellung wurde aufgegeben! Komm einfach zur Abholung vorbei.</p>
-    <div class="info-cards">
-        <div class="info-card">
-            <div class="card-label">Bestellart</div>
-            <div class="card-value highlight">Abholung</div>
+<div class="tracking-card" style="min-height:100vh;padding-top:110px;">
+    <div class="status-badge badge-confirmed" id="pickup-badge">⏳ Bestellung bestätigt</div>
+
+    <div class="steps-wrap">
+        <div class="step-row current" id="pstep-confirmed">
+            <div class="step-circle">✓</div>
+            <span class="step-label">Bestellung bestätigt</span>
         </div>
-        <div class="info-card">
-            <div class="card-label">Geschätzte Zeit</div>
-            <div class="card-value highlight">~15 Min.</div>
+        <div class="step-row" id="pstep-preparing">
+            <div class="step-circle">🍔</div>
+            <span class="step-label">Wird zubereitet</span>
+        </div>
+        <div class="step-row" id="pstep-ready">
+            <div class="step-circle">🏪</div>
+            <span class="step-label">Bereit zur Abholung!</span>
+        </div>
+        <div class="step-row" id="pstep-collected">
+            <div class="step-circle">✅</div>
+            <span class="step-label">Abgeholt</span>
         </div>
     </div>
-    <div class="call-box">
+
+    <div class="order-ref" id="pickup-order-ref"></div>
+
+    <div class="call-box" style="margin-top:0.5rem;">
         <p>Fragen zu deiner Bestellung?</p>
         <a class="call-link" href="tel:+49212315737">0212 315737</a>
     </div>
@@ -333,10 +343,44 @@
     if (orderType === 'delivery' && orderId) {
         document.getElementById('tracking-view').style.display = 'flex';
         document.getElementById('order-ref').innerHTML = 'Order <span>#' + orderId + '</span>';
-        // Double rAF: ensures browser finishes layout before Leaflet measures the container
         requestAnimationFrame(() => requestAnimationFrame(() => initTracking(orderId)));
     } else {
         document.getElementById('simple-view').style.display = 'block';
+        if (orderId) {
+            document.getElementById('pickup-order-ref').innerHTML = 'Order <span style="color:var(--primary);font-weight:700">#' + orderId + '</span>';
+            initPickupTracking(orderId);
+        }
+    }
+
+    // ── PICKUP LIVE TRACKING ────────────────────────────────────────────────
+    const PICKUP_STATUSES = {
+        confirmed: { badge:'badge-confirmed', label:'⏳ Bestellung bestätigt', steps:['current','','',''] },
+        preparing: { badge:'badge-confirmed', label:'🔥 Wird zubereitet',       steps:['done','current','',''] },
+        ready:     { badge:'badge-on_the_way',label:'✅ Bereit zur Abholung!', steps:['done','done','current',''] },
+        delivered: { badge:'badge-delivered', label:'✅ Abgeholt! Guten Appetit!', steps:['done','done','done','done'] }
+    };
+    const PICKUP_STEP_IDS = ['pstep-confirmed','pstep-preparing','pstep-ready','pstep-collected'];
+
+    function initPickupTracking(id) {
+        db.ref('orders/' + id).on('value', snap => {
+            const o = snap.val();
+            if (!o) return;
+            const cfg = PICKUP_STATUSES[o.status] || PICKUP_STATUSES.confirmed;
+            const badge = document.getElementById('pickup-badge');
+            badge.className = 'status-badge ' + cfg.badge;
+            badge.textContent = cfg.label;
+            PICKUP_STEP_IDS.forEach((sid, i) => {
+                const el = document.getElementById(sid);
+                if (el) el.className = 'step-row ' + (cfg.steps[i] || '');
+            });
+            // Vibrate + notify when ready
+            if (o.status === 'ready') {
+                if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+                if ('Notification' in window && Notification.permission === 'granted') {
+                    new Notification('BYTE Burgers 🍔', { body: 'Deine Bestellung ist bereit zur Abholung!', icon: '/images/logo.png' });
+                }
+            }
+        });
     }
 
     // ── MAP ────────────────────────────────────
