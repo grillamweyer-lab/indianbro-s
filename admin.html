@@ -878,48 +878,7 @@ function showToast(msg) {
 // ── MENU MANAGER ──────────────────────────────────────────────────────────────
 const MENU_VERSION = 2; // bump this to force-reseed after menu changes
 
-const DEFAULT_MENU = {
-    Burgers: [
-        { name:'Goat Byte Original',    desc:'100% Halal Ziegenpatty, BYTE Sauce, Salat, Tomate',       price:7.48, emoji:'🐐' },
-        { name:'Spicy Goat Byte',       desc:'Würziges Ziegenpatty, Jalapeño, Sriracha Mayo',           price:8.01, emoji:'🌶️' },
-        { name:'Truffle Goat Byte',     desc:'Ziegenpatty, Trüffelöl, karamellisierte Zwiebeln',        price:8.55, emoji:'🍄' },
-        { name:'Byte Classic',          desc:'Smash Patty, Cheddar, Salat, Tomate, BYTE Sauce',         price:6.41, emoji:'🍔' },
-        { name:'Double Byte',           desc:'Doppeltes Smash Patty, doppelter Cheddar',                price:8.01, emoji:'🍔' },
-        { name:'Smoky BBQ Byte',        desc:'Smash Patty, BBQ Sauce, Speck, Cheddar',                  price:7.48, emoji:'🔥' },
-        { name:'Crispy Chicken Byte',   desc:'Knuspriges Hähnchenfilet, Krautsalat, Gurken',            price:5.87, emoji:'🐔' },
-        { name:'Spicy Chicken Byte',    desc:'Würziges Hähnchenfilet, Sriracha, Pickles',               price:6.41, emoji:'🌶️' },
-        { name:'Green Byte (Vegan)',    desc:'Pflanzliches Patty, Avocado, geröstete Paprika',          price:5.87, emoji:'🥑' },
-        { name:'Falafel Byte',          desc:'Hausgemachte Falafel, Hummus, Tahini',                    price:6.41, emoji:'🧆' },
-    ],
-    Sides: [
-        { name:'Classic Fries',         desc:'Klassische knusprige Pommes',                             price:2.66, emoji:'🍟' },
-        { name:'Peri Peri Fries',       desc:'Pommes mit Peri Peri Gewürz',                            price:3.20, emoji:'🍟' },
-        { name:'Cheese Melt Fries',     desc:'Pommes mit geschmolzenem Cheddar',                       price:4.27, emoji:'🧀' },
-        { name:'GOAT Loaded Fries',     desc:'Geladene Pommes mit Ziegenfleisch',                      price:5.87, emoji:'🐐' },
-        { name:'BBQ Beef Loaded Fries', desc:'Pommes mit BBQ Rindfleisch',                             price:5.34, emoji:'🥩' },
-        { name:'Crispy Onion Rings',    desc:'Knusprige Zwiebelringe',                                  price:4.80, emoji:'🧅' },
-        { name:'Mozzarella Sticks',     desc:'Frittierte Mozzarella Sticks (6 Stk.)',                  price:5.87, emoji:'🧀' },
-        { name:'Jalapeño Poppers',      desc:'Gefüllte Jalapeño Poppers (6 Stk.)',                     price:5.34, emoji:'🌶️' },
-        { name:'Chicken Tenders',       desc:'3 knusprige Tenders mit Dip',                            price:6.41, emoji:'🍗' },
-    ],
-    Specials: [
-        { name:'BYTE Currywurst',           desc:'Hausgemachte Currywurst nach BYTE Art',               price:7.49, emoji:'🌭' },
-        { name:'BYTE Currywurst + Fries',   desc:'Currywurst mit klassischen Pommes',                   price:9.99, emoji:'🌭' },
-    ],
-    Drinks: [
-        { name:'Sodas',             desc:'Coca-Cola / Fanta / Sprite',              price:2.68, emoji:'🥤' },
-        { name:'Water',             desc:'Still oder prickelnd',                    price:3.75, emoji:'💧' },
-        { name:'Chocolate Shake',   desc:'Reichhaltige belgische Schokolade',       price:3.73, emoji:'🍫' },
-        { name:'Vanilla Shake',     desc:'Vanilleschote aus Madagaskar',            price:3.73, emoji:'🍦' },
-        { name:'Strawberry Shake',  desc:'Frische Bauernerdbeeren',                price:3.73, emoji:'🍓' },
-    ],
-    Extras: [
-        { name:'Extra Cheese',      desc:'Scheibe geschmolzener Cheddar',          price:1.07, emoji:'🧀' },
-        { name:'Extra Patty',       desc:'Zusätzliches Rinder- oder Ziegenpatty',  price:2.68, emoji:'🥩' },
-        { name:'Extra Sauce',       desc:'Zusätzliche Soße nach Wahl',             price:0.54, emoji:'🫙' },
-        { name:'Make it Spicy',     desc:'Schärfe-Level erhöhen 🌶️',              price:0.54, emoji:'🌶️' },
-    ],
-};
+const DEFAULT_MENU = {};
 
 function seedMenu() {
     db.ref('menu').remove(() => {
