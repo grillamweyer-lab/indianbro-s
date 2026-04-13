@@ -1113,18 +1113,28 @@ function buildCharts() {
         options:{ plugins:{legend:{display:false}}, scales:{x:{ticks:{color:'#666'}},y:{ticks:{color:'#666'},grid:{color:'rgba(255,255,255,0.04)'}}} }
     });
 
-    // Hours chart
+    // Hours chart — all 24h, peak hour highlighted
     const hourBuckets = Array(24).fill(0);
     orders.forEach(o => { hourBuckets[new Date(o.created_at).getHours()]++; });
-    const peakHours = hourBuckets.slice(10,23);
+    const maxOrders = Math.max(...hourBuckets);
+    const hourColors = hourBuckets.map(v => v === maxOrders && v > 0 ? '#ff7f00' : 'rgba(255,127,0,0.35)');
     if (chartHours) chartHours.destroy();
     chartHours = new Chart(document.getElementById('hours-chart').getContext('2d'), {
         type:'bar',
         data:{
-            labels: Array.from({length:13},(_,i)=>i+10+':00'),
-            datasets:[{ data:peakHours, backgroundColor:'rgba(255,127,0,0.5)', borderRadius:4, borderSkipped:false }]
+            labels: Array.from({length:24},(_,i) => i + ':00'),
+            datasets:[{ data:hourBuckets, backgroundColor:hourColors, borderRadius:4, borderSkipped:false }]
         },
-        options:{ plugins:{legend:{display:false}}, scales:{x:{ticks:{color:'#666',font:{size:9}}},y:{ticks:{color:'#666'},grid:{color:'rgba(255,255,255,0.04)'}}} }
+        options:{
+            plugins:{
+                legend:{display:false},
+                tooltip:{ callbacks:{ label: ctx => ctx.parsed.y + ' orders' } }
+            },
+            scales:{
+                x:{ ticks:{ color:'#666', font:{size:9}, maxRotation:0, callback:(v,i) => i%3===0 ? i+':00' : '' } },
+                y:{ ticks:{color:'#666'}, grid:{color:'rgba(255,255,255,0.04)'} }
+            }
+        }
     });
 
     // Type chart (doughnut)

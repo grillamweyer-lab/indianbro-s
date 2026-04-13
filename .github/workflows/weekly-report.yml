@@ -1,0 +1,141 @@
+name: Weekly Report
+
+on:
+  schedule:
+    - cron: '0 7 * * 1'   # Every Monday at 07:00 UTC (08:00 Germany)
+  workflow_dispatch:        # Allow manual trigger from GitHub Actions tab
+
+jobs:
+  send-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send weekly report
+        uses: actions/github-script@v7
+        env:
+          FIREBASE_DB_URL: ${{ secrets.FIREBASE_DB_URL }}
+          FIREBASE_DB_SECRET: ${{ secrets.FIREBASE_DB_SECRET }}
+          REPORT_EMAIL: ${{ secrets.REPORT_EMAIL }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        with:
+          script: |
+            const https = require('https');
+
+            // ── Fetch all orders from Firebase REST API ──────────────────
+            function fetchFirebase(path) {
+              return new Promise((resolve, reject) => {
+                const url = `${process.env.FIREBASE_DB_URL}/${path}.json?auth=${process.env.FIREBASE_DB_SECRET}`;
+                https.get(url, res => {
+                  let data = '';
+                  res.on('data', c => data += c);
+                  res.on('end', () => resolve(JSON.parse(data)));
+                }).on('error', reject);
+              });
+            }
+
+            // ── Date range: last 7 days ──────────────────────────────────
+            const now   = Date.now();
+            const week  = 7 * 24 * 60 * 60 * 1000;
+            const start = now - week;
+
+            const allOrders = await fetchFirebase('orders');
+            if (!allOrders) { console.log('No orders found'); return; }
+
+            const orders = Object.values(allOrders).filter(o => o.created_at >= start);
+
+            // ── Compute stats ────────────────────────────────────────────
+            const totalOrders  = orders.length;
+            const totalRevenue = orders.reduce((s, o) => s + (o.total || 0), 0);
+            const avgOrder     = totalOrders ? totalRevenue / totalOrders : 0;
+            const deliveries   = orders.filter(o => o.type === 'delivery').length;
+            const pickups      = orders.filter(o => o.type === 'pickup').length;
+
+            // Top items
+            const skipKeywords = ['total','vat','delivery','net food','net drink','subtotal','items total','fee','breakdown','final'];
+            const itemCount = {};
+            orders.forEach(o => {
+              (o.items || '').split('\n').forEach(line => {
+                const l = line.trim();
+                if (!l || skipKeywords.some(k => l.toLowerCase().includes(k))) return;
+                const m = l.match(/^-\s+(.+?)\s*\(€[\d.]+\)/);
+                const name = m ? m[1].trim() : '';
+                if (name.length > 2) itemCount[name] = (itemCount[name] || 0) + 1;
+              });
+            });
+            const topItems = Object.entries(itemCount)
+              .sort((a, b) => b[1] - a[1])
+              .slice(0, 5)
+              .map(([name, count], i) => `${i+1}. ${name} — ${count}x`)
+              .join('\n') || 'No data';
+
+            // Busiest hour
+            const hourBuckets = Array(24).fill(0);
+            orders.forEach(o => { hourBuckets[new Date(o.created_at).getHours()]++; });
+            const peakHour = hourBuckets.indexOf(Math.max(...hourBuckets));
+            const peakStr  = totalOrders ? `${peakHour}:00 – ${peakHour+1}:00 (${hourBuckets[peakHour]} orders)` : '—';
+
+            // Revenue by day
+            const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+            const dayRevenue = Array(7).fill(0);
+            const dayOrders  = Array(7).fill(0);
+            orders.forEach(o => {
+              const d = new Date(o.created_at).getDay();
+              dayRevenue[d] += (o.total || 0);
+              dayOrders[d]++;
+            });
+            const dayBreakdown = dayNames
+              .map((d, i) => `${d}: ${dayOrders[i]} orders · €${dayRevenue[i].toFixed(2)}`)
+              .join('\n');
+
+            // ── Build email ──────────────────────────────────────────────
+            const weekStart = new Date(start).toLocaleDateString('de-DE');
+            const weekEnd   = new Date(now).toLocaleDateString('de-DE');
+
+            const subject = `BYTE Burgers Weekly Report — ${weekStart} to ${weekEnd}`;
+            const body = `
+BYTE Burgers — Weekly Summary
+${weekStart} → ${weekEnd}
+═══════════════════════════════
+
+📦 ORDERS
+  Total Orders:    ${totalOrders}
+  Deliveries:      ${deliveries}
+  Pickups:         ${pickups}
+
+💶 REVENUE
+  Total Revenue:   €${totalRevenue.toFixed(2)}
+  Average Order:   €${avgOrder.toFixed(2)}
+
+⭐ TOP 5 ITEMS
+${topItems}
+
+⏰ BUSIEST HOUR
+  ${peakStr}
+
+📅 BY DAY
+${dayBreakdown}
+
+───────────────────────────────
+View full analytics: https://byteburgers.shop/admin.html
+            `.trim();
+
+            console.log('Report:\n' + body);
+
+            // ── Send email via Gmail SMTP ────────────────────────────────
+            const nodemailer = require('nodemailer');
+            const transporter = nodemailer.createTransport({
+              service: 'gmail',
+              auth: {
+                user: process.env.GMAIL_USER,
+                pass: process.env.GMAIL_APP_PASSWORD
+              }
+            });
+
+            await transporter.sendMail({
+              from: `"BYTE Burgers Reports" <${process.env.GMAIL_USER}>`,
+              to:   process.env.REPORT_EMAIL,
+              subject,
+              text: body
+            });
+
+            console.log('Weekly report sent successfully.');
