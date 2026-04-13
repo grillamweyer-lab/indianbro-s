@@ -601,7 +601,7 @@ function checkPin() {
         digits[0].focus();
         return;
     }
-    if (entered === ADMIN_PIN) {
+    if (entered === String(ADMIN_PIN)) {
         document.getElementById('pin-screen').style.display = 'none';
         const app = document.getElementById('app');
         app.style.display = 'flex';
