@@ -730,7 +730,7 @@
         container.innerHTML = SECTION_ORDER
             .filter(s => sections[s] && sections[s].length)
             .map(s => renderSection(s, sections[s]))
-            .join('') + renderCombos(currentFees);
+            .join('');
 
         if (typeof VanillaTilt !== 'undefined') {
             VanillaTilt.init(container.querySelectorAll('.tilt-card'), {
