@@ -738,10 +738,14 @@ function orderCardHTML(id, o) {
 }
 
 function statusButtons(id, status) {
+    const o = allOrders[id] || {};
+    const isPickup = (o.type || '').toLowerCase() === 'pickup';
     const map = {
         confirmed: `<button class="btn btn-primary btn-sm" onclick="setStatus('${id}','preparing')">🔥 Preparing</button>`,
         preparing: `<button class="btn btn-primary btn-sm" onclick="setStatus('${id}','ready')">✅ Ready</button>`,
-        ready:     `<button class="btn btn-green btn-sm" onclick="setStatus('${id}','on_the_way')">🛵 Send Out</button>`,
+        ready:     isPickup
+            ? `<button class="btn btn-green btn-sm" onclick="setStatus('${id}','delivered')">✅ Collected</button>`
+            : `<button class="btn btn-green btn-sm" onclick="setStatus('${id}','on_the_way')">🛵 Send Out</button>`,
         on_the_way:`<button class="btn btn-green btn-sm" onclick="setStatus('${id}','delivered')">📦 Delivered</button>`,
         delivered: `<span style="font-size:.78rem;color:var(--muted)">Completed</span>`
     };
@@ -1192,7 +1196,7 @@ function updateDriverMarkers() {
     if (!driversMap) return;
     // Find active deliveries with GPS
     const active = Object.entries(allOrders).filter(([,o]) =>
-        o.status === 'on_the_way' && o.driver_lat && o.driver_lng
+        o.status === 'on_the_way' && (o.type||'').toLowerCase() !== 'pickup' && o.driver_lat && o.driver_lng
     );
     // Remove old markers not in active
     const activeIds = new Set(active.map(([id]) => id));
@@ -1215,7 +1219,7 @@ const COLORS = ['#ff7f00','#44ff88','#4488ff','#ffcc00','#ff44aa'];
 function getColor(id) { return COLORS[Math.abs(id.charCodeAt(0)) % COLORS.length]; }
 
 function renderDriverList() {
-    const active = Object.entries(allOrders).filter(([,o]) => o.status === 'on_the_way');
+    const active = Object.entries(allOrders).filter(([,o]) => o.status === 'on_the_way' && (o.type||'').toLowerCase() !== 'pickup');
     const list = document.getElementById('driver-list');
     if (!list) return;
     if (!active.length) {
